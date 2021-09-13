@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_prework"
+        android:icon="@drawable/ic_baseline_prework_24"
+        android:title="prework"
+        >
+    </item>
+    <item
+        android:id="@+id/nav_maintain"
+        android:icon="@drawable/ic_maintain_24"
+        android:title="maintain"
+        >
+    </item>
+    <item
+        android:id="@+id/nav_change_data_maintain"
+        android:icon="@drawable/ic_baseline_change_data_maintain_24"
+        android:title="maintain2"
+        >
+    </item>
+    <item
+        android:id="@+id/nav_batch_processing"
+        android:icon="@drawable/ic_baseline_batch_processing_24"
+        android:title="handle"
+        >
+    </item>
+    <item
+        android:id="@+id/nav_dashboard"
+        android:icon="@drawable/ic_baseline_dashboard_24"
+        android:title="dashboard"
+        >
+    </item>
+
+
+
+</menu>
