@@ -1,0 +1,7 @@
+<resources>
+    <string-array name="combobox_yes_no">
+        <item>false</item>
+        <item>true</item>
+    </string-array>
+
+</resources>

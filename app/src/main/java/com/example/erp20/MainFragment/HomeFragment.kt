@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.example.erp20.DisplayActivity
 import com.example.erp20.R
 import com.example.erp20.SaleActivity
+import com.example.erp20.cookie_data
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,10 +45,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val theTextView = getView()?.findViewById<TextView>(R.id.home_fragment_text)
         val saleBtn=getView()?.findViewById<ImageButton>(R.id.btn_01)
+        theTextView?.text = "home\n"+"${cookie_data.tokenValue}\n"+"${cookie_data.loginflag}"
 
-        if (theTextView != null) {
-            theTextView.text = "home"
-        }
 
         saleBtn?.setOnClickListener{
             //Toast.makeText(activity,"1233211212",Toast.LENGTH_SHORT).show()

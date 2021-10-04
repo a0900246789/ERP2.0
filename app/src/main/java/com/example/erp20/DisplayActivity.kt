@@ -28,37 +28,17 @@ import okhttp3.*
 class DisplayActivity : AppCompatActivity() {
 
     private lateinit var toggle:ActionBarDrawerToggle
-    private lateinit var tokenValue:String
     private lateinit var loginflag:String
     private lateinit var msg:String
-    val okHttpClient = OkHttpClient.Builder().cookieJar(object : CookieJar {
-        override fun saveFromResponse(httpUrl: HttpUrl, list: List<Cookie>)
-        {
-            Log.d("Save", "response: ${httpUrl.host}")
-            //cookieStore[httpUrl.host] = list
-            var Save=cookie.setcookie(httpUrl.host,list)
-        }
-        override fun loadForRequest(httpUrl: HttpUrl): List<Cookie>
-        {
-            Log.d("Load", "response: ${httpUrl.host}")
-            //val cookies = cookieStore[httpUrl.host]
-            val cookies = cookie.getcookie(httpUrl.host)
-            if(cookies==null){
-                Log.d("沒加載到cookie", "response: 哭阿")
-            }
-            return cookies ?: ArrayList()
-        }
-    }).build()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display)
         //get data
-        val passedBundle =intent.getBundleExtra("Bundle")
-        //val theTextView = findViewById<TextView>(R.id.TextName)
-
+        /*val passedBundle =intent.getBundleExtra("Bundle")
         tokenValue=passedBundle?.getString("token").toString()
-        loginflag=passedBundle?.getString("login_flag").toString()
+        loginflag=passedBundle?.getString("login_flag").toString()*/
 
         //fragment
         val homeFragment=HomeFragment()
@@ -109,7 +89,6 @@ class DisplayActivity : AppCompatActivity() {
     private fun currentFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.current_fragment,fragment)
-            addToBackStack(null)
             commit()
         }
 
@@ -119,8 +98,8 @@ class DisplayActivity : AppCompatActivity() {
         val body = FormBody.Builder()
             .add("username", "System")
             .add("password", "cvFm9Mq6")
-            .add("csrfmiddlewaretoken", tokenValue)
-            .add("login_flag",loginflag)
+            .add("csrfmiddlewaretoken", cookie_data.tokenValue)
+            .add("login_flag",cookie_data.loginflag)
             .build()
         val request = Request.Builder()
             .url("http://140.125.46.125:8000/logout")
@@ -129,7 +108,7 @@ class DisplayActivity : AppCompatActivity() {
             .build()
         runBlocking {
             var job = CoroutineScope(Dispatchers.IO).launch {
-                var response = okHttpClient.newCall(request).execute()
+                var response = cookie_data.okHttpClient.newCall(request).execute()
 
                 val login_Info = Gson().fromJson(response.body?.string(), com.example.erp20.Model.login::class.java)
                 response.body?.run {
@@ -141,7 +120,7 @@ class DisplayActivity : AppCompatActivity() {
             job.join()
             Toast.makeText(applicationContext,msg,Toast.LENGTH_SHORT).show()
             val logoutIntent= Intent(applicationContext,MainActivity::class.java)
-            logoutIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            logoutIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)//清空上一頁
             startActivity(logoutIntent)
         }
 

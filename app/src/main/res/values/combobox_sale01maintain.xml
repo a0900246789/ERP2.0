@@ -1,0 +1,20 @@
+<resources>
+    <string-array name="comboboxSale01maintain">
+        <item>產品型號</item>
+        <item>櫃編維護</item>
+        <item>櫃型維護</item>
+        <item>港口維護</item>
+        <item>產品基本資料維護</item>
+        <item>客戶基本資料維護</item>
+        <item>車行基本資料維護</item>
+        <item>件號部門注意事項維護</item>
+        <item>船公司基本資料維護</item>
+    </string-array>
+
+
+
+
+
+
+
+</resources>

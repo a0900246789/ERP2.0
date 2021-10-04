@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="underline">#BDB8B8</color>
+    <color name="underline2">#977C7C</color>
+    <color name="combobox_gray">#CDCBCB</color>
 </resources>
