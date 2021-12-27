@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/underline2"
+        android:paddingRight="16dp"
+        android:paddingLeft="32dp"
+        android:paddingTop="20dp"
+        >
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/contNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="櫃編"
+            android:background="#E1E1E1"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_contNo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+
+                >
+            </AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/cont_type_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/contNo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="櫃型代號"
+            android:background="#E1E1E1"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_cont_type_code"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+
+                >
+            </AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/customer_poNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/cont_type_code"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="poNo"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_customer_poNo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/is_urgent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/customer_poNo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="急單"
+            android:background="#E1E1E1"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_is_urgent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:text="false"
+                >
+            </AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/stacking_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/is_urgent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="疊櫃日期"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_stacking_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+                android:hint="2021-01-01 "
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/est_start_stacking_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/stacking_date"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="預計開始疊櫃時間"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_est_start_stacking_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+                android:hint="00:00:00"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/est_stop_stacking_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/est_start_stacking_date"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="預計結束疊櫃時間"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_est_stop_stacking_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+                android:hint="00:00:00"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+
+
+
+        <Button
+            android:id="@+id/delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp"
+            android:text="刪除"
+            android:visibility="invisible">
+
+        </Button>
+        <Button
+            android:id="@+id/edit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/delete_btn"
+            android:layout_marginTop="16dp"
+            android:text="編輯"
+            android:visibility="invisible">
+
+        </Button>
+        <Button
+            android:id="@+id/lock_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_btn"
+            android:layout_marginTop="16dp"
+            android:text="鎖定"
+            android:visibility="invisible">
+
+        </Button>
+
+        <Button
+            android:id="@+id/over_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lock_btn"
+            android:layout_marginTop="16dp"
+            android:text="結案"
+            android:visibility="invisible">
+
+        </Button>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/underline">
+        </View>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

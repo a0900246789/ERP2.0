@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/underline2"
+        android:paddingRight="16dp"
+        android:paddingLeft="32dp"
+        android:paddingTop="20dp"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/workstation_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="工作站別編號"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_workstation_number"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/product_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/workstation_number"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="工程編制單編號"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_product_id"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/workstation_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/product_id"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="工作站別代號"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_workstation_code"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/is_body_condition_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/workstation_code"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="體力、耐力、耐熱、敏銳度"
+            android:background="#E1E1E1"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_is_body_condition_ok"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:text="true"
+                >
+
+            </AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/is_vision_condition_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/is_body_condition_ok"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="眼力、細心度"
+            android:background="#E1E1E1"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_is_vision_condition_ok"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:text="true"
+                >
+
+            </AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/is_technology_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/is_vision_condition_ok"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="技術類"
+            android:background="#E1E1E1"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_is_technology_ok"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:text="true"
+                >
+
+            </AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/is_normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/is_technology_ok"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="一般"
+            android:background="#E1E1E1"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_is_normal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:text="true"
+                >
+            </AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/job_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/is_normal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="工作描述"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_job_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/standard_working_hours_optimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/job_description"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="標準工時(最適)"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_standard_working_hours_optimal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+                android:text="8"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/unit_of_timer_optimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/standard_working_hours_optimal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="計時單位(最適)"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_unit_of_timer_optimal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/number_of_staff_optimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/unit_of_timer_optimal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="編制人數(最適)"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_number_of_staff_optimal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/theoretical_output"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/number_of_staff_optimal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="理論產量(最適)"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_theoretical_output"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+                android:text="1"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/standard_working_hours_less"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/theoretical_output"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="標準工時(最少)"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_standard_working_hours_less"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+                android:text="8"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/unit_of_timer_less"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/standard_working_hours_less"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="計時單位(最少)"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_unit_of_timer_less"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/number_of_staff_less"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/unit_of_timer_less"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="編制人數(最少)"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_number_of_staff_less"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/theoretical_output_less"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/number_of_staff_less"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="理論產量(最少)"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_theoretical_output_less"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+                android:text="1"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/_creator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/theoretical_output_less"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="創建者"
+
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_creator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/lock_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/_creator"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="鎖定時間"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_lock_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/create_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/edit_time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="創建時間"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_create_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/_remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/invalid_time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="備註"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="15dp">
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/edit_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lock_time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="編輯時間"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_edit_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/invalid_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/create_time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="作廢時間"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_invalid_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/_editor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/theoretical_output_less"
+            app:layout_constraintLeft_toRightOf="@id/_creator"
+            android:layout_marginLeft="1dp"
+            android:hint="編輯者"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_editor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/theoretical_output_less"
+            app:layout_constraintLeft_toRightOf="@id/_editor"
+            android:layout_marginLeft="1dp"
+            android:hint="鎖定"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/_invalid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/theoretical_output_less"
+            app:layout_constraintLeft_toRightOf="@id/_lock"
+            android:layout_marginLeft="1dp"
+            android:hint="作廢"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_invalid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp"
+            android:text="刪除"
+            android:visibility="invisible">
+
+        </Button>
+        <Button
+            android:id="@+id/edit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/delete_btn"
+            android:layout_marginTop="16dp"
+            android:text="編輯"
+            android:visibility="invisible">
+
+        </Button>
+        <Button
+            android:id="@+id/lock_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_btn"
+            android:layout_marginTop="16dp"
+            android:text="鎖定"
+            android:visibility="invisible">
+
+        </Button>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/underline">
+        </View>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

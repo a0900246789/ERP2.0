@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/underline2"
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="20dp"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/_name"
+            android:hint="日期"
+
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/_date"
+            android:paddingLeft="3dp"
+            android:hint="姓名"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:singleLine="true">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/card_number"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/_date"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/is_absent"
+
+            android:hint="卡號"
+            android:background="#E1E1E1"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_card_number"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                >
+            </AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/is_absent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/_name"
+            app:layout_constraintLeft_toRightOf="@id/card_number"
+
+            android:hint="請假"
+            android:background="#E1E1E1"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_is_absent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:text="無"
+
+                >
+            </AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/leave_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/card_number"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            android:hint="請假時數"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_leave_hours"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number|numberDecimal"
+                android:text="0.0"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/overtime_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/is_absent"
+            app:layout_constraintLeft_toRightOf="@id/leave_hours"
+            android:paddingLeft="3dp"
+            android:hint="加班時數"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_overtime_hours"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number|numberDecimal"
+                android:text="0.0"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/support_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/is_absent"
+            app:layout_constraintLeft_toRightOf="@id/overtime_hours"
+            android:paddingLeft="3dp"
+            android:hint="支援時數"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_support_hours"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number|numberDecimal"
+                android:text="0.0"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/is_l_meals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/leave_hours"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            android:hint="午"
+            android:background="#E1E1E1"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_is_l_meals"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:text="葷食餐"
+                >
+            </AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/is_d_meals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/support_hours"
+            app:layout_constraintLeft_toRightOf="@id/is_l_meals"
+            android:paddingLeft="10dp"
+            android:hint="晚"
+            android:background="#E1E1E1"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_is_d_meals"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:text="葷食餐"
+                >
+            </AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/underline">
+        </View>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

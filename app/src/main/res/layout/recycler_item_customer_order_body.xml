@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/underline2"
+        android:paddingRight="16dp"
+        android:paddingLeft="32dp"
+        android:paddingTop="20dp"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/poNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="客戶訂單單號"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_poNo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/product_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/poNo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="產品編號"
+            android:background="#E1E1E1"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_product_id"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+
+                >
+            </AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/quantity_of_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/product_id"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="訂單數量"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_quantity_of_order"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/quantity_delivered"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/quantity_of_order"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="已交數量"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_quantity_delivered"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/unit_of_measurement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/quantity_delivered"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="計量單位"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_unit_of_measurement"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/body_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/unit_of_measurement"
+            app:layout_constraintRight_toLeftOf="@+id/_section"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="客戶訂單編號"
+
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_body_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+
+                ></AutoCompleteTextView>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/_section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/unit_of_measurement"
+            app:layout_constraintLeft_toRightOf="@id/body_id"
+            android:layout_marginLeft="50dp"
+            android:hint="項次"
+
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_section"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/_creator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/body_id"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="創建者"
+
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_creator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/lock_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/_creator"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="鎖定時間"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_lock_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/create_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/edit_time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="創建時間"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_create_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/_remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/close_time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="備註"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/edit_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lock_time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="編輯時間"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_edit_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/invalid_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/create_time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="作廢時間"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_invalid_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/close_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/invalid_time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="結案時間"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_close_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/_editor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/body_id"
+            app:layout_constraintLeft_toRightOf="@id/_creator"
+            android:layout_marginLeft="1dp"
+            android:hint="編輯者"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_editor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/body_id"
+            app:layout_constraintLeft_toRightOf="@id/_editor"
+            android:layout_marginLeft="1dp"
+            android:hint="鎖定"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/_invalid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/body_id"
+            app:layout_constraintLeft_toRightOf="@id/_lock"
+            android:layout_marginLeft="1dp"
+            android:hint="作廢"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_invalid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/is_closed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/body_id"
+            app:layout_constraintLeft_toRightOf="@id/_invalid"
+            android:layout_marginLeft="1dp"
+            android:hint="結案"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_is_closed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/underline2"
+                android:inputType="none"
+                android:textSize="15dp"
+                ></AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp"
+            android:text="刪除"
+            android:visibility="invisible">
+
+        </Button>
+        <Button
+            android:id="@+id/edit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/delete_btn"
+            android:layout_marginTop="16dp"
+            android:text="編輯"
+            android:visibility="invisible">
+
+        </Button>
+        <Button
+            android:id="@+id/lock_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_btn"
+            android:layout_marginTop="16dp"
+            android:text="鎖定"
+            android:visibility="invisible">
+
+        </Button>
+
+        <Button
+            android:id="@+id/over_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lock_btn"
+            android:layout_marginTop="16dp"
+            android:text="結案"
+            android:visibility="invisible">
+
+        </Button>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/underline">
+        </View>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

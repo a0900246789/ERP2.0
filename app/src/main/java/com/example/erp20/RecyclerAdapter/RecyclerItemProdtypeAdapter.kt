@@ -12,8 +12,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.erp20.Model.ProdType
+import com.example.erp20.Model.Response
 import com.example.erp20.Model.ShowProdType
-import com.example.erp20.Model.response
 import com.example.erp20.R
 import com.example.erp20.cookie_data
 import com.google.android.material.textfield.TextInputEditText
@@ -45,6 +45,7 @@ class RecyclerItemProdtypeAdapter() :
         holder.item_id.inputType=InputType.TYPE_NULL
         holder.item_name.setText(data[position].product_type_name)
         holder.item_name.inputType=InputType.TYPE_NULL
+
         holder.creator.setText(data[position].creator)
         holder.creator_time.setText(data[position].create_time)
         holder.editor.setText(data[position].editor)
@@ -65,7 +66,7 @@ class RecyclerItemProdtypeAdapter() :
     }
 
     override fun getItemCount(): Int {
-        return cookie_data.itemCount
+        return itemData.count
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -155,7 +156,7 @@ class RecyclerItemProdtypeAdapter() :
                         0-> {//成功
                             data.removeAt(adapterPosition)
                             notifyItemRemoved(adapterPosition)
-                            cookie_data.itemCount-=1
+                            itemData.count-=1
                             Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
 
                         }
@@ -231,7 +232,7 @@ class RecyclerItemProdtypeAdapter() :
                 job.join()
 
             }
-            val responseInfo = Gson().fromJson(cookie_data.response_data, response::class.java)
+            val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
             cookie_data.status=responseInfo.status
             cookie_data.msg=responseInfo.msg
 
@@ -264,7 +265,7 @@ class RecyclerItemProdtypeAdapter() :
 
                 }
                 job.join()
-                val responseInfo = Gson().fromJson(cookie_data.response_data, response::class.java)
+                val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
                 cookie_data.status=responseInfo.status
                 cookie_data.msg=responseInfo.msg
             }
@@ -297,7 +298,7 @@ class RecyclerItemProdtypeAdapter() :
 
                 }
                 job.join()
-                val responseInfo = Gson().fromJson(cookie_data.response_data, response::class.java)
+                val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
                 cookie_data.status=responseInfo.status
                 cookie_data.msg=responseInfo.msg
             }
@@ -307,9 +308,9 @@ class RecyclerItemProdtypeAdapter() :
 
     }
     fun addItem(addData:ProdType){
-        data.add(cookie_data.itemCount,addData)
-        notifyItemInserted(cookie_data.itemCount)
-        cookie_data.itemCount+=1
+        data.add(itemData.count,addData)
+        notifyItemInserted(itemData.count)
+        itemData.count+=1
     }
 
 }

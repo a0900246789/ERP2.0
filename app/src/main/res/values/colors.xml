@@ -9,5 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="underline">#BDB8B8</color>
     <color name="underline2">#977C7C</color>
+    <color name="underline3">#6E5454</color>
     <color name="combobox_gray">#CDCBCB</color>
+    <color name="importmant_red">#C10101</color>
 </resources>

@@ -1,0 +1,215 @@
+<resources>
+    <string-array name="comboboxSale01maintain">
+        <item>產品型號</item>
+        <item>櫃編維護</item>
+        <item>櫃型維護</item>
+        <item>港口維護</item>
+        <item>產品基本資料維護</item>
+        <item>客戶基本資料維護</item>
+        <item>車行基本資料維護</item>
+        <item>船公司基本資料維護</item>
+    </string-array>
+    <string-array name="comboboxSale01change">
+        <item>客戶訂單(單頭)</item>
+        <item>客戶訂單(單身)</item>
+        <item>疊櫃管制單(單頭)</item>
+        <item>疊櫃管制單(單身)</item>
+        <item>訂艙通知單(單頭)</item>
+        <item>訂艙通知單(單身)</item>
+        <item>訂艙通知單號變更記錄</item>
+        <item>客戶預測單(單頭)</item>
+        <item>客戶預測單(單身)</item>
+        <item>主排單(單頭)</item>
+        <item>主排單(單身)</item>
+        <item>文管中心資訊庫(單頭)</item>
+        <item>文管中心資訊庫(單身)</item>
+        <item>文管中心資訊庫(附件)</item>
+    </string-array>
+
+    <string-array name="comboboxProduce02maintain">
+        <item>料件基本資料維護</item>
+        <item>生產線維護</item>
+        <item>生產設備基本資料維護</item>
+        <item>工程編制表維護(單頭)</item>
+        <item>工程編制表維護(單身)</item>
+        <item>工程編制表維護(工作站)</item>
+        <item>工程編制表維護(站別-設備)</item>
+    </string-array>
+    <string-array name="comboboxProduce02change">
+        <item>生產管制單(單頭)</item>
+        <item>生產管制單(單身)</item>
+        <item>文管中心資訊庫(單頭)</item>
+        <item>文管中心資訊庫(單身)</item>
+        <item>文管中心資訊庫(附件)</item>
+    </string-array>
+
+    <string-array name="comboboxMES03maintain">
+        <item>工程編制表維護(單頭)</item>
+        <item>工程編制表維護(單身)</item>
+        <item>工程編制表維護(工作站)</item>
+        <item>工程編制表維護(站別-設備)</item>
+        <item>員工基本資料維護</item>
+    </string-array>
+    <string-array name="comboboxMES03change">
+        <item>員工每日訂餐單(單頭)</item>
+        <item>員工每日訂餐單(單身)</item>
+        <item>庫存異動單(單頭)</item>
+        <item>庫存異動單(單身)</item>
+        <item>生產管制單(單頭)</item>
+        <item>生產管制單(單身)</item>
+        <item>生產管制單(報工)</item>
+        <item>生產管制單(派工)</item>
+        <item>生產管制單(領料單)</item>
+        <item>員工基本資料維護</item>
+        <item>派車單(單頭)</item>
+        <item>派車單(單身)</item>
+        <item>設備養護記錄</item>
+        <item>產線異常停機記錄</item>
+        <item>文管中心資訊庫(單頭)</item>
+        <item>文管中心資訊庫(單身)</item>
+        <item>文管中心資訊庫(附件)</item>
+    </string-array>
+    <string-array name="comboboxMES03dashboard">
+        <item>生產線生產效率分析</item>
+        <item>產能負荷分析</item>
+        <item>生產線剩餘產能查詢</item>
+        <item>生產計劃達成率</item>
+        <item>設備稼動率(時間稼動率)</item>
+        <item>部門別生產人力每日分派</item>
+    </string-array>
+
+
+    <string-array name="comboboxPUR04maintain">
+        <item>廠商基本資料維護</item>
+        <item>料件基本資料維護</item>
+
+    </string-array>
+    <string-array name="comboboxPUR04change">
+        <item>採購單(單頭)</item>
+        <item>採購單(單身)</item>
+        <item>採購分批進料明細</item>
+        <item>生產管制單(單頭)</item>
+        <item>生產管制單(單身)</item>
+        <item>生產管制單(分批進貨)</item>
+        <item>採購備料單(單頭)</item>
+        <item>採購備料單(單身)</item>
+        <item>廠商出貨單(單頭)</item>
+        <item>廠商出貨單(單身)</item>
+        <item>採購內聯單(單頭)</item>
+        <item>採購內聯單(單身)</item>
+        <item>文管中心資訊庫(單頭)</item>
+        <item>文管中心資訊庫(單身)</item>
+    </string-array>
+    <string-array name="comboboxOPS05maintain">
+        <item>料件基本資料維護</item>
+        <item>廠商基本資料維護</item>
+        <item>生產線維護</item>
+        <item>工程編制表維護(單頭)</item>
+        <item>工程編制表維護(單身)</item>
+        <item>工程編制表維護(工作站)</item>
+        <item>工程編制表維護(站別-設備)</item>
+        <item>料件別廠商產能維護</item>
+        <item>容器基本資料維護</item>
+    </string-array>
+    <string-array name="comboboxOPS05change">
+        <item>生產管制單(單頭)</item>
+        <item>生產管制單(單身)</item>
+        <item>生產管制單(分批進貨)</item>
+        <item>廠商基本資料</item>
+        <item>庫存異動單(單頭)</item>
+        <item>庫存異動單(單身)</item>
+        <item>生產管制單(領料單)</item>
+        <item>文管中心資訊庫(單頭)</item>
+        <item>文管中心資訊庫(單身)</item>
+        <item>文管中心資訊庫(附件)</item>
+    </string-array>
+    <string-array name="comboboxSTK06maintain">
+        <item>料件基本資料維護</item>
+        <item>容器基本資料維護</item>
+        <item>自動播送設定(單頭)</item>
+        <item>自動播送設定(單身)</item>
+    </string-array>
+    <string-array name="comboboxSTK06change">
+        <item>生產管制單(單頭)</item>
+        <item>生產管制單(單身)</item>
+        <item>生產管制單(報工)</item>
+        <item>生產管制單(分批進貨)</item>
+        <item>生產管制單(領料單)</item>
+        <item>主庫存異動別</item>
+        <item>次庫存異動別</item>
+        <item>庫存異動單(單頭)</item>
+        <item>庫存異動單(單身)</item>
+        <item>採購單(單頭)</item>
+        <item>採購單(單身)</item>
+        <item>文管中心資訊庫(單頭)</item>
+        <item>文管中心資訊庫(單身)</item>
+        <item>文管中心資訊庫(附件)</item>
+    </string-array>
+
+
+    <string-array name="combobox02">
+        <item>刷卡訂餐</item>
+        <item>(查詢)今日訂餐明細</item>
+        <item>(查詢)今日訂餐統計</item>
+        <item>(查詢)今日出勤人數與人力工時統計</item>
+    </string-array>
+
+    <string-array name="combobox07">
+        <item>備料作業</item>
+        <item>發料確認作業</item>
+    </string-array>
+
+    <string-array name="combobox09">
+        <item>生產完工報工(生產線)</item>
+        <item>退料作業(不合格品)</item>
+        <item>退料作業(報廢品)</item>
+    </string-array>
+
+
+    <string-array name="absent">
+        <item>無</item>
+        <item>早假</item>
+        <item>午假</item>
+        <item>全假</item>
+    </string-array>
+
+    <string-array name="meal">
+        <item>葷食</item>
+        <item>素食</item>
+        <item>印尼餐</item>
+        <item>自理</item>
+    </string-array>
+
+    <string-array name="stackingControlSort">
+        <item>預開始時間</item>
+        <item>急單</item>
+        <item>櫃編</item>
+    </string-array>
+
+    <string-array name="productControlSort">
+        <item>最晚驗貨日</item>
+        <item>生產管制單號</item>
+        <item>預計開工日</item>
+    </string-array>
+    <string-array name="productControlSort2">
+        <item>最晚驗貨日</item>
+        <item>半成品編號</item>
+        <item>預計開工日</item>
+    </string-array>
+
+    <string-array name="VenderShipmentSort">
+        <item>進貨日期</item>
+        <item>廠商編號</item>
+        <item>進貨單號</item>
+        <item>項次</item>
+    </string-array>
+
+    <string-array name="checkResult">
+        <item>無</item>
+        <item>待判定</item>
+        <item>允收</item>
+        <item>拒收</item>
+        <item>特採</item>
+    </string-array>
+
+</resources>

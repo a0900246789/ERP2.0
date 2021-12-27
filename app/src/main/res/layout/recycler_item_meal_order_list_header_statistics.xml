@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/underline2"
+        android:paddingRight="16dp"
+        android:paddingLeft="32dp"
+        android:paddingTop="20dp"
+        >
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/_dept"
+            android:hint="日期"
+            android:paddingRight="5dp"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="date"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/_dept"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/_date"
+            android:hint="部門"
+            android:background="#E1E1E1"
+            >
+            <AutoCompleteTextView
+                android:id="@+id/edit_dept"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+
+                >
+            </AutoCompleteTextView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/l_meat_meals"
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/_date"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/l_vegetarian_meals"
+            android:paddingRight="3dp"
+            android:paddingTop="6dp"
+            android:hint="葷食餐-午"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_l_meat_meals"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+                android:text="0"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/l_vegetarian_meals"
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/_dept"
+            app:layout_constraintLeft_toRightOf="@id/l_meat_meals"
+            android:paddingRight="3dp"
+            android:hint="素食餐-午"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_l_vegetarian_meals"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+                android:text="0"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/l_indonesia_meals"
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+           app:layout_constraintTop_toBottomOf="@id/_dept"
+            app:layout_constraintLeft_toRightOf="@id/l_vegetarian_meals"
+
+            android:hint="印尼餐-午"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_l_indonesia_meals"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+                android:text="0"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/l_small_total"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/l_meat_meals"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:paddingRight="3dp"
+            android:hint="小計-午"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_l_small_total"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+                android:text="0"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/l_num_of_selfcare"
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/l_indonesia_meals"
+            app:layout_constraintLeft_toRightOf="@id/l_small_total"
+
+            android:hint="自理人數-午"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_l_num_of_selfcare"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+                android:text="0"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/d_meat_meals"
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/l_small_total"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:paddingRight="3dp"
+            android:hint="葷食餐-晚"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_d_meat_meals"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+                android:text="0"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/d_vegetarian_meals"
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/l_num_of_selfcare"
+            app:layout_constraintLeft_toRightOf="@id/d_meat_meals"
+            android:paddingRight="3dp"
+            android:hint="素食餐-晚"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_d_vegetarian_meals"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+                android:text="0"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/d_indonesia_meals"
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/l_num_of_selfcare"
+            app:layout_constraintLeft_toRightOf="@id/d_vegetarian_meals"
+
+            android:hint="印尼餐-晚"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_d_indonesia_meals"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+                android:text="0"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/d_small_total"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/d_meat_meals"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:paddingRight="3dp"
+            android:hint="小計-晚"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_d_small_total"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+                android:text="0"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/d_num_of_selfcare"
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/d_indonesia_meals"
+            app:layout_constraintLeft_toRightOf="@id/d_small_total"
+            android:paddingRight="3dp"
+            android:hint="自理人數-晚"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_d_num_of_selfcare"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+                android:text="0"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/l_d_total"
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/d_indonesia_meals"
+            app:layout_constraintLeft_toRightOf="@id/d_num_of_selfcare"
+
+            android:hint="合計(午+晚)"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_l_d_total"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
+                android:text="0"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/underline">
+        </View>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

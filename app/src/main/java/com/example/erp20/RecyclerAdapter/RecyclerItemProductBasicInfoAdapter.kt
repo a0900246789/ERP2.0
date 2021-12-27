@@ -1,5 +1,4 @@
 package com.example.erp20.RecyclerAdapter
-import android.app.Activity
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,10 +7,7 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Toast
-import android.widget.*
-import android.content.*
 import androidx.appcompat.app.AlertDialog
-
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.erp20.Model.*
@@ -88,7 +84,7 @@ class RecyclerItemProductBasicInfoAdapter() :
     }
 
     override fun getItemCount(): Int {
-        return cookie_data.itemCount
+        return itemData.count
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -139,7 +135,6 @@ class RecyclerItemProductBasicInfoAdapter() :
                         product_name.inputType=InputType.TYPE_CLASS_TEXT
                         product_type.inputType=InputType.TYPE_CLASS_TEXT
                         is_new.setAdapter(arrayAdapter)
-                        println(is_new.dropDownHeight)
                         is_new.isClickable=true
                         release_date.inputType=InputType.TYPE_DATETIME_VARIATION_DATE
                         is_discontinue.setAdapter(arrayAdapter)
@@ -233,7 +228,7 @@ class RecyclerItemProductBasicInfoAdapter() :
                         0-> {//成功
                             data.removeAt(adapterPosition)
                             notifyItemRemoved(adapterPosition)
-                            cookie_data.itemCount-=1
+                            itemData.count-=1
                             Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
 
                         }
@@ -324,7 +319,7 @@ class RecyclerItemProductBasicInfoAdapter() :
                 job.join()
 
             }
-            val responseInfo = Gson().fromJson(cookie_data.response_data, response::class.java)
+            val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
             cookie_data.status=responseInfo.status
             cookie_data.msg=responseInfo.msg
 
@@ -365,7 +360,7 @@ class RecyclerItemProductBasicInfoAdapter() :
 
                 }
                 job.join()
-                val responseInfo = Gson().fromJson(cookie_data.response_data, response::class.java)
+                val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
                 cookie_data.status=responseInfo.status
                 cookie_data.msg=responseInfo.msg
             }
@@ -406,7 +401,7 @@ class RecyclerItemProductBasicInfoAdapter() :
 
                 }
                 job.join()
-                val responseInfo = Gson().fromJson(cookie_data.response_data, response::class.java)
+                val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
                 cookie_data.status=responseInfo.status
                 cookie_data.msg=responseInfo.msg
             }
@@ -416,9 +411,9 @@ class RecyclerItemProductBasicInfoAdapter() :
 
     }
     fun addItem(addData:ProductBasicInfo){
-        data.add(cookie_data.itemCount,addData)
-        notifyItemInserted(cookie_data.itemCount)
-        cookie_data.itemCount+=1
+        data.add(itemData.count,addData)
+        notifyItemInserted(itemData.count)
+        itemData.count+=1
     }
 
 }

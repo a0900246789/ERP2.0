@@ -7,12 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
-import com.example.erp20.DisplayActivity
-import com.example.erp20.R
-import com.example.erp20.SaleActivity
-import com.example.erp20.cookie_data
+import com.example.erp20.*
+import com.example.erp20.app01.Activity01
+import com.example.erp20.app02.Activity02
+import com.example.erp20.app04.Activity04
+import com.example.erp20.app05.Activity05
+import com.example.erp20.app06.Activity06
+import com.example.erp20.app07.Activity07
+import com.example.erp20.app08.Activity08
+import com.example.erp20.app09.Activity09
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,16 +46,71 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val theTextView = getView()?.findViewById<TextView>(R.id.home_fragment_text)
-        val saleBtn=getView()?.findViewById<ImageButton>(R.id.btn_01)
-        theTextView?.text = "home\n"+"${cookie_data.tokenValue}\n"+"${cookie_data.loginflag}"
+
+        val Btn01=getView()?.findViewById<ImageButton>(R.id.btn_01)
+        val Btn02=getView()?.findViewById<ImageButton>(R.id.btn_02)
+        val Btn03=getView()?.findViewById<ImageButton>(R.id.btn_03)
+        val Btn04=getView()?.findViewById<ImageButton>(R.id.btn_04)
+        val Btn05=getView()?.findViewById<ImageButton>(R.id.btn_05)
+        val Btn06=getView()?.findViewById<ImageButton>(R.id.btn_06)
+        val Btn07=getView()?.findViewById<ImageButton>(R.id.btn_07)
+        val Btn08=getView()?.findViewById<ImageButton>(R.id.btn_08)
+        val Btn09=getView()?.findViewById<ImageButton>(R.id.btn_09)
 
 
-        saleBtn?.setOnClickListener{
+        //01
+        Btn01?.setOnClickListener{
             //Toast.makeText(activity,"1233211212",Toast.LENGTH_SHORT).show()
-            val intent=Intent(activity, SaleActivity::class.java)
+            val intent=Intent(activity, Activity01::class.java)
             startActivity(intent)
-
+        }
+        //02
+        Btn02?.setOnClickListener{
+            //Toast.makeText(activity,"1233211212",Toast.LENGTH_SHORT).show()
+            val intent=Intent(activity, Activity02::class.java)
+            startActivity(intent)
+        }
+        //03
+        Btn03?.setOnClickListener{
+            //Toast.makeText(activity,"1233211212",Toast.LENGTH_SHORT).show()
+            val intent=Intent(activity, STK_Activity::class.java)
+            startActivity(intent)
+        }
+        //04
+        Btn04?.setOnClickListener{
+            //Toast.makeText(activity,"1233211212",Toast.LENGTH_SHORT).show()
+            val intent=Intent(activity, Activity04::class.java)
+            startActivity(intent)
+        }
+        //05
+        Btn05?.setOnClickListener{
+            //Toast.makeText(activity,"1233211212",Toast.LENGTH_SHORT).show()
+            val intent=Intent(activity, Activity05::class.java)
+            startActivity(intent)
+        }
+        //06
+        Btn06?.setOnClickListener{
+            //Toast.makeText(activity,"1233211212",Toast.LENGTH_SHORT).show()
+            val intent=Intent(activity, Activity06::class.java)
+            startActivity(intent)
+        }
+        //07
+        Btn07?.setOnClickListener{
+            //Toast.makeText(activity,"1233211212",Toast.LENGTH_SHORT).show()
+            val intent=Intent(activity, Activity07::class.java)
+            startActivity(intent)
+        }
+        //08
+        Btn08?.setOnClickListener{
+            //Toast.makeText(activity,"1233211212",Toast.LENGTH_SHORT).show()
+            val intent=Intent(activity, Activity08::class.java)
+            startActivity(intent)
+        }
+        //09
+        Btn09?.setOnClickListener{
+            //Toast.makeText(activity,"1233211212",Toast.LENGTH_SHORT).show()
+            val intent=Intent(activity, Activity09::class.java)
+            startActivity(intent)
         }
 
     }

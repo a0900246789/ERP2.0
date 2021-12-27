@@ -1,6 +1,6 @@
 package com.example.erp20.ClassFragment.Sale
 
-import android.app.Activity
+
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -36,6 +36,11 @@ class Sale01maintainFragment : Fragment() {
     private lateinit var ContType_adapter:RecyclerItemContTypeAdapter
     private lateinit var Port_adapter:RecyclerItemPortAdapter
     private lateinit var ProductBasicInfo_adapter:RecyclerItemProductBasicInfoAdapter
+    private lateinit var CustomBasicInfo_adapter:RecyclerItemCustomBasicInfoAdapter
+    private lateinit var CarCBasicInfo_adapter:RecyclerItemCarCBasicInfoAdapter
+    private lateinit var ShippingCompanyBasicInfo_adapter:RecyclerItemShippingCompanyBasicInfoAdapter
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,7 +52,6 @@ class Sale01maintainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
     }
     override fun onResume() {
@@ -63,10 +67,16 @@ class Sale01maintainFragment : Fragment() {
         autoCompleteTextView?.setAdapter(arrayAdapter)
 
 
-
-        //搜尋按鈕
         val searchbtn=getView()?.findViewById<Button>(R.id.search_btn)
         val addbtn=view?.findViewById<Button>(R.id.add_btn)
+
+
+        //每次換選單內容add_btn失靈
+        autoCompleteTextView?.setOnItemClickListener { parent, view, position, id ->
+            addbtn?.isEnabled=false
+        }
+
+        //搜尋按鈕
         searchbtn?.setOnClickListener {
             theTextView?.text = autoCompleteTextView?.text
 
@@ -83,7 +93,7 @@ class Sale01maintainFragment : Fragment() {
                               addbtn?.isEnabled=true
                         }
                         1->{
-                            Toast.makeText(activity, "載入失敗", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -99,7 +109,7 @@ class Sale01maintainFragment : Fragment() {
                             addbtn?.isEnabled=true
                         }
                         1->{
-                            Toast.makeText(activity, "載入失敗", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -115,7 +125,7 @@ class Sale01maintainFragment : Fragment() {
                             addbtn?.isEnabled=true
                         }
                         1->{
-                            Toast.makeText(activity, "載入失敗", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -131,7 +141,7 @@ class Sale01maintainFragment : Fragment() {
                             addbtn?.isEnabled=true
                         }
                         1->{
-                            Toast.makeText(activity, "載入失敗", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -147,7 +157,55 @@ class Sale01maintainFragment : Fragment() {
                             addbtn?.isEnabled=true
                         }
                         1->{
-                            Toast.makeText(activity, "載入失敗", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                "客戶基本資料維護"->{
+                    showBasic("CustomBasicInfo","all","False")//type=combobox or all
+                    when(cookie_data.status)
+                    {
+                        0->{
+                            Toast.makeText(activity, "資料載入", Toast.LENGTH_SHORT).show()
+                            recyclerView?.layoutManager=LinearLayoutManager(context)//設定Linear格式
+                            CustomBasicInfo_adapter= RecyclerItemCustomBasicInfoAdapter()
+                            recyclerView?.adapter=CustomBasicInfo_adapter//找對應itemAdapter
+                            addbtn?.isEnabled=true
+                        }
+                        1->{
+                            Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                "車行基本資料維護"->{
+                    showBasic("CarCBasicInfo","all","False")//type=combobox or all
+                    when(cookie_data.status)
+                    {
+                        0->{
+                            Toast.makeText(activity, "資料載入", Toast.LENGTH_SHORT).show()
+                            recyclerView?.layoutManager=LinearLayoutManager(context)//設定Linear格式
+                            CarCBasicInfo_adapter= RecyclerItemCarCBasicInfoAdapter()
+                            recyclerView?.adapter=CarCBasicInfo_adapter//找對應itemAdapter
+                            addbtn?.isEnabled=true
+                        }
+                        1->{
+                            Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                "船公司基本資料維護"->{
+                    showBasic("ShippingCompanyBasicInfo","all","False")//type=combobox or all
+                    when(cookie_data.status)
+                    {
+                        0->{
+                            Toast.makeText(activity, "資料載入", Toast.LENGTH_SHORT).show()
+                            recyclerView?.layoutManager=LinearLayoutManager(context)//設定Linear格式
+                            ShippingCompanyBasicInfo_adapter= RecyclerItemShippingCompanyBasicInfoAdapter()
+                            recyclerView?.adapter=ShippingCompanyBasicInfo_adapter//找對應itemAdapter
+                            addbtn?.isEnabled=true
+                        }
+                        1->{
+                            Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -413,6 +471,162 @@ class Sale01maintainFragment : Fragment() {
                     }
                     mAlertDialog.show()
                 }
+                "客戶基本資料維護"->{
+                    val item = LayoutInflater.from(activity).inflate(R.layout.recycler_item_custom_basic_info, null)
+                    val mAlertDialog = AlertDialog.Builder(requireView().context)
+                    //mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
+                    mAlertDialog.setTitle("新增") //set alertdialog title
+                    //mAlertDialog.setMessage("確定要登出?") //set alertdialog message
+                    mAlertDialog.setView(item)
+
+                    val _id =item.findViewById<TextInputEditText>(R.id.edit_id)
+                    val abbreviation=item.findViewById<TextInputEditText>(R.id.edit_abbreviation)
+                    val full_name =item.findViewById<TextInputEditText>(R.id.edit_full_name)
+                    val code =item.findViewById<TextInputEditText>(R.id.edit_code)
+
+
+                    val remark=item.findViewById<TextInputEditText>(R.id.edit_remark)
+
+                    mAlertDialog.setPositiveButton("取消") { dialog, id ->
+                        dialog.dismiss()
+                    }
+                    mAlertDialog.setNegativeButton("確定") { dialog, id ->
+                        //新增不能為空
+                        if( _id.text.toString().trim().isEmpty() ||
+                            abbreviation.text.toString().trim().isEmpty()  ||
+                            full_name.text.toString().trim().isEmpty() ||
+                            code.text.toString().trim().isEmpty()    ){
+                            Toast.makeText(requireView().context,"Input required",Toast.LENGTH_LONG).show()
+                        }
+                        else{
+                            val addData=CustomBasicInfo("","","","")
+                            addData._id=_id.text.toString()
+                            addData.abbreviation=abbreviation.text.toString()
+                            addData.full_name=full_name.text.toString()
+                            addData.code=code.text.toString()
+
+
+                            addData.remark=remark.text.toString()
+                            addData.creator=cookie_data.username
+                            addData.create_time=Calendar.getInstance().getTime().toString()
+                            addData.editor=cookie_data.username
+                            addData.edit_time=Calendar.getInstance().getTime().toString()
+                            addBasic("CustomBasicInfo",addData)
+                            when(cookie_data.status){
+                                0-> {//成功
+
+                                    CustomBasicInfo_adapter.addItem(addData)
+                                    Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                                }
+                                1->{//失敗
+                                    Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    }
+                    mAlertDialog.show()
+                }
+                "車行基本資料維護"->{
+                    val item = LayoutInflater.from(activity).inflate(R.layout.recycler_item_car_c_basic_info, null)
+                    val mAlertDialog = AlertDialog.Builder(requireView().context)
+                    //mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
+                    mAlertDialog.setTitle("新增") //set alertdialog title
+                    //mAlertDialog.setMessage("確定要登出?") //set alertdialog message
+                    mAlertDialog.setView(item)
+
+                    val _id =item.findViewById<TextInputEditText>(R.id.edit_id)
+                    val abbreviation=item.findViewById<TextInputEditText>(R.id.edit_abbreviation)
+
+
+
+                    val remark=item.findViewById<TextInputEditText>(R.id.edit_remark)
+
+                    mAlertDialog.setPositiveButton("取消") { dialog, id ->
+                        dialog.dismiss()
+                    }
+                    mAlertDialog.setNegativeButton("確定") { dialog, id ->
+                        //新增不能為空
+                        if( _id.text.toString().trim().isEmpty() ||
+                            abbreviation.text.toString().trim().isEmpty()    ){
+                            Toast.makeText(requireView().context,"Input required",Toast.LENGTH_LONG).show()
+                        }
+                        else{
+                            val addData=CarCBasicInfo("","")
+                            addData._id=_id.text.toString()
+                            addData.abbreviation=abbreviation.text.toString()
+
+
+
+                            addData.remark=remark.text.toString()
+                            addData.creator=cookie_data.username
+                            addData.create_time=Calendar.getInstance().getTime().toString()
+                            addData.editor=cookie_data.username
+                            addData.edit_time=Calendar.getInstance().getTime().toString()
+                            addBasic("CarCBasicInfo",addData)
+                            when(cookie_data.status){
+                                0-> {//成功
+
+                                    CarCBasicInfo_adapter.addItem(addData)
+                                    Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                                }
+                                1->{//失敗
+                                    Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    }
+                    mAlertDialog.show()
+                }
+                "船公司基本資料維護"->{
+                    val item = LayoutInflater.from(activity).inflate(R.layout.recycler_item_shipping_company_basic_info, null)
+                    val mAlertDialog = AlertDialog.Builder(requireView().context)
+                    //mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
+                    mAlertDialog.setTitle("新增") //set alertdialog title
+                    //mAlertDialog.setMessage("確定要登出?") //set alertdialog message
+                    mAlertDialog.setView(item)
+
+                    val shipping_number =item.findViewById<TextInputEditText>(R.id.edit_shipping_number)
+                    val shipping_name=item.findViewById<TextInputEditText>(R.id.edit_shipping_name)
+
+
+
+                    val remark=item.findViewById<TextInputEditText>(R.id.edit_remark)
+
+                    mAlertDialog.setPositiveButton("取消") { dialog, id ->
+                        dialog.dismiss()
+                    }
+                    mAlertDialog.setNegativeButton("確定") { dialog, id ->
+                        //新增不能為空
+                        if( shipping_number.text.toString().trim().isEmpty() ||
+                            shipping_name.text.toString().trim().isEmpty()    ){
+                            Toast.makeText(requireView().context,"Input required",Toast.LENGTH_LONG).show()
+                        }
+                        else{
+                            val addData=ShippingCompanyBasicInfo("","")
+                            addData.shipping_number=shipping_number.text.toString()
+                            addData.shipping_name=shipping_name.text.toString()
+
+
+                            addData.remark=remark.text.toString()
+                            addData.creator=cookie_data.username
+                            addData.create_time=Calendar.getInstance().getTime().toString()
+                            addData.editor=cookie_data.username
+                            addData.edit_time=Calendar.getInstance().getTime().toString()
+                            addBasic("ShippingCompanyBasicInfo",addData)
+                            when(cookie_data.status){
+                                0-> {//成功
+
+                                    ShippingCompanyBasicInfo_adapter.addItem(addData)
+                                    Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                                }
+                                1->{//失敗
+                                    Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    }
+                    mAlertDialog.show()
+                }
             }
 
         }
@@ -423,7 +637,7 @@ class Sale01maintainFragment : Fragment() {
         val body = FormBody.Builder()
             .add("username", cookie_data.username)
             .add("operation", operation)
-            .add("action","0")
+            .add("action",cookie_data.Actions.VIEW)
             .add("view_type",view_type)
             .add("view_hide",view_hide)
             .add("csrfmiddlewaretoken", cookie_data.tokenValue)
@@ -442,9 +656,11 @@ class Sale01maintainFragment : Fragment() {
 
             }
             job.join()
-            val responseInfo = Gson().fromJson(cookie_data.response_data, ShowProdType::class.java)
+            val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
             cookie_data.status=responseInfo.status
-            cookie_data.itemCount=responseInfo.count
+            if(responseInfo.msg !=null){
+                cookie_data.msg=responseInfo.msg
+            }
             //Log.d("GSON", "msg:${responseInfo.data[0].create_time}")
         }
 
@@ -464,7 +680,7 @@ class Sale01maintainFragment : Fragment() {
                 val body = FormBody.Builder()
                     .add("username", cookie_data.username)
                     .add("operation", operation)
-                    .add("action","1")
+                    .add("action",cookie_data.Actions.ADD)
                     .add("data",add.toString())
                     .add("csrfmiddlewaretoken", cookie_data.tokenValue)
                     .add("login_flag", cookie_data.loginflag)
@@ -481,7 +697,7 @@ class Sale01maintainFragment : Fragment() {
                         Log.d("GSON", "msg:${cookie_data.response_data}")
                     }
                         job.join()
-                        val responseInfo = Gson().fromJson(cookie_data.response_data, response::class.java)
+                        val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
                         cookie_data.status=responseInfo.status
                         cookie_data.msg=responseInfo.msg
                 }
@@ -500,7 +716,7 @@ class Sale01maintainFragment : Fragment() {
                 val body = FormBody.Builder()
                     .add("username", cookie_data.username)
                     .add("operation", operation)
-                    .add("action","1")
+                    .add("action",cookie_data.Actions.ADD)
                     .add("data",add.toString())
                     .add("csrfmiddlewaretoken", cookie_data.tokenValue)
                     .add("login_flag", cookie_data.loginflag)
@@ -518,7 +734,7 @@ class Sale01maintainFragment : Fragment() {
 
                     }
                     job.join()
-                    val responseInfo = Gson().fromJson(cookie_data.response_data, response::class.java)
+                    val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
                     cookie_data.status=responseInfo.status
                     cookie_data.msg=responseInfo.msg
                 }
@@ -536,7 +752,7 @@ class Sale01maintainFragment : Fragment() {
                 val body = FormBody.Builder()
                     .add("username", cookie_data.username)
                     .add("operation", operation)
-                    .add("action","1")
+                    .add("action",cookie_data.Actions.ADD)
                     .add("data",add.toString())
                     .add("csrfmiddlewaretoken", cookie_data.tokenValue)
                     .add("login_flag", cookie_data.loginflag)
@@ -554,7 +770,7 @@ class Sale01maintainFragment : Fragment() {
 
                     }
                     job.join()
-                    val responseInfo = Gson().fromJson(cookie_data.response_data, response::class.java)
+                    val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
                     cookie_data.status=responseInfo.status
                     cookie_data.msg=responseInfo.msg
                 }
@@ -571,7 +787,7 @@ class Sale01maintainFragment : Fragment() {
                 val body = FormBody.Builder()
                     .add("username", cookie_data.username)
                     .add("operation", operation)
-                    .add("action","1")
+                    .add("action",cookie_data.Actions.ADD)
                     .add("data",add.toString())
                     .add("csrfmiddlewaretoken", cookie_data.tokenValue)
                     .add("login_flag", cookie_data.loginflag)
@@ -588,7 +804,7 @@ class Sale01maintainFragment : Fragment() {
                         Log.d("GSON", "msg:${cookie_data.response_data}")
                     }
                     job.join()
-                    val responseInfo = Gson().fromJson(cookie_data.response_data, response::class.java)
+                    val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
                     cookie_data.status=responseInfo.status
                     cookie_data.msg=responseInfo.msg
                 }
@@ -604,7 +820,7 @@ class Sale01maintainFragment : Fragment() {
             .add("card_number", cookie_data.card_number)
             .add("username", cookie_data.username)
             .add("operation", operation)
-            .add("action","0")
+            .add("action",cookie_data.Actions.VIEW)
             .add("view_type",view_type)
             .add("view_hide",view_hide)
             .add("csrfmiddlewaretoken", cookie_data.tokenValue)
@@ -623,9 +839,11 @@ class Sale01maintainFragment : Fragment() {
 
             }
             job.join()
-            val responseInfo = Gson().fromJson(cookie_data.response_data, ShowProdType::class.java)
+            val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
             cookie_data.status=responseInfo.status
-            cookie_data.itemCount=responseInfo.count
+            if(responseInfo.msg !=null){
+                cookie_data.msg=responseInfo.msg
+            }
             //Log.d("GSON", "msg:${responseInfo.data[0].create_time}")
         }
 
@@ -653,7 +871,7 @@ class Sale01maintainFragment : Fragment() {
                     .add("card_number", cookie_data.card_number)
                     .add("username", cookie_data.username)
                     .add("operation", operation)
-                    .add("action","1")
+                    .add("action",cookie_data.Actions.ADD)
                     .add("data",add.toString())
                     .add("csrfmiddlewaretoken", cookie_data.tokenValue)
                     .add("login_flag", cookie_data.loginflag)
@@ -670,56 +888,119 @@ class Sale01maintainFragment : Fragment() {
                         Log.d("GSON", "msg:${cookie_data.response_data}")
                     }
                     job.join()
-                    val responseInfo = Gson().fromJson(cookie_data.response_data, response::class.java)
+                    val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
                     cookie_data.status=responseInfo.status
                     cookie_data.msg=responseInfo.msg
                 }
             }
-
-
+            is CustomBasicInfo->{
+                val add = JSONObject()
+                add.put("_id",addData._id)
+                add.put("abbreviation",addData.abbreviation)
+                add.put("full_name",addData.full_name)
+                add.put("code",addData.code)
+                add.put("remark",addData.remark)
+                add.put("creator",cookie_data.username)
+                add.put("editor",cookie_data.username)
+                Log.d("GSON", "msg:${add}")
+                val body = FormBody.Builder()
+                    .add("card_number", cookie_data.card_number)
+                    .add("username", cookie_data.username)
+                    .add("operation", operation)
+                    .add("action",cookie_data.Actions.ADD)
+                    .add("data",add.toString())
+                    .add("csrfmiddlewaretoken", cookie_data.tokenValue)
+                    .add("login_flag", cookie_data.loginflag)
+                    .build()
+                val request = Request.Builder()
+                    .url("http://140.125.46.125:8000/basic_management")
+                    .header("User-Agent", "ERP_MOBILE")
+                    .post(body)
+                    .build()
+                runBlocking {
+                    var job = CoroutineScope(Dispatchers.IO).launch {
+                        var response = cookie_data.okHttpClient.newCall(request).execute()
+                        cookie_data.response_data=response.body?.string().toString()
+                        Log.d("GSON", "msg:${cookie_data.response_data}")
+                    }
+                    job.join()
+                    val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
+                    cookie_data.status=responseInfo.status
+                    cookie_data.msg=responseInfo.msg
+                }
+            }
+            is CarCBasicInfo->{
+                val add = JSONObject()
+                add.put("_id",addData._id)
+                add.put("abbreviation",addData.abbreviation)
+                add.put("remark",addData.remark)
+                add.put("creator",cookie_data.username)
+                add.put("editor",cookie_data.username)
+                Log.d("GSON", "msg:${add}")
+                val body = FormBody.Builder()
+                    .add("card_number", cookie_data.card_number)
+                    .add("username", cookie_data.username)
+                    .add("operation", operation)
+                    .add("action",cookie_data.Actions.ADD)
+                    .add("data",add.toString())
+                    .add("csrfmiddlewaretoken", cookie_data.tokenValue)
+                    .add("login_flag", cookie_data.loginflag)
+                    .build()
+                val request = Request.Builder()
+                    .url("http://140.125.46.125:8000/basic_management")
+                    .header("User-Agent", "ERP_MOBILE")
+                    .post(body)
+                    .build()
+                runBlocking {
+                    var job = CoroutineScope(Dispatchers.IO).launch {
+                        var response = cookie_data.okHttpClient.newCall(request).execute()
+                        cookie_data.response_data=response.body?.string().toString()
+                        Log.d("GSON", "msg:${cookie_data.response_data}")
+                    }
+                    job.join()
+                    val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
+                    cookie_data.status=responseInfo.status
+                    cookie_data.msg=responseInfo.msg
+                }
+            }
+            is ShippingCompanyBasicInfo->{
+                val add = JSONObject()
+                add.put("shipping_number",addData.shipping_number)
+                add.put("shipping_name",addData.shipping_name)
+                add.put("remark",addData.remark)
+                add.put("creator",cookie_data.username)
+                add.put("editor",cookie_data.username)
+                Log.d("GSON", "msg:${add}")
+                val body = FormBody.Builder()
+                    .add("card_number", cookie_data.card_number)
+                    .add("username", cookie_data.username)
+                    .add("operation", operation)
+                    .add("action",cookie_data.Actions.ADD)
+                    .add("data",add.toString())
+                    .add("csrfmiddlewaretoken", cookie_data.tokenValue)
+                    .add("login_flag", cookie_data.loginflag)
+                    .build()
+                val request = Request.Builder()
+                    .url("http://140.125.46.125:8000/basic_management")
+                    .header("User-Agent", "ERP_MOBILE")
+                    .post(body)
+                    .build()
+                runBlocking {
+                    var job = CoroutineScope(Dispatchers.IO).launch {
+                        var response = cookie_data.okHttpClient.newCall(request).execute()
+                        cookie_data.response_data=response.body?.string().toString()
+                        Log.d("GSON", "msg:${cookie_data.response_data}")
+                    }
+                    job.join()
+                    val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
+                    cookie_data.status=responseInfo.status
+                    cookie_data.msg=responseInfo.msg
+                }
+            }
         }
-
 
 
     }
-   /* private fun addDef(operation:String,addData:ContNo) {
-        val add = JSONObject()
-        add.put("cont_code",addData.cont_code)
-        add.put("customer_code",addData.customer_code)
-        add.put("age",addData.age)
-        add.put("serial_number",addData.serial_number)
-        add.put("cont_code_name",addData.cont_code_name)
-        add.put("remark",addData.remark)
-        add.put("creator",cookie_data.username)
-        add.put("editor",cookie_data.username)
-        Log.d("GSON", "msg:${add}")
-        val body = FormBody.Builder()
-            .add("username", cookie_data.username)
-            .add("operation", operation)
-            .add("action","1")
-            .add("data",add.toString())
-            .add("csrfmiddlewaretoken", cookie_data.tokenValue)
-            .add("login_flag", cookie_data.loginflag)
-            .build()
-        val request = Request.Builder()
-            .url("http://140.125.46.125:8000/def_management")
-            .header("User-Agent", "ERP_MOBILE")
-            .post(body)
-            .build()
-        runBlocking {
-            var job = CoroutineScope(Dispatchers.IO).launch {
-                var response = cookie_data.okHttpClient.newCall(request).execute()
-                cookie_data.response_data=response.body?.string().toString()
-                Log.d("GSON", "msg:${cookie_data.response_data}")
-
-            }
-            job.join()
-            val responseInfo = Gson().fromJson(cookie_data.response_data, response::class.java)
-            cookie_data.status=responseInfo.status
-            cookie_data.msg=responseInfo.msg
-        }
-
-    }*/
 }
 
 
