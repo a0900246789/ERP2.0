@@ -184,7 +184,7 @@ class RecyclerItemStockTransOrderBodyAdapter() :
                         header_id.inputType=InputType.TYPE_NULL
                         newData.item_id=item_id.text.toString()
                         item_id.setAdapter(null)
-                        newData.modify_count=modify_count.text.toString().toInt()
+                        newData.modify_count=modify_count.text.toString().toDouble()
                         modify_count.inputType=InputType.TYPE_NULL
                         newData.main_trans_code=main_trans_code.text.toString()
                         main_trans_code.setAdapter(null)
@@ -203,11 +203,11 @@ class RecyclerItemStockTransOrderBodyAdapter() :
                             newData.qc_time=qc_time.text.toString()
                         }
                         qc_time.inputType=InputType.TYPE_NULL
-                        newData.ok_count=ok_count.text.toString().toInt()
+                        newData.ok_count=ok_count.text.toString().toDouble()
                         ok_count.inputType=InputType.TYPE_NULL
-                        newData.ng_count=ng_count.text.toString().toInt()
+                        newData.ng_count=ng_count.text.toString().toDouble()
                         ng_count.inputType=InputType.TYPE_NULL
-                        newData.scrapped_count=scrapped_count.text.toString().toInt()
+                        newData.scrapped_count=scrapped_count.text.toString().toDouble()
                         scrapped_count.inputType=InputType.TYPE_NULL
                         newData.is_rework=is_rework.text.toString().toBoolean()
                         is_rework.isClickable=false
@@ -388,7 +388,7 @@ class RecyclerItemStockTransOrderBodyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -434,7 +434,7 @@ class RecyclerItemStockTransOrderBodyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -479,7 +479,7 @@ class RecyclerItemStockTransOrderBodyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -524,7 +524,7 @@ class RecyclerItemStockTransOrderBodyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()

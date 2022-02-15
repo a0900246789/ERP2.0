@@ -59,31 +59,12 @@ class RecyclerItemProductControlOrderBodyADetailAdapter2(SelectFilter:String) :
     }
     fun sort(data:ArrayList<ProductControlOrderBody_A>,filter:String): ArrayList<ProductControlOrderBody_A>{
         var sortedList:List<ProductControlOrderBody_A> = data
-        when(filter){
-            "最晚驗貨日"->{
-                sortedList  = data.sortedWith(
-                    compareBy(
-                        { it.latest_inspection_day}
-                    )
-                )
-            }
-            "生產管制單號"->{
-                sortedList  = data.sortedWith(
-                    compareBy(
-                        { it.header_id}
-                    )
-                )
-            }
-            "預計開工日"->{
-                sortedList  = data.sortedWith(
-                    compareBy(
-                        { it.est_start_date}
-                    )
-                )
-            }
-
-        }
-
+        sortedList  = data.sortedWith(
+            compareBy(
+                { it.latest_inspection_day},
+                { it.est_start_date}
+            )
+        )
         return sortedList.toCollection(java.util.ArrayList())
     }
 
@@ -238,10 +219,10 @@ class RecyclerItemProductControlOrderBodyADetailAdapter2(SelectFilter:String) :
          holder.remark.isFocusable=false
          holder.remark.isFocusableInTouchMode=false
          holder.remark.isTextInputLayoutFocusedRectEnabled=false*/
-        holder.deletebtn.isVisible=true
+        holder.next_btn.isVisible=true
         holder.edit_btn.isVisible=true
-        holder.lockbtn.isVisible=true
-        holder.overbtn.isVisible=true
+        //holder.lockbtn.isVisible=true
+        //holder.overbtn.isVisible=true
        /* if(cookie_data.out_sourceing_ComboboxData[cookie_data.pline_id_ComboboxData.indexOf(data[position].pline_id)]){
             holder.out_source_btn.isVisible=true
         }*/
@@ -256,10 +237,10 @@ class RecyclerItemProductControlOrderBodyADetailAdapter2(SelectFilter:String) :
         var customer_poNo=itemView.findViewById<TextInputEditText>(R.id.edit_customer_poNo)
         var item_name=itemView.findViewById<TextInputEditText>(R.id.edit_item_name)
         //var me_code=itemView.findViewById<AutoCompleteTextView>(R.id.edit_me_code)
-        var semi_finished_prod_number=itemView.findViewById<AutoCompleteTextView>(R.id.edit_semi_finished_prod_number)
-        var pline_id=itemView.findViewById<AutoCompleteTextView>(R.id.edit_pline_id)
+        var semi_finished_prod_number=itemView.findViewById<TextInputEditText>(R.id.edit_semi_finished_prod_number)
+        var pline_id=itemView.findViewById<TextInputEditText>(R.id.edit_pline_id)
         var latest_inspection_day =itemView.findViewById<TextInputEditText>(R.id.edit_latest_inspection_day )
-        var is_re_make=itemView.findViewById<AutoCompleteTextView>(R.id.edit_is_re_make)
+        var is_re_make=itemView.findViewById<TextInputEditText>(R.id.edit_is_re_make)
         //var qc_date=itemView.findViewById<TextInputEditText>(R.id.edit_qc_date)
         //var qc_number=itemView.findViewById<TextInputEditText>(R.id.edit_qc_number)
         //var unit_of_measurement=itemView.findViewById<TextInputEditText>(R.id.edit_unit_of_measurement)
@@ -271,17 +252,18 @@ class RecyclerItemProductControlOrderBodyADetailAdapter2(SelectFilter:String) :
         var complete_date=itemView.findViewById<TextInputEditText>(R.id.edit_complete_date)
         var work_option=itemView.findViewById<TextInputEditText>(R.id.edit_work_option)
         var actual_output=itemView.findViewById<TextInputEditText>(R.id.edit_actual_output)
-        var is_request_support=itemView.findViewById<AutoCompleteTextView>(R.id.edit_is_request_support)
+        var is_request_support=itemView.findViewById<TextInputEditText>(R.id.edit_is_request_support)
         var number_of_support=itemView.findViewById<TextInputEditText>(R.id.edit_number_of_support)
         var number_of_supported=itemView.findViewById<TextInputEditText>(R.id.edit_number_of_supported)
         //var request_support_time=itemView.findViewById<TextInputEditText>(R.id.edit_request_support_time)
-        var is_urgent=itemView.findViewById<AutoCompleteTextView>(R.id.edit_is_urgent)
+        var is_urgent=itemView.findViewById<TextInputEditText>(R.id.edit_is_urgent)
         //var urgent_deadline=itemView.findViewById<TextInputEditText>(R.id.edit_urgent_deadline)
 
         var edit_btn=itemView.findViewById<Button>(R.id.edit_btn)
-        var deletebtn=itemView.findViewById<Button>(R.id.delete_btn)
-        var lockbtn=itemView.findViewById<Button>(R.id.lock_btn)
-        var overbtn=itemView.findViewById<Button>(R.id.over_btn)
+        var next_btn=itemView.findViewById<Button>(R.id.next_btn)
+        //var deletebtn=itemView.findViewById<Button>(R.id.delete_btn)
+        //var lockbtn=itemView.findViewById<Button>(R.id.lock_btn)
+        //var overbtn=itemView.findViewById<Button>(R.id.over_btn)
         var out_source_btn=itemView.findViewById<Button>(R.id.out_source_btn)
         /*var creator=itemView.findViewById<AutoCompleteTextView>(R.id.edit_creator)
         var creator_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_create_time)
@@ -336,40 +318,7 @@ class RecyclerItemProductControlOrderBodyADetailAdapter2(SelectFilter:String) :
                 when(edit_btn.text){
                     "編輯"->{
                         oldData=data[adapterPosition]
-                        //Log.d("GSON", "msg: ${oldData.id}\n")
-                        //header_id.inputType=InputType.TYPE_CLASS_TEXT
-                        //prod_ctrl_order_number.inputType=InputType.TYPE_CLASS_TEXT
-                        // me_code.setAdapter(arrayAdapter01)
-                        //semi_finished_prod_number.setAdapter(arrayAdapter02)
-                        // pline_id.setAdapter(arrayAdapter03)
-                        // latest_inspection_day.inputType=InputType.TYPE_DATETIME_VARIATION_DATE
-                        //is_re_make.setAdapter(arrayAdapter)
-                        // is_re_make.isClickable=true
-                        // qc_date.inputType=InputType.TYPE_DATETIME_VARIATION_DATE
-                        //qc_number.inputType=InputType.TYPE_CLASS_TEXT
-                        //unit_of_measurement.inputType=InputType.TYPE_CLASS_TEXT
-                        //est_start_date.inputType=InputType.TYPE_DATETIME_VARIATION_DATE
-                        //est_complete_date.inputType=InputType.TYPE_DATETIME_VARIATION_DATE
-                        //est_output.inputType=InputType.TYPE_CLASS_NUMBER
-                        // unit_of_timer.inputType=InputType.TYPE_CLASS_TEXT
-                        //start_date.inputType=InputType.TYPE_DATETIME_VARIATION_DATE
-                        // complete_date.inputType=InputType.TYPE_DATETIME_VARIATION_DATE
-                        /*actual_output.inputType=InputType.TYPE_CLASS_NUMBER
-                        is_request_support.setAdapter(arrayAdapter)
-                        is_request_support.isClickable=true
-                        number_of_support.inputType=InputType.TYPE_CLASS_NUMBER
-                        number_of_supported.inputType=InputType.TYPE_CLASS_NUMBER
-                        request_support_time.inputType=InputType.TYPE_CLASS_DATETIME
-                        is_urgent.setAdapter(arrayAdapter)
-                        is_urgent.isClickable=true
-                        urgent_deadline.inputType=InputType.TYPE_CLASS_DATETIME
 
-
-
-                        remark.isClickable=true
-                        remark.isFocusable=true
-                        remark.isFocusableInTouchMode=true
-                        remark.isTextInputLayoutFocusedRectEnabled=true*/
                         editTime=true
                         start_date.requestFocus()
                         edit_btn.text = "完成"
@@ -377,55 +326,7 @@ class RecyclerItemProductControlOrderBodyADetailAdapter2(SelectFilter:String) :
                     "完成"->{
                         editTime=false
                         newData=oldData.copy()
-                        //newData.header_id=header_id.text.toString()
-                        //header_id.inputType=InputType.TYPE_NULL
-                        //newData.prod_ctrl_order_number=prod_ctrl_order_number.text.toString()
-                        //prod_ctrl_order_number.inputType=InputType.TYPE_NULL
-                        //newData.me_code=me_code.text.toString()
-                        //me_code.setAdapter(null)
-                        /*newData.semi_finished_prod_number=semi_finished_prod_number.text.toString()
-                        semi_finished_prod_number.setAdapter(null)
-                        newData.pline_id=pline_id.text.toString()
-                        pline_id.setAdapter(null)
-                        if(latest_inspection_day.text.toString()==""){
-                            newData.latest_inspection_day=null
-                        }
-                        else{
-                            newData.latest_inspection_day=latest_inspection_day.text.toString()
-                        }
-                        latest_inspection_day.inputType=InputType.TYPE_NULL
-                        newData.is_re_make=is_re_make.text.toString().toBoolean()
-                        is_re_make.isClickable=false
-                        is_re_make.setAdapter(null)
-                        if(qc_date.text.toString()==""){
-                            newData.qc_date=null
-                        }
-                        else{
-                            newData.qc_date=qc_date.text.toString()
-                        }
-                        qc_date.inputType=InputType.TYPE_NULL
-                        newData.qc_number=qc_number.text.toString()
-                        qc_number.inputType=InputType.TYPE_NULL
-                        newData.unit_of_measurement=unit_of_measurement.text.toString()
-                        unit_of_measurement.inputType=InputType.TYPE_NULL*/
-                        /*if(est_start_date.text.toString()==""){
-                            newData.est_start_date=null
-                        }
-                        else{
-                            newData.est_start_date=est_start_date.text.toString().substring(0,est_start_date.text.toString().indexOf("("))
-                        }
-                        est_start_date.inputType=InputType.TYPE_NULL
-                        if(est_complete_date.text.toString()==""){
-                            newData.est_complete_date=null
-                        }
-                        else{
-                            newData.est_complete_date=est_complete_date.text.toString().substring(0,est_start_date.text.toString().indexOf("("))
-                        }
-                        est_complete_date.inputType=InputType.TYPE_NULL*/
-                        //newData.est_output=est_output.text.toString().toInt()
-                        //est_output.inputType=InputType.TYPE_NULL
-                        //newData.unit_of_timer=unit_of_timer.text.toString()
-                        //unit_of_timer.inputType=InputType.TYPE_NULL
+
                         if(start_date.text.toString()==""){
                             newData.start_date=null
                         }
@@ -433,45 +334,7 @@ class RecyclerItemProductControlOrderBodyADetailAdapter2(SelectFilter:String) :
                             newData.start_date=start_date.text.toString().substring(0,start_date.text.toString().indexOf("("))
                         }
                         start_date.inputType=InputType.TYPE_NULL
-                       /* if(complete_date.text.toString()==""){
-                            newData.complete_date=null
-                        }
-                        else{
-                            newData.complete_date=complete_date.text.toString()
-                        }
-                        complete_date.inputType=InputType.TYPE_NULL
-                        newData.actual_output=actual_output.text.toString().toInt()
-                        actual_output.inputType=InputType.TYPE_NULL
-                        newData.is_request_support=is_request_support.text.toString().toBoolean()
-                        is_request_support.isClickable=false
-                        is_request_support.setAdapter(null)
-                        newData.number_of_support=number_of_support.text.toString().toInt()
-                        number_of_support.inputType=InputType.TYPE_NULL
-                        newData.number_of_supported=number_of_supported.text.toString().toInt()
-                        number_of_supported.inputType=InputType.TYPE_NULL
-                        if(request_support_time.text.toString()==""){
-                            newData.request_support_time=null
-                        }
-                        else{
-                            newData.request_support_time=request_support_time.text.toString()
-                        }
-                        request_support_time.inputType=InputType.TYPE_NULL
-                        newData.is_urgent=is_urgent.text.toString().toBoolean()
-                        is_urgent.isClickable=false
-                        is_urgent.setAdapter(null)
-                        if(urgent_deadline.text.toString()==""){
-                            newData.urgent_deadline=null
-                        }
-                        else{
-                            newData.urgent_deadline=urgent_deadline.text.toString()
-                        }
-                        urgent_deadline.inputType=InputType.TYPE_NULL
 
-                        newData.remark=remark.text.toString()
-                        remark.isClickable=false
-                        remark.isFocusable=false
-                        remark.isFocusableInTouchMode=false
-                        remark.isTextInputLayoutFocusedRectEnabled=false*/
                         //Log.d("GSON", "msg: ${oldData}\n")
                         //Log.d("GSON", "msg: ${newData.remark}\n")
                         edit_ProductControlOrder("ProductControlOrderBody_A",oldData,newData)//更改資料庫資料
@@ -518,7 +381,15 @@ class RecyclerItemProductControlOrderBodyADetailAdapter2(SelectFilter:String) :
                 }
 
             }
-            //刪除按鈕
+
+            //下一筆
+            next_btn.setOnClickListener {
+                if(adapterPosition+1<=data.size){
+                    cookie_data.recyclerView.smoothScrollToPosition(adapterPosition+1)
+                }
+
+            }
+          /*  //刪除按鈕
             deletebtn.setOnClickListener {
                 //Log.d("GSON", "msg: ${data}\n")
                 val mAlertDialog = AlertDialog.Builder(itemView.context)
@@ -601,7 +472,7 @@ class RecyclerItemProductControlOrderBodyADetailAdapter2(SelectFilter:String) :
                 }
                 mAlertDialog.show()
 
-            }
+            }*/
 
             out_source_btn.setOnClickListener {
                 var dialogF= PopUpOutSourceFragment(data[adapterPosition].prod_ctrl_order_number)
@@ -674,7 +545,7 @@ class RecyclerItemProductControlOrderBodyADetailAdapter2(SelectFilter:String) :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -730,7 +601,7 @@ class RecyclerItemProductControlOrderBodyADetailAdapter2(SelectFilter:String) :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -785,7 +656,7 @@ class RecyclerItemProductControlOrderBodyADetailAdapter2(SelectFilter:String) :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -840,7 +711,7 @@ class RecyclerItemProductControlOrderBodyADetailAdapter2(SelectFilter:String) :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()

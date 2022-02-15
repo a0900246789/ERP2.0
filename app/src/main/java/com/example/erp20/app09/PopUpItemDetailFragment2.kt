@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,6 +47,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
     lateinit var Filter_id: String
     lateinit var Filter_purchase_order_id: String
     lateinit var Filter_prod_ctrl_order_number: String
+    lateinit var recyclerView:RecyclerView
     init {
         Filter_id=filter_id
         Filter_purchase_order_id=filter_purchase_order_id
@@ -91,7 +93,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
         recyclerView.layoutManager= LinearLayoutManager(view.context)//設定Linear格式
         StockTransOrderBody_Simplify_adapter2= RecyclerItemStockTransOrderBodySimplifyAdapter2()
         recyclerView.adapter=StockTransOrderBody_Simplify_adapter2//找對應itemAdapter
-
+        cookie_data.recyclerView=recyclerView
         //關閉
         var dismiss=view.findViewById<Button>(R.id.dismiss_btn)
         dismiss?.setOnClickListener {
@@ -109,6 +111,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
         //新增
         var add_btn=view.findViewById<Button>(R.id.add_btn)
         add_btn?.setOnClickListener {
+            cookie_data.recyclerView=recyclerView
             val item = LayoutInflater.from(activity).inflate(R.layout.recycler_item_stock_trans_order_body_simplify2, null)
             val mAlertDialog = androidx.appcompat.app.AlertDialog.Builder(requireView().context)
             //mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
@@ -130,21 +133,16 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
             body_id.inputType= InputType.TYPE_NULL
             var item_id=item.findViewById<AutoCompleteTextView>(R.id.edit_item_id)
             item_id.setAdapter(arrayAdapter01)
-            var item_name=item.findViewById<TextInputEditText>(R.id.edit_item_name)
-            item_name.inputType= InputType.TYPE_NULL
+
             var modify_count=item.findViewById<TextInputEditText>(R.id.edit_modify_count)
             modify_count.inputType= InputType.TYPE_NULL
-            /*var main_trans_code=item.findViewById<AutoCompleteTextView>(R.id.edit_main_trans_code)
-            main_trans_code.setAdapter(arrayAdapter02)
-            var sec_trans_code=item.findViewById<AutoCompleteTextView>(R.id.edit_sec_trans_code)
-            sec_trans_code.setAdapter(arrayAdapter03)
-            var store_area=item.findViewById<AutoCompleteTextView>(R.id.edit_store_area)
-            store_area.setAdapter(arrayAdapter04)
-            var store_local=item.findViewById<AutoCompleteTextView>(R.id.edit_store_local)
-            store_local.setAdapter(arrayAdapter05)*/
+            modify_count.isVisible=false
+
             var qc_insp_number=item.findViewById<TextInputEditText>(R.id.edit_qc_insp_number)
+            qc_insp_number.isVisible=false
             var qc_time=item.findViewById<TextInputEditText>(R.id.edit_qc_time)
             qc_time.inputType=InputType.TYPE_NULL
+            qc_time.isVisible=false
             //var ok_count=item.findViewById<TextInputEditText>(R.id.edit_ok_count)
             //var ng_count=item.findViewById<TextInputEditText>(R.id.edit_ng_count)
             //ng_count.setSelectAllOnFocus(true)
@@ -174,23 +172,21 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     },year,month,day).show()
             }
 
-            item_id.setOnItemClickListener { parent, view, position, id ->
-                item_name.setText(cookie_data.item_name_ComboboxData[cookie_data.item_id_ComboboxData.indexOf(item_id.text.toString())])
-            }
+
 
             mAlertDialog.setPositiveButton("取消") { dialog, id ->
                 dialog.dismiss()
             }
             mAlertDialog.setNegativeButton("確定") { dialog, id ->
                 //新增不能為空
-                if( item_id.text.toString().trim().isEmpty() ){
-                    Toast.makeText(requireView().context,"Item ID Input required", Toast.LENGTH_LONG).show()
+                if( item_id.text.toString().trim().isEmpty() || (cookie_data.item_id_name_ComboboxData.indexOf(item_id.text.toString())==-1) ){
+                    Toast.makeText(requireView().context,"Item ID 輸入錯誤", Toast.LENGTH_LONG).show()
                 }
                 else{
                     val addData= StockTransOrderBody()
                     addData.header_id=header_id.text.toString()
-                    addData.item_id=item_id.text.toString()
-                    addData.modify_count=scrapped_count.text.toString().toInt()
+                    addData.item_id=item_id.text.toString().substring(0,item_id.text.toString().indexOf("\n"))
+                    addData.modify_count=scrapped_count.text.toString().toDouble()
                     /*addData.main_trans_code=main_trans_code.text.toString()
                     addData.sec_trans_code=sec_trans_code.text.toString()
                     addData.store_area=store_area.text.toString()
@@ -204,7 +200,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     }
                     //addData.ok_count=ok_count.text.toString().toInt()
                     //addData.ng_count=ng_count.text.toString().toInt()
-                    addData.scrapped_count=scrapped_count.text.toString().toInt()
+                    addData.scrapped_count=scrapped_count.text.toString().toDouble()
                     //addData.is_rework=is_rework.text.toString().toBoolean()
 
 
@@ -239,22 +235,23 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
         item2=show_relative_combobox_filter("PurchaseOrderBody","condition","False")
         if(Filter_prod_ctrl_order_number=="" && Filter_purchase_order_id==""){
             cookie_data.Filter_item_id_ComboboxData.removeAll(cookie_data.Filter_item_id_ComboboxData)
-            cookie_data.Filter_item_id_ComboboxData.addAll(cookie_data.item_id_ComboboxData)
+            cookie_data.Filter_item_id_ComboboxData.addAll(cookie_data.item_id_name_ComboboxData)
         }
         else if(Filter_prod_ctrl_order_number!="" && Filter_purchase_order_id==""){
             cookie_data.Filter_item_id_ComboboxData.removeAll(cookie_data.Filter_item_id_ComboboxData)
-            cookie_data.Filter_item_id_ComboboxData.add(item1)
+            cookie_data.Filter_item_id_ComboboxData.add(item1+"\n"+cookie_data.item_name_ComboboxData[cookie_data.item_id_ComboboxData.indexOf(item1)])
         }
         else if(Filter_prod_ctrl_order_number=="" && Filter_purchase_order_id!=""){
             cookie_data.Filter_item_id_ComboboxData.removeAll(cookie_data.Filter_item_id_ComboboxData)
-            cookie_data.Filter_item_id_ComboboxData.add(item2)
+            cookie_data.Filter_item_id_ComboboxData.add(item2+"\n"+cookie_data.item_name_ComboboxData[cookie_data.item_id_ComboboxData.indexOf(item2)])
         }
         else if(Filter_prod_ctrl_order_number!="" && Filter_purchase_order_id!="")
         {
             cookie_data.Filter_item_id_ComboboxData.removeAll(cookie_data.Filter_item_id_ComboboxData)
-            cookie_data.Filter_item_id_ComboboxData.add(item1)
-            cookie_data.Filter_item_id_ComboboxData.add(item2)
+            cookie_data.Filter_item_id_ComboboxData.add(item1+"\n"+cookie_data.item_name_ComboboxData[cookie_data.item_id_ComboboxData.indexOf(item1)])
+            cookie_data.Filter_item_id_ComboboxData.add(item2+"\n"+cookie_data.item_name_ComboboxData[cookie_data.item_id_ComboboxData.indexOf(item2)])
         }
+        cookie_data.Filter_item_id_ComboboxData=cookie_data.Filter_item_id_ComboboxData.distinct().toCollection(java.util.ArrayList())
     }
     //異動資料單頭單身過濾
     private fun show_header_body_filter(operation:String,view_type:String,view_hide:String,selectedfilter:String) {
@@ -274,7 +271,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/inventory_management")
+                    .url(cookie_data.URL+"/inventory_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -333,7 +330,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .build()
 
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/inventory_management")
+                    .url(cookie_data.URL+"/inventory_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -369,7 +366,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -412,7 +409,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -458,7 +455,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -501,7 +498,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -544,7 +541,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -587,7 +584,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -630,7 +627,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -673,7 +670,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -716,7 +713,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/master_scheduled_order_management")
+                    .url(cookie_data.URL+"/master_scheduled_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -762,7 +759,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -806,7 +803,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/custom_order_management")
+                    .url(cookie_data.URL+"/custom_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -851,7 +848,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -895,7 +892,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -912,11 +909,13 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                                 cookie_data.item_name_ComboboxData.removeAll(cookie_data.item_name_ComboboxData)
                                 cookie_data.semi_finished_product_number_ComboboxData.removeAll(cookie_data.semi_finished_product_number_ComboboxData)
                                 cookie_data.is_exemption_ComboboxData.removeAll(cookie_data.is_exemption_ComboboxData)
+                                cookie_data.item_id_name_ComboboxData.removeAll(cookie_data.item_id_name_ComboboxData)
                                 for(i in 0 until data.size){
                                     cookie_data.item_id_ComboboxData.add(data[i]._id)
                                     cookie_data.item_name_ComboboxData.add(data[i].name)
                                     cookie_data.semi_finished_product_number_ComboboxData.add(data[i].semi_finished_product_number)
                                     cookie_data.is_exemption_ComboboxData.add(data[i].is_exemption)
+                                    cookie_data.item_id_name_ComboboxData.add(data[i]._id+"\n"+data[i].name)
                                 }
                                 //Log.d("GSON", "msg:${comboboxData}")
                             }
@@ -946,7 +945,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/special_basic_management")
+                    .url(cookie_data.URL+"/special_basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -991,7 +990,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/special_basic_management")
+                    .url(cookie_data.URL+"/special_basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1037,7 +1036,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1087,7 +1086,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/staff_management")
+                    .url(cookie_data.URL+"/staff_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1137,7 +1136,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1182,7 +1181,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1229,7 +1228,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/production_control_sheet_management")
+                    .url(cookie_data.URL+"/production_control_sheet_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1277,7 +1276,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/production_control_sheet_management")
+                    .url(cookie_data.URL+"/production_control_sheet_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1337,7 +1336,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1383,7 +1382,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1429,7 +1428,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1474,7 +1473,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1517,7 +1516,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/purchase_order_management")
+                    .url(cookie_data.URL+"/purchase_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1571,7 +1570,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/purchase_order_management")
+                    .url(cookie_data.URL+"/purchase_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1620,7 +1619,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/purchase_order_management")
+                    .url(cookie_data.URL+"/purchase_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1669,7 +1668,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/purchase_order_management")
+                    .url(cookie_data.URL+"/purchase_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1720,7 +1719,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/inventory_management")
+                    .url(cookie_data.URL+"/inventory_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1779,7 +1778,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/production_control_sheet_management")
+                    .url(cookie_data.URL+"/production_control_sheet_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1823,7 +1822,7 @@ class PopUpItemDetailFragment2(filter_id:String,filter_purchase_order_id:String,
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/purchase_order_management")
+                    .url(cookie_data.URL+"/purchase_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()

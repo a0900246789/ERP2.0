@@ -198,6 +198,12 @@ class RecyclerItemMealOrderListBodyAdapter() :
             val arrayAdapter_meal= ArrayAdapter(itemView.context,R.layout.combobox_item,combobox_meal)
             val arrayAdapter01= ArrayAdapter(itemView.context,R.layout.combobox_item,relativeCombobox01)
 
+            is_absent.setOnItemClickListener { parent, view, position, id ->
+                if(position==0){
+                    leave_hours.setText("0")
+                }
+            }
+
             //編輯按鈕
             edit_btn.setOnClickListener {
                 when(edit_btn.text){
@@ -209,8 +215,11 @@ class RecyclerItemMealOrderListBodyAdapter() :
                         //card_number.setAdapter(arrayAdapter01)
                         is_absent.setAdapter(arrayAdapter_absent)
                         leave_hours.inputType=(InputType.TYPE_NUMBER_FLAG_DECIMAL or  InputType.TYPE_CLASS_NUMBER )
+                        leave_hours.setSelectAllOnFocus(true)
                         support_hours.inputType=(InputType.TYPE_NUMBER_FLAG_DECIMAL or  InputType.TYPE_CLASS_NUMBER )
+                        support_hours.setSelectAllOnFocus(true)
                         overtime_hours.inputType=(InputType.TYPE_NUMBER_FLAG_DECIMAL or  InputType.TYPE_CLASS_NUMBER )
+                        overtime_hours.setSelectAllOnFocus(true)
                         is_l_meals.setAdapter(arrayAdapter_meal)
                         is_d_meals.setAdapter(arrayAdapter_meal)
 
@@ -537,7 +546,7 @@ class RecyclerItemMealOrderListBodyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -589,7 +598,7 @@ class RecyclerItemMealOrderListBodyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -640,7 +649,7 @@ class RecyclerItemMealOrderListBodyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -691,7 +700,7 @@ class RecyclerItemMealOrderListBodyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()

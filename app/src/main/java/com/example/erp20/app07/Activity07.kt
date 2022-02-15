@@ -31,7 +31,9 @@ import java.util.*
 
 class Activity07 : AppCompatActivity() {
     private lateinit var StockTransOrderBodyWithHeader_adapter: RecyclerItemStockTransOrderBodyWithHeaderAdapter
+    private lateinit var StockTransOrderBodyWithHeaderLookup_adapter: RecyclerItemStockTransOrderBodyWithHeaderLookupAdapter
     var comboboxData: MutableList<String> = mutableListOf<String>()
+    lateinit var  allComboboxData:ArrayList<StockTransOrderBody>
     lateinit var selectFilter:String
     lateinit var selectFilter2:String
     lateinit var recyclerView:RecyclerView
@@ -48,16 +50,13 @@ class Activity07 : AppCompatActivity() {
 
         //combobox選單內容
         val autoCompleteTextView=findViewById<AutoCompleteTextView>(R.id.autoCompleteText)
-        val combobox=resources.getStringArray(R.array.combobox07)
-        val arrayAdapter= ArrayAdapter(this,R.layout.combobox_item,combobox)
-         autoCompleteTextView.setAdapter(arrayAdapter)
+        //val combobox=resources.getStringArray(R.array.combobox07)
+        //val arrayAdapter= ArrayAdapter(this,R.layout.combobox_item,combobox)
+        // autoCompleteTextView.setAdapter(arrayAdapter)
 
         val searchbtn=findViewById<Button>(R.id.search_btn)
-        val addbtn=findViewById<Button>(R.id.add_btn)
-        //每次換選單內容add_btn失靈
-        autoCompleteTextView?.setOnItemClickListener { parent, view, position, id ->
-            addbtn?.isEnabled=false
-        }
+        val find_btn=findViewById<Button>(R.id.find_btn)
+
         //搜尋按鈕
         searchbtn?.setOnClickListener {
             theTextView?.text = autoCompleteTextView?.text
@@ -252,7 +251,7 @@ class Activity07 : AppCompatActivity() {
                     mAlertDialog.show()
 
                 }*/
-                "備料作業"->{
+               /* "備料作業"->{
                     show_header_body_filter("StockTransOrderBody","condition","False","123")
                     show_relative_combobox("StoreArea","all","False", StoreArea())
                     show_relative_combobox("StoreLocal","all","False", StoreLocal())
@@ -277,348 +276,265 @@ class Activity07 : AppCompatActivity() {
                     }
 
 
-                }
-
-            }
-        }
-        //新增按鈕
-        addbtn?.setOnClickListener {
-            when(autoCompleteTextView?.text.toString()){
-                /*"領料申請"->{
+                }*/
+                "備料/發料作業"->{
+                    show_combobox("StockTransOrderBody","condition","False",StockTransOrderBody())
+                    show_relative_combobox("ItemBasicInfo","all","False", ItemBasicInfo())
+                    show_relative_combobox("PLineBasicInfo","all","False", PLineBasicInfo())
                     show_relative_combobox("StockTransOrderHeader","all","False", StockTransOrderHeader())
-                    val item = LayoutInflater.from(this).inflate(R.layout.recycler_item_stock_trans_order_header_simplify, null)
+                    val item = LayoutInflater.from(this).inflate(R.layout.filter_combobox2, null)
                     val mAlertDialog = AlertDialog.Builder(this)
                     //mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
-                    mAlertDialog.setTitle("新增") //set alertdialog title
+                    mAlertDialog.setTitle("篩選") //set alertdialog title
                     //mAlertDialog.setMessage("確定要登出?") //set alertdialog message
                     mAlertDialog.setView(item)
-
-                    val combobox=item.resources.getStringArray(R.array.combobox_yes_no)
-                    val arrayAdapter= ArrayAdapter(item.context,R.layout.combobox_item,combobox)
-                    //val arrayAdapter01= ArrayAdapter(item.context,R.layout.combobox_item,
-                    //   cookie_data.pline_id_name_ComboboxData)
-                    //val arrayAdapter02= ArrayAdapter(item.context,R.layout.combobox_item,
-                    //    cookie_data.inv_code_name_m_ComboboxData)
-                    var arrayAdapter03= ArrayAdapter(item.context,R.layout.combobox_item,
-                        cookie_data.inv_code_name_s_ComboboxData)
-                    var relativeCombobox04: ArrayList<String> = ArrayList<String>()
-                    for(i in 0 until cookie_data.PurchaseBatchOrder_batch_id_ComboboxData.size){
-                        if(cookie_data.PurchaseBatchOrder_is_closed_ComboboxData[i]){
-                            relativeCombobox04.add(
-                                cookie_data.PurchaseBatchOrder_purchase_order_id_ComboboxData[i]+" "+
-                                        cookie_data.PurchaseBatchOrder_batch_id_ComboboxData[i]+" "+
-                                        cookie_data.PurchaseOrderHeader_vender_name_ComboboxData[cookie_data.PurchaseOrderHeader_poNo_ComboboxData.indexOf(
-                                            cookie_data.PurchaseOrderBody_poNo_ComboboxData[cookie_data.PurchaseOrderBody_body_id_ComboboxData.indexOf(
-                                                cookie_data.PurchaseBatchOrder_purchase_order_id_ComboboxData[i])])] )
-                        }
-                    }
-                    val arrayAdapter04= ArrayAdapter(item.context,R.layout.combobox_item,relativeCombobox04)
-                    var relativeCombobox05: ArrayList<String> = ArrayList<String>()
-                    for(i in 0 until cookie_data.ProductControlOrderBody_A_complete_date_ComboboxData.size){
-                        if(cookie_data.ProductControlOrderBody_A_complete_date_ComboboxData[i]!=null){
-                            relativeCombobox05.add(
-                                cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData[i]+"\n"+
-                                        cookie_data.item_name_ComboboxData[cookie_data.semi_finished_product_number_ComboboxData.indexOf(
-                                            cookie_data.ProductControlOrderBody_A_semi_finished_prod_number_ComboboxData[i])]+"\n"+
-                                        cookie_data.pline_name_ComboboxData[cookie_data.pline_id_ComboboxData.indexOf(
-                                            cookie_data.ProductControlOrderBody_A_pline_id_ComboboxData[i])]+"\n"+
-                                        cookie_data.MeBody_work_option_ComboboxData[cookie_data.MeBody_process_number_ComboboxData.indexOf(
-                                            cookie_data.ProductControlOrderBody_A_me_code_ComboboxData[i])]
-                            )
-                        }
-                    }
-                    val arrayAdapter05= ArrayAdapter(item.context,R.layout.combobox_item,relativeCombobox05)
-
-                    var _id=item.findViewById<TextInputEditText>(R.id.edit_id)
-                    _id.inputType= InputType.TYPE_CLASS_NUMBER
-                    var date=item.findViewById<TextInputEditText>(R.id.edit_date)
-                    date.inputType= InputType.TYPE_NULL
-                    var dept=item.findViewById<AutoCompleteTextView>(R.id.edit_dept)
-                    dept.setText(selectFilter2+" "+ cookie_data.pline_name_ComboboxData[cookie_data.pline_id_ComboboxData.indexOf(selectFilter2)])
-                    var main_trans_code=item.findViewById<AutoCompleteTextView>(R.id.edit_main_trans_code)
-                    main_trans_code.setText("M02 領發料")
-                    var sec_trans_code=item.findViewById<AutoCompleteTextView>(R.id.edit_sec_trans_code)
-                    sec_trans_code.setText("M02-4 超領(發料短少)")
-                    var inv_code_m=main_trans_code.text.toString().substring(0,main_trans_code.text.toString().indexOf(" "))
-                    var ArrayList: ArrayList<String> = ArrayList<String>()
-                    for(i in 0 until cookie_data.inv_code_s_inv_code_m_ComboboxData.size){
-                        if(cookie_data.inv_code_s_inv_code_m_ComboboxData[i]==inv_code_m){
-                            ArrayList.add(cookie_data.inv_code_name_s_ComboboxData[i])
-                        }
-                    }
-                    arrayAdapter03= ArrayAdapter(item.context,R.layout.combobox_item,ArrayList)
-                    sec_trans_code.setAdapter(arrayAdapter03)
-                    var purchase_order_id=item.findViewById<AutoCompleteTextView>(R.id.edit_purchase_order_id)
-                    purchase_order_id.setAdapter(arrayAdapter04)
-                    var prod_ctrl_order_number=item.findViewById<AutoCompleteTextView>(R.id.edit_prod_ctrl_order_number)
-                    prod_ctrl_order_number.setAdapter(arrayAdapter05)
-                    var illustrate=item.findViewById<TextInputEditText>(R.id.edit_illustrate)
-
-                    //異動日期
-                    date.setOnClickListener {
-                        val dateF = SimpleDateFormat("yyyy-MM-dd(EEEE)", Locale.TAIWAN)
-                        var c= Calendar.getInstance()
-                        val year= c.get(Calendar.YEAR)
-                        val month = c.get(Calendar.MONTH)
-                        val day = c.get(Calendar.DAY_OF_MONTH)
-                        var datePicker = DatePickerDialog(item.context,
-                            DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                                val SelectedDate= Calendar.getInstance()
-                                SelectedDate.set(Calendar.YEAR,mYear)
-                                SelectedDate.set(Calendar.MONTH,mMonth)
-                                SelectedDate.set(Calendar.DAY_OF_MONTH,mDay)
-                                val Date= dateF.format(SelectedDate.time)
-                                date.setText(Date)
-
-                                //自動填單號
-                                var maxNum=1
-                                for(i in 0 until cookie_data.StockTransOrderHeader_id_ComboboxData.size){
-                                    if(cookie_data.StockTransOrderHeader_id_ComboboxData[i].indexOf(mYear.toString()+(mMonth+1).toString()+"-")>=0){
-                                        if(cookie_data.StockTransOrderHeader_id_ComboboxData[i].substring(
-                                                cookie_data.StockTransOrderHeader_id_ComboboxData[i].indexOf("-")+1,
-                                                cookie_data.StockTransOrderHeader_id_ComboboxData[i].length).toInt()>=maxNum){
-                                            maxNum= cookie_data.StockTransOrderHeader_id_ComboboxData[i].substring(
-                                                cookie_data.StockTransOrderHeader_id_ComboboxData[i].indexOf("-")+1,
-                                                cookie_data.StockTransOrderHeader_id_ComboboxData[i].length).toInt()+1
-                                        }
-                                    }
+                    //filter_combobox選單內容
+                    val comboboxView=item.findViewById<AutoCompleteTextView>(R.id.autoCompleteText)//選擇項目
+                    val comboboxView2=item.findViewById<AutoCompleteTextView>(R.id.autoCompleteText2)//內容
+                    comboboxView.setText("需求日期")
+                    val arrayAdapter1= ArrayAdapter(this,R.layout.combobox_item,resources.getStringArray(R.array.combobox07_filter))
+                    comboboxView.setAdapter(arrayAdapter1)
+                    comboboxView.setOnItemClickListener { parent, view, position, id ->
+                        comboboxView2.setText("")
+                        if(position==1){//料件編號/名稱
+                            comboboxData.removeAll(comboboxData)
+                            for(i in 0 until allComboboxData.size){
+                                if(cookie_data.StockTransOrderHeader_main_trans_code_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(allComboboxData[i].header_id)]=="M02"){
+                                    comboboxData.add(allComboboxData[i].item_id+"\n"+cookie_data.item_name_ComboboxData[cookie_data.item_id_ComboboxData.indexOf(allComboboxData[i].item_id)])
                                 }
-                                _id.setText(mYear.toString()+(mMonth+1).toString()+"-"+maxNum.toString())
-                            },year,month,day).show()
+                            }
+                            comboboxData=comboboxData.distinct().toCollection(java.util.ArrayList())
+                            //comboboxData.remove("")
+                            //Log.d("GSON", "msg:${comboboxData}")
+                            val arrayAdapter2= ArrayAdapter(this,R.layout.combobox_item,comboboxData)
+                            comboboxView2.setAdapter(arrayAdapter2)
+                        }
+                        else if(position==2){//生產管制單編號
+                            comboboxData.removeAll(comboboxData)
+                            for(i in 0 until allComboboxData.size){
+                                if(cookie_data.StockTransOrderHeader_main_trans_code_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(allComboboxData[i].header_id)]=="M02"){
+                                    comboboxData.add(cookie_data.StockTransOrderHeader_prod_ctrl_order_number_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(allComboboxData[i].header_id)])
+                                }
+                            }
+                            comboboxData=comboboxData.distinct().toCollection(java.util.ArrayList())
+                           // comboboxData.remove("")
+                            //Log.d("GSON", "msg:${comboboxData}")
+                            val arrayAdapter2= ArrayAdapter(this,R.layout.combobox_item,comboboxData)
+                            comboboxView2.setAdapter(arrayAdapter2)
+                        }
+                        else if(position==3){//需求單位
+                            comboboxData.removeAll(comboboxData)
+                            for(i in 0 until allComboboxData.size){
+                                if(cookie_data.StockTransOrderHeader_main_trans_code_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(allComboboxData[i].header_id)]=="M02"){
+                                    comboboxData.add(cookie_data.pline_id_name_ComboboxData[cookie_data.pline_id_ComboboxData.indexOf(cookie_data.StockTransOrderHeader_dept_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(allComboboxData[i].header_id)])])
+                                }
+                            }
+                            comboboxData=comboboxData.distinct().toCollection(java.util.ArrayList())
+                            //comboboxData.remove("")
+                            //Log.d("GSON", "msg:${comboboxData}")
+                            val arrayAdapter2= ArrayAdapter(this,R.layout.combobox_item,comboboxData)
+                            comboboxView2.setAdapter(arrayAdapter2)
+                        }
                     }
-
-
-
-                    //val remark=item.findViewById<TextInputEditText>(R.id.edit_remark)
-
+                    val dateF = SimpleDateFormat("yyyy-MM-dd(EEEE)", Locale.TAIWAN)
+                    var C= Calendar.getInstance()
+                    C.set(Calendar.DAY_OF_MONTH,1)
+                    var Date= dateF.format(C.time)
+                    comboboxView2.setText(Date)
+                    comboboxView2.setOnClickListener {
+                        if(comboboxView.text.toString()=="需求日期"){
+                            comboboxView2.setAdapter(null)
+                            var c= Calendar.getInstance()
+                            val year= c.get(Calendar.YEAR)
+                            val month = c.get(Calendar.MONTH)
+                            val day = c.get(Calendar.DAY_OF_MONTH)
+                            var datePicker = DatePickerDialog(item.context,
+                                DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
+                                    val SelectedDate= Calendar.getInstance()
+                                    SelectedDate.set(Calendar.YEAR,mYear)
+                                    SelectedDate.set(Calendar.MONTH,mMonth)
+                                    SelectedDate.set(Calendar.DAY_OF_MONTH,mDay)
+                                    val Date1= dateF.format(SelectedDate.time)
+                                    comboboxView2.setText(Date1)
+                                },year,month,day).show()
+                        }
+                    }
                     mAlertDialog.setPositiveButton("取消") { dialog, id ->
                         dialog.dismiss()
                     }
                     mAlertDialog.setNegativeButton("確定") { dialog, id ->
-                        //新增不能為空
-                        if( _id.text.toString().trim().isEmpty() ||
-                            date.text.toString().trim().isEmpty()  ||
-                            dept.text.toString().trim().isEmpty()       ||
-                            main_trans_code.text.toString().trim().isEmpty() ||
-                            sec_trans_code.text.toString().trim().isEmpty()  ){
-                            Toast.makeText(this,"Input required", Toast.LENGTH_LONG).show()
+                        //println(comboboxView.text)
+                        selectFilter=comboboxView.text.toString()
+                        if(comboboxView.text.toString()=="需求日期"){
+                            selectFilter2=comboboxView2.text.toString().substring(0,comboboxView2.text.toString().indexOf("("))//date
                         }
-                        else{
-                            val addData= StockTransOrderHeader()
-                            addData._id=_id.text.toString()
-                            addData.date=date.text.toString().substring(0,date.text.toString().indexOf("("))
-                            addData.dept=dept.text.toString().substring(0,dept.text.toString().indexOf(" "))
-                            addData.main_trans_code=main_trans_code.text.toString().substring(0,main_trans_code.text.toString().indexOf(" "))
-                            addData.sec_trans_code=sec_trans_code.text.toString().substring(0,sec_trans_code.text.toString().indexOf(" "))
-                            if(purchase_order_id.text.toString()==""){
-                                addData.purchase_order_id=""
+                        else if(comboboxView.text.toString()=="料件編號/名稱"){
+                            selectFilter2=comboboxView2.text.toString().substring(0,comboboxView2.text.toString().indexOf("\n"))
+                        }
+                        else if(comboboxView.text.toString()=="生產管制單編號"){
+                            selectFilter2=comboboxView2.text.toString()
+                        }
+                        else if(comboboxView.text.toString()=="需求單位"){
+                            selectFilter2=comboboxView2.text.toString().substring(0,comboboxView2.text.toString().indexOf(" "))//pline
+                        }
+                        //println(selectFilter)
+                        show_header_body_filter("StockTransOrderBody","condition","False","123")
+                        show_relative_combobox("StoreArea","all","False", StoreArea())
+                        show_relative_combobox("StoreLocal","all","False", StoreLocal())
+                        show_relative_combobox("PLineBasicInfo","all","False", PLineBasicInfo())
+                        show_relative_combobox("InvChangeTypeM","all","False", InvChangeTypeM())
+                        show_relative_combobox("InvChangeTypeS","all","False", InvChangeTypeS())
+                        //println(cookie_data.StockTransOrderHeader_id_ComboboxData)
+                        when(cookie_data.status)
+                        {
+                            0->{
+                                Toast.makeText(this, "資料載入", Toast.LENGTH_SHORT).show()
+                                recyclerView.layoutManager= LinearLayoutManager(this)//設定Linear格式
+                                StockTransOrderBodyWithHeader_adapter= RecyclerItemStockTransOrderBodyWithHeaderAdapter(selectFilter,selectFilter2)
+                                recyclerView.adapter=StockTransOrderBodyWithHeader_adapter//找對應itemAdapter
+                                cookie_data.recyclerView=recyclerView
+                                find_btn?.isEnabled=true
                             }
-                            else{
-                                addData.purchase_order_id=purchase_order_id.text.toString().substring(0,purchase_order_id.text.toString().indexOf(" "))
-                            }
-                            if(prod_ctrl_order_number.text.toString()==""){
-                                addData.prod_ctrl_order_number=""
-                            }
-                            else{
-                                addData.prod_ctrl_order_number=prod_ctrl_order_number.text.toString().substring(0,prod_ctrl_order_number.text.toString().indexOf("\n"))
-                            }
-
-
-                            addData.illustrate=illustrate.text.toString()
-
-
-                            /*addData.remark=remark.text.toString()
-                            addData.creator= cookie_data.username
-                            addData.create_time= Calendar.getInstance().getTime().toString()
-                            addData.editor= cookie_data.username
-                            addData.edit_time= Calendar.getInstance().getTime().toString()*/
-                            add_header_body("StockTransOrderHeader",addData)
-                            when(cookie_data.status){
-                                0-> {//成功
-
-                                    StockTransOrderHeaderSimplify_adapter3.addItem(addData)
-                                    Toast.makeText(this, cookie_data.msg, Toast.LENGTH_SHORT).show()
-                                }
-                                1->{//失敗
-                                    Toast.makeText(this, cookie_data.msg, Toast.LENGTH_SHORT).show()
-                                }
+                            1->{
+                                Toast.makeText(this, cookie_data.msg, Toast.LENGTH_SHORT).show()
                             }
                         }
+
                     }
                     mAlertDialog.show()
-                }*/
-                /* "退料作業(報廢品)"->{
-                     show_relative_combobox("StockTransOrderHeader","all","False", StockTransOrderHeader())
-                     val item = LayoutInflater.from(this).inflate(R.layout.recycler_item_stock_trans_order_header_simplify, null)
-                     val mAlertDialog = AlertDialog.Builder(this)
-                     //mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
-                     mAlertDialog.setTitle("新增") //set alertdialog title
-                     //mAlertDialog.setMessage("確定要登出?") //set alertdialog message
-                     mAlertDialog.setView(item)
 
-                     val combobox=item.resources.getStringArray(R.array.combobox_yes_no)
-                     val arrayAdapter= ArrayAdapter(item.context,R.layout.combobox_item,combobox)
-                     val arrayAdapter01= ArrayAdapter(item.context,R.layout.combobox_item,
-                         cookie_data.pline_id_name_ComboboxData)
-                     val arrayAdapter02= ArrayAdapter(item.context,R.layout.combobox_item,
-                         cookie_data.inv_code_name_m_ComboboxData)
-                     var arrayAdapter03= ArrayAdapter(item.context,R.layout.combobox_item,
-                         cookie_data.inv_code_name_s_ComboboxData)
-                     var relativeCombobox04: ArrayList<String> = ArrayList<String>()
-                     for(i in 0 until cookie_data.PurchaseBatchOrder_batch_id_ComboboxData.size){
-                         if(cookie_data.PurchaseBatchOrder_is_closed_ComboboxData[i]){
-                             relativeCombobox04.add(
-                                 cookie_data.PurchaseBatchOrder_purchase_order_id_ComboboxData[i]+" "+
-                                     cookie_data.PurchaseBatchOrder_batch_id_ComboboxData[i]+" "+
-                                     cookie_data.PurchaseOrderHeader_vender_name_ComboboxData[cookie_data.PurchaseOrderHeader_poNo_ComboboxData.indexOf(
-                                         cookie_data.PurchaseOrderBody_poNo_ComboboxData[cookie_data.PurchaseOrderBody_body_id_ComboboxData.indexOf(
-                                             cookie_data.PurchaseBatchOrder_purchase_order_id_ComboboxData[i])])] )
-                         }
-                     }
-                     val arrayAdapter04= ArrayAdapter(item.context,R.layout.combobox_item,relativeCombobox04)
-                     var relativeCombobox05: ArrayList<String> = ArrayList<String>()
-                     for(i in 0 until cookie_data.ProductControlOrderBody_A_complete_date_ComboboxData.size){
-                         if(cookie_data.ProductControlOrderBody_A_complete_date_ComboboxData[i]!=null){
-                             relativeCombobox05.add(
-                                 cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData[i]+"\n"+
-                                     cookie_data.item_name_ComboboxData[cookie_data.semi_finished_product_number_ComboboxData.indexOf(
-                                         cookie_data.ProductControlOrderBody_A_semi_finished_prod_number_ComboboxData[i])]+"\n"+
-                                     cookie_data.pline_name_ComboboxData[cookie_data.pline_id_ComboboxData.indexOf(
-                                         cookie_data.ProductControlOrderBody_A_pline_id_ComboboxData[i])]+"\n"+
-                                     cookie_data.MeBody_work_option_ComboboxData[cookie_data.MeBody_process_number_ComboboxData.indexOf(
-                                         cookie_data.ProductControlOrderBody_A_me_code_ComboboxData[i])]
-                             )
-                         }
-                     }
-                     val arrayAdapter05= ArrayAdapter(item.context,R.layout.combobox_item,relativeCombobox05)
+                }
+            }
+        }
+        //查詢按鈕
+        find_btn?.setOnClickListener {
+            when(autoCompleteTextView?.text.toString()){
+                "備料/發料作業"->{
+                    show_combobox("StockTransOrderBody","all","False",StockTransOrderBody())
+                    show_relative_combobox("ItemBasicInfo","all","False", ItemBasicInfo())
+                    show_relative_combobox("PLineBasicInfo","all","False", PLineBasicInfo())
+                    show_relative_combobox("StockTransOrderHeader","all","False", StockTransOrderHeader())
+                    val item = LayoutInflater.from(this).inflate(R.layout.filter_combobox2, null)
+                    val mAlertDialog = AlertDialog.Builder(this)
+                    //mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
+                    mAlertDialog.setTitle("篩選") //set alertdialog title
+                    //mAlertDialog.setMessage("確定要登出?") //set alertdialog message
+                    mAlertDialog.setView(item)
+                    //filter_combobox選單內容
+                    val comboboxView=item.findViewById<AutoCompleteTextView>(R.id.autoCompleteText)//選擇項目
+                    val comboboxView2=item.findViewById<AutoCompleteTextView>(R.id.autoCompleteText2)//內容
+                    comboboxView.setText("需求日期")
+                    val arrayAdapter1= ArrayAdapter(this,R.layout.combobox_item,resources.getStringArray(R.array.combobox07_filter))
+                    comboboxView.setAdapter(arrayAdapter1)
+                    comboboxView.setOnItemClickListener { parent, view, position, id ->
+                        comboboxView2.setText("")
+                        if(position==1){//料件編號/名稱
+                            comboboxData.removeAll(comboboxData)
+                            for(i in 0 until allComboboxData.size){
+                                if(cookie_data.StockTransOrderHeader_main_trans_code_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(allComboboxData[i].header_id)]=="M02"){
+                                    comboboxData.add(allComboboxData[i].item_id+"\n"+cookie_data.item_name_ComboboxData[cookie_data.item_id_ComboboxData.indexOf(allComboboxData[i].item_id)])
+                                }
+                            }
+                            comboboxData=comboboxData.distinct().toCollection(java.util.ArrayList())
+                            //comboboxData.remove("")
+                            //Log.d("GSON", "msg:${comboboxData}")
+                            val arrayAdapter2= ArrayAdapter(this,R.layout.combobox_item,comboboxData)
+                            comboboxView2.setAdapter(arrayAdapter2)
+                        }
+                        else if(position==2){//生產管制單編號
+                            comboboxData.removeAll(comboboxData)
+                            for(i in 0 until allComboboxData.size){
+                                if(cookie_data.StockTransOrderHeader_main_trans_code_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(allComboboxData[i].header_id)]=="M02"){
+                                    comboboxData.add(cookie_data.StockTransOrderHeader_prod_ctrl_order_number_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(allComboboxData[i].header_id)])
+                                }
+                            }
+                            comboboxData=comboboxData.distinct().toCollection(java.util.ArrayList())
+                            // comboboxData.remove("")
+                            //Log.d("GSON", "msg:${comboboxData}")
+                            val arrayAdapter2= ArrayAdapter(this,R.layout.combobox_item,comboboxData)
+                            comboboxView2.setAdapter(arrayAdapter2)
+                        }
+                        else if(position==3){//需求單位
+                            comboboxData.removeAll(comboboxData)
+                            for(i in 0 until allComboboxData.size){
+                                if(cookie_data.StockTransOrderHeader_main_trans_code_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(allComboboxData[i].header_id)]=="M02"){
+                                    comboboxData.add(cookie_data.pline_id_name_ComboboxData[cookie_data.pline_id_ComboboxData.indexOf(cookie_data.StockTransOrderHeader_dept_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(allComboboxData[i].header_id)])])
+                                }
+                            }
+                            comboboxData=comboboxData.distinct().toCollection(java.util.ArrayList())
+                            //comboboxData.remove("")
+                            //Log.d("GSON", "msg:${comboboxData}")
+                            val arrayAdapter2= ArrayAdapter(this,R.layout.combobox_item,comboboxData)
+                            comboboxView2.setAdapter(arrayAdapter2)
+                        }
+                    }
+                    val dateF = SimpleDateFormat("yyyy-MM-dd(EEEE)", Locale.TAIWAN)
+                    var C= Calendar.getInstance()
+                    C.set(Calendar.DAY_OF_MONTH,1)
+                    var Date= dateF.format(C.time)
+                    comboboxView2.setText(Date)
+                    comboboxView2.setOnClickListener {
+                        if(comboboxView.text.toString()=="需求日期"){
+                            comboboxView2.setAdapter(null)
+                            var c= Calendar.getInstance()
+                            val year= c.get(Calendar.YEAR)
+                            val month = c.get(Calendar.MONTH)
+                            val day = c.get(Calendar.DAY_OF_MONTH)
+                            var datePicker = DatePickerDialog(item.context,
+                                DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
+                                    val SelectedDate= Calendar.getInstance()
+                                    SelectedDate.set(Calendar.YEAR,mYear)
+                                    SelectedDate.set(Calendar.MONTH,mMonth)
+                                    SelectedDate.set(Calendar.DAY_OF_MONTH,mDay)
+                                    val Date1= dateF.format(SelectedDate.time)
+                                    comboboxView2.setText(Date1)
+                                },year,month,day).show()
+                        }
+                    }
+                    mAlertDialog.setPositiveButton("取消") { dialog, id ->
+                        dialog.dismiss()
+                    }
+                    mAlertDialog.setNegativeButton("確定") { dialog, id ->
+                        //println(comboboxView.text)
+                        selectFilter=comboboxView.text.toString()
+                        if(comboboxView.text.toString()=="需求日期"){
+                            selectFilter2=comboboxView2.text.toString().substring(0,comboboxView2.text.toString().indexOf("("))//date
+                        }
+                        else if(comboboxView.text.toString()=="料件編號/名稱"){
+                            selectFilter2=comboboxView2.text.toString().substring(0,comboboxView2.text.toString().indexOf("\n"))
+                        }
+                        else if(comboboxView.text.toString()=="生產管制單編號"){
+                            selectFilter2=comboboxView2.text.toString()
+                        }
+                        else if(comboboxView.text.toString()=="需求單位"){
+                            selectFilter2=comboboxView2.text.toString().substring(0,comboboxView2.text.toString().indexOf(" "))//pline
+                        }
+                        //println(selectFilter)
+                        show_header_body("StockTransOrderBody","all","False")
+                        show_relative_combobox("StoreArea","all","False", StoreArea())
+                        show_relative_combobox("StoreLocal","all","False", StoreLocal())
+                        show_relative_combobox("PLineBasicInfo","all","False", PLineBasicInfo())
+                        show_relative_combobox("InvChangeTypeM","all","False", InvChangeTypeM())
+                        show_relative_combobox("InvChangeTypeS","all","False", InvChangeTypeS())
+                        //println(cookie_data.StockTransOrderHeader_id_ComboboxData)
+                        when(cookie_data.status)
+                        {
+                            0->{
+                                Toast.makeText(this, "資料載入", Toast.LENGTH_SHORT).show()
+                                recyclerView.layoutManager= LinearLayoutManager(this)//設定Linear格式
+                                StockTransOrderBodyWithHeaderLookup_adapter= RecyclerItemStockTransOrderBodyWithHeaderLookupAdapter(selectFilter,selectFilter2)
+                                recyclerView.adapter=StockTransOrderBodyWithHeaderLookup_adapter//找對應itemAdapter
+                                cookie_data.recyclerView=recyclerView
+                            }
+                            1->{
+                                Toast.makeText(this, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                            }
+                        }
 
-                     var _id=item.findViewById<TextInputEditText>(R.id.edit_id)
-                     _id.inputType= InputType.TYPE_CLASS_NUMBER
-                     var date=item.findViewById<TextInputEditText>(R.id.edit_date)
-                     date.inputType= InputType.TYPE_NULL
-                     var dept=item.findViewById<AutoCompleteTextView>(R.id.edit_dept)
-                     dept.setAdapter(arrayAdapter01)
-                     var main_trans_code=item.findViewById<AutoCompleteTextView>(R.id.edit_main_trans_code)
-                     main_trans_code.setText("M06 報廢")
-                     main_trans_code.setAdapter(arrayAdapter02)
-                     var sec_trans_code=item.findViewById<AutoCompleteTextView>(R.id.edit_sec_trans_code)
-                     sec_trans_code.isClickable=true
-                     sec_trans_code.setText("M06-1 不良品報廢")
-                     sec_trans_code.setAdapter(arrayAdapter03)
-                     var purchase_order_id=item.findViewById<AutoCompleteTextView>(R.id.edit_purchase_order_id)
-                     purchase_order_id.setAdapter(arrayAdapter04)
-                     var prod_ctrl_order_number=item.findViewById<AutoCompleteTextView>(R.id.edit_prod_ctrl_order_number)
-                     prod_ctrl_order_number.setAdapter(arrayAdapter05)
-                     var illustrate=item.findViewById<TextInputEditText>(R.id.edit_illustrate)
+                    }
+                    mAlertDialog.show()
 
-                     //異動日期
-                     date.setOnClickListener {
-                         val dateF = SimpleDateFormat("yyyy-MM-dd(EEEE)", Locale.TAIWAN)
-                         var c= Calendar.getInstance()
-                         val year= c.get(Calendar.YEAR)
-                         val month = c.get(Calendar.MONTH)
-                         val day = c.get(Calendar.DAY_OF_MONTH)
-                         var datePicker = DatePickerDialog(item.context,
-                             DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                                 val SelectedDate= Calendar.getInstance()
-                                 SelectedDate.set(Calendar.YEAR,mYear)
-                                 SelectedDate.set(Calendar.MONTH,mMonth)
-                                 SelectedDate.set(Calendar.DAY_OF_MONTH,mDay)
-                                 val Date= dateF.format(SelectedDate.time)
-                                 date.setText(Date)
-
-                                 //自動填單號
-                                 var maxNum=1
-                                 for(i in 0 until cookie_data.StockTransOrderHeader_id_ComboboxData.size){
-                                     if(cookie_data.StockTransOrderHeader_id_ComboboxData[i].indexOf(mYear.toString()+(mMonth+1).toString()+"-")>=0){
-                                         if(cookie_data.StockTransOrderHeader_id_ComboboxData[i].substring(
-                                                 cookie_data.StockTransOrderHeader_id_ComboboxData[i].indexOf("-")+1,
-                                                 cookie_data.StockTransOrderHeader_id_ComboboxData[i].length).toInt()>=maxNum){
-                                             maxNum= cookie_data.StockTransOrderHeader_id_ComboboxData[i].substring(
-                                                 cookie_data.StockTransOrderHeader_id_ComboboxData[i].indexOf("-")+1,
-                                                 cookie_data.StockTransOrderHeader_id_ComboboxData[i].length).toInt()+1
-                                         }
-                                     }
-                                 }
-                                 _id.setText(mYear.toString()+(mMonth+1).toString()+"-"+maxNum.toString())
-                             },year,month,day).show()
-                     }
-                     //主異動次別
-                     main_trans_code.setOnItemClickListener { parent, view, position, id ->
-                         var inv_code_m=main_trans_code.text.toString().substring(0,main_trans_code.text.toString().indexOf(" "))
-                         //println(inv_code_m)
-                         var ArrayList: ArrayList<String> = ArrayList<String>()
-
-                         for(i in 0 until cookie_data.inv_code_s_inv_code_m_ComboboxData.size){
-                             if(cookie_data.inv_code_s_inv_code_m_ComboboxData[i]==inv_code_m){
-                                 ArrayList.add(cookie_data.inv_code_name_s_ComboboxData[i])
-                             }
-                         }
-
-                         arrayAdapter03= ArrayAdapter(item.context,R.layout.combobox_item,ArrayList)
-                         sec_trans_code.setAdapter(arrayAdapter03)
-                     }
-
-
-
-                     //val remark=item.findViewById<TextInputEditText>(R.id.edit_remark)
-
-                     mAlertDialog.setPositiveButton("取消") { dialog, id ->
-                         dialog.dismiss()
-                     }
-                     mAlertDialog.setNegativeButton("確定") { dialog, id ->
-                         //新增不能為空
-                         if( _id.text.toString().trim().isEmpty() ||
-                             date.text.toString().trim().isEmpty()  ||
-                             dept.text.toString().trim().isEmpty()       ||
-                             main_trans_code.text.toString().trim().isEmpty() ||
-                             sec_trans_code.text.toString().trim().isEmpty()  ){
-                             Toast.makeText(this,"Input required", Toast.LENGTH_LONG).show()
-                         }
-                         else{
-                             val addData= StockTransOrderHeader()
-                             addData._id=_id.text.toString()
-                             addData.date=date.text.toString().substring(0,date.text.toString().indexOf("("))
-                             addData.dept=dept.text.toString().substring(0,dept.text.toString().indexOf(" "))
-                             addData.main_trans_code=main_trans_code.text.toString().substring(0,main_trans_code.text.toString().indexOf(" "))
-                             addData.sec_trans_code=sec_trans_code.text.toString().substring(0,sec_trans_code.text.toString().indexOf(" "))
-                             if(purchase_order_id.text.toString()==""){
-                                 addData.purchase_order_id=""
-                             }
-                             else{
-                                 addData.purchase_order_id=purchase_order_id.text.toString().substring(0,purchase_order_id.text.toString().indexOf(" "))
-                             }
-                             if(prod_ctrl_order_number.text.toString()==""){
-                                 addData.prod_ctrl_order_number=""
-                             }
-                             else{
-                                 addData.prod_ctrl_order_number=prod_ctrl_order_number.text.toString().substring(0,prod_ctrl_order_number.text.toString().indexOf("\n"))
-                             }
-
-
-                             addData.illustrate=illustrate.text.toString()
-
-
-                             /*addData.remark=remark.text.toString()
-                             addData.creator= cookie_data.username
-                             addData.create_time= Calendar.getInstance().getTime().toString()
-                             addData.editor= cookie_data.username
-                             addData.edit_time= Calendar.getInstance().getTime().toString()*/
-                             add_header_body("StockTransOrderHeader",addData)
-                             when(cookie_data.status){
-                                 0-> {//成功
-
-                                     StockTransOrderHeaderSimplify_adapter2.addItem(addData)
-                                     Toast.makeText(this, cookie_data.msg, Toast.LENGTH_SHORT).show()
-                                 }
-                                 1->{//失敗
-                                     Toast.makeText(this, cookie_data.msg, Toast.LENGTH_SHORT).show()
-                                 }
-                             }
-                         }
-                     }
-                     mAlertDialog.show()
-                 }*/
+                }
 
             }
 
@@ -630,7 +546,7 @@ class Activity07 : AppCompatActivity() {
 
     private fun show_header_body(operation:String,view_type:String,view_hide:String) {
         when(operation){
-            "StockTransOrderHeader"->{
+            "StockTransOrderBody"->{
                 val body = FormBody.Builder()
                     .add("username", cookie_data.username)
                     .add("operation", operation)
@@ -641,7 +557,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/inventory_management")
+                    .url(cookie_data.URL+"/inventory_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -693,7 +609,7 @@ class Activity07 : AppCompatActivity() {
                     .build()
 
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/inventory_management")
+                    .url(cookie_data.URL+"/inventory_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -740,7 +656,7 @@ class Activity07 : AppCompatActivity() {
                     .build()
 
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/inventory_management")
+                    .url(cookie_data.URL+"/inventory_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -765,7 +681,7 @@ class Activity07 : AppCompatActivity() {
     private fun <T>show_combobox(operation:String,view_type:String,view_hide:String,fmt:T) {
         when(fmt)
         {
-            is ProductControlOrderBody_A ->{
+            is StockTransOrderBody ->{
                 val filter = JSONObject()
                 filter.put("is_closed",false)
                 val body = FormBody.Builder()
@@ -779,7 +695,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/production_control_sheet_management")
+                    .url(cookie_data.URL+"/inventory_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -788,16 +704,13 @@ class Activity07 : AppCompatActivity() {
                         var response = cookie_data.okHttpClient.newCall(request).execute()
                         var responseinfo=response.body?.string().toString()
                         //Log.d("GSON", "msg:${responseinfo}")
-                        var json= Gson().fromJson(responseinfo, ShowProductControlOrderBody_A::class.java)
+                        var json= Gson().fromJson(responseinfo, ShowStockTransOrderBody::class.java)
                         when(json.status){
                             0->{
                                 cookie_data.status =json.status
-                                var data: ArrayList<ProductControlOrderBody_A> =json.data
-                                comboboxData.removeAll(comboboxData)
-                                for(i in 0 until data.size){
-                                    comboboxData.add(data[i].pline_id)
-                                }
-                                Log.d("GSON", "msg:${comboboxData}")
+                                var data: ArrayList<StockTransOrderBody> =json.data
+                                allComboboxData=data.toMutableList().toCollection(java.util.ArrayList())
+
                             }
                             1->{
                                 var fail= Gson().fromJson(responseinfo, Response::class.java)
@@ -833,7 +746,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/inventory_management")
+                    .url(cookie_data.URL+"/inventory_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -872,7 +785,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -915,7 +828,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -961,7 +874,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1004,7 +917,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1047,7 +960,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1090,7 +1003,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1137,7 +1050,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1180,7 +1093,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1223,7 +1136,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/master_scheduled_order_management")
+                    .url(cookie_data.URL+"/master_scheduled_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1269,7 +1182,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1313,7 +1226,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/custom_order_management")
+                    .url(cookie_data.URL+"/custom_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1358,7 +1271,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1402,7 +1315,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1454,7 +1367,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/special_basic_management")
+                    .url(cookie_data.URL+"/special_basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1499,7 +1412,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/special_basic_management")
+                    .url(cookie_data.URL+"/special_basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1545,7 +1458,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1595,7 +1508,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/staff_management")
+                    .url(cookie_data.URL+"/staff_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1645,7 +1558,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1690,7 +1603,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1737,7 +1650,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/production_control_sheet_management")
+                    .url(cookie_data.URL+"/production_control_sheet_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1785,7 +1698,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/production_control_sheet_management")
+                    .url(cookie_data.URL+"/production_control_sheet_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1845,7 +1758,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1891,7 +1804,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1937,7 +1850,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1982,7 +1895,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -2025,7 +1938,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/purchase_order_management")
+                    .url(cookie_data.URL+"/purchase_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -2079,7 +1992,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/purchase_order_management")
+                    .url(cookie_data.URL+"/purchase_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -2128,7 +2041,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/purchase_order_management")
+                    .url(cookie_data.URL+"/purchase_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -2177,7 +2090,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/purchase_order_management")
+                    .url(cookie_data.URL+"/purchase_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -2228,7 +2141,7 @@ class Activity07 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/inventory_management")
+                    .url(cookie_data.URL+"/inventory_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -2277,9 +2190,6 @@ class Activity07 : AppCompatActivity() {
 
 
     }
-
-
-
 
     //點擊旁邊自動收起鍵盤
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {

@@ -20,9 +20,7 @@
         >
 
 
-
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:id="@+id/contNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,19 +30,18 @@
             android:hint="櫃編"
             android:background="#E1E1E1"
             >
-            <AutoCompleteTextView
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_contNo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
 
                 >
-            </AutoCompleteTextView>
+            </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:id="@+id/cont_type_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,14 +51,14 @@
             android:hint="櫃型代號"
             android:background="#E1E1E1"
             >
-            <AutoCompleteTextView
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_cont_type_code"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
 
                 >
-            </AutoCompleteTextView>
+            </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -88,7 +85,6 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:id="@+id/is_urgent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -98,14 +94,14 @@
             android:hint="急單"
             android:background="#E1E1E1"
             >
-            <AutoCompleteTextView
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_is_urgent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
                 android:text="false"
                 >
-            </AutoCompleteTextView>
+            </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -201,28 +197,18 @@
 
         </Button>
         <Button
-            android:id="@+id/lock_btn"
+            android:id="@+id/next_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edit_btn"
             android:layout_marginTop="16dp"
-            android:text="鎖定"
+            android:text="下一筆"
             android:visibility="invisible">
 
         </Button>
 
-        <Button
-            android:id="@+id/over_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lock_btn"
-            android:layout_marginTop="16dp"
-            android:text="結案"
-            android:visibility="invisible">
 
-        </Button>
 
         <View
             android:layout_width="match_parent"

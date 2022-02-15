@@ -26,7 +26,7 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RecyclerItemStockTransOrderBodyWithHeaderAdapter() :
+class RecyclerItemStockTransOrderBodyWithHeaderAdapter(FilterTopic:String,FilterContent:String) :
     RecyclerView.Adapter<RecyclerItemStockTransOrderBodyWithHeaderAdapter.ViewHolder>() {
     private var itemData: ShowStockTransOrderBody =Gson().fromJson(cookie_data.response_data, ShowStockTransOrderBody::class.java)
     private var data: ArrayList<StockTransOrderBody> =itemData.data
@@ -35,21 +35,45 @@ class RecyclerItemStockTransOrderBodyWithHeaderAdapter() :
     val dateF2 = SimpleDateFormat("yyyy-MM-dd", Locale.US)
     init {
         // println(SelectFilter)
-        //data=filter(data,Filter)//過濾date<filter && main_trans_code!=M03
+        data=filter(data,FilterTopic,FilterContent)//過濾date<filter && main_trans_code!=M03
         data=sort(data)
 
     }
 
-    fun filter(data:ArrayList<StockTransOrderHeader>,filter:String): ArrayList<StockTransOrderHeader>{
-        var ArrayList:ArrayList<StockTransOrderHeader> = ArrayList<StockTransOrderHeader>()
-
-        for(i in 0 until data.size){
-            var date1=dateF2.parse(data[i].date)
-            var date2=dateF2.parse(filter)
-            if(date1.compareTo(date2)>=0 && data[i].main_trans_code=="M03"){
-                ArrayList.add(data[i])
+    fun filter(data:ArrayList<StockTransOrderBody>,filterTopic:String,filterContent:String): ArrayList<StockTransOrderBody>{
+        var ArrayList:ArrayList<StockTransOrderBody> = ArrayList<StockTransOrderBody>()
+        if(filterTopic=="需求日期"){
+            for(i in 0 until data.size){
+                var date1=dateF2.parse(cookie_data.StockTransOrderHeader_date_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(data[i].header_id)])
+                var date2=dateF2.parse(filterContent)
+                if(date1.compareTo(date2)>=0 && cookie_data.StockTransOrderHeader_main_trans_code_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(data[i].header_id)]=="M02"){
+                    ArrayList.add(data[i])
+                }
             }
         }
+        else if(filterTopic=="料件編號/名稱"){
+            for(i in 0 until data.size){
+                if(data[i].item_id==filterContent && cookie_data.StockTransOrderHeader_main_trans_code_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(data[i].header_id)]=="M02"){
+                    ArrayList.add(data[i])
+                }
+            }
+        }
+        else if(filterTopic=="生產管制單編號"){
+            for(i in 0 until data.size){
+                if(cookie_data.StockTransOrderHeader_prod_ctrl_order_number_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(data[i].header_id)]==filterContent && cookie_data.StockTransOrderHeader_main_trans_code_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(data[i].header_id)]=="M02"){
+                    ArrayList.add(data[i])
+                }
+            }
+        }
+        else if(filterTopic=="需求單位"){
+            for(i in 0 until data.size){
+                if(cookie_data.StockTransOrderHeader_dept_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(data[i].header_id)]==filterContent && cookie_data.StockTransOrderHeader_main_trans_code_ComboboxData[cookie_data.StockTransOrderHeader_id_ComboboxData.indexOf(data[i].header_id)]=="M02"){
+                    ArrayList.add(data[i])
+                }
+            }
+        }
+
+
         return ArrayList
     }
     fun sort(data:ArrayList<StockTransOrderBody>): ArrayList<StockTransOrderBody>{
@@ -150,7 +174,7 @@ class RecyclerItemStockTransOrderBodyWithHeaderAdapter() :
         holder.remark.isTextInputLayoutFocusedRectEnabled=false
         holder.deletebtn.isVisible=true
         holder.edit_btn.isVisible=true
-        holder.lockbtn.isVisible=true
+        holder.next_btn.isVisible=true
         holder.overbtn.isVisible=true
     }
 
@@ -160,24 +184,24 @@ class RecyclerItemStockTransOrderBodyWithHeaderAdapter() :
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var date=itemView.findViewById<TextInputEditText>(R.id.edit_date)
-        var dept=itemView.findViewById<AutoCompleteTextView>(R.id.edit_dept)
+        var dept=itemView.findViewById<TextInputEditText>(R.id.edit_dept)
         var body_id=itemView.findViewById<TextInputEditText>(R.id.edit_body_id)
-        var item_id=itemView.findViewById<AutoCompleteTextView>(R.id.edit_item_id)
+        var item_id=itemView.findViewById<TextInputEditText>(R.id.edit_item_id)
         var item_name=itemView.findViewById<TextInputEditText>(R.id.edit_item_name)
         var modify_count=itemView.findViewById<TextInputEditText>(R.id.edit_modify_count)
-        var main_trans_code=itemView.findViewById<AutoCompleteTextView>(R.id.edit_main_trans_code)
-        var sec_trans_code=itemView.findViewById<AutoCompleteTextView>(R.id.edit_sec_trans_code)
+        var main_trans_code=itemView.findViewById<TextInputEditText>(R.id.edit_main_trans_code)
+        var sec_trans_code=itemView.findViewById<TextInputEditText>(R.id.edit_sec_trans_code)
         var store_area =itemView.findViewById<AutoCompleteTextView>(R.id.edit_store_area)
         var store_local=itemView.findViewById<AutoCompleteTextView>(R.id.edit_store_local)
         var qc_insp_number=itemView.findViewById<TextInputEditText>(R.id.edit_qc_insp_number)
-        var prod_ctrl_order_number =itemView.findViewById<AutoCompleteTextView>(R.id.edit_prod_ctrl_order_number)
-        var purchase_order_id =itemView.findViewById<AutoCompleteTextView>(R.id.edit_purchase_order_id)
-        var is_rework=itemView.findViewById<AutoCompleteTextView>(R.id.edit_is_rework)
+        var prod_ctrl_order_number =itemView.findViewById<TextInputEditText>(R.id.edit_prod_ctrl_order_number)
+        var purchase_order_id =itemView.findViewById<TextInputEditText>(R.id.edit_purchase_order_id)
+        var is_rework=itemView.findViewById<TextInputEditText>(R.id.edit_is_rework)
         var is_closed=itemView.findViewById<TextInputEditText>(R.id.edit_is_closed)
 
         var edit_btn=itemView.findViewById<Button>(R.id.edit_btn)
         var deletebtn=itemView.findViewById<Button>(R.id.delete_btn)
-        var lockbtn=itemView.findViewById<Button>(R.id.lock_btn)
+        var next_btn=itemView.findViewById<Button>(R.id.next_btn)
         var overbtn=itemView.findViewById<Button>(R.id.over_btn)
         /*var creator=itemView.findViewById<AutoCompleteTextView>(R.id.edit_creator)
         var creator_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_create_time)
@@ -351,8 +375,15 @@ class RecyclerItemStockTransOrderBodyWithHeaderAdapter() :
                 mAlertDialog.show()
 
             }
+            //下一筆
+            next_btn.setOnClickListener {
+                if(adapterPosition+1<=data.size){
+                    cookie_data.recyclerView.smoothScrollToPosition(adapterPosition+1)
+                }
 
-            //鎖定按鈕
+            }
+
+           /* //鎖定按鈕
             lockbtn.setOnClickListener {
                 //Log.d("GSON", "msg: ${data}\n")
                 val mAlertDialog = AlertDialog.Builder(itemView.context)
@@ -378,15 +409,15 @@ class RecyclerItemStockTransOrderBodyWithHeaderAdapter() :
                 }
                 mAlertDialog.show()
 
-            }
+            }*/
 
             //結案按鈕
             overbtn.setOnClickListener {
                 //Log.d("GSON", "msg: ${data}\n")
                 val mAlertDialog = AlertDialog.Builder(itemView.context)
                 mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
-                mAlertDialog.setTitle("結案") //set alertdialog title
-                mAlertDialog.setMessage("確定要結案?！") //set alertdialog message
+                mAlertDialog.setTitle("發料") //set alertdialog title
+                mAlertDialog.setMessage("確定要發料?！") //set alertdialog message
                 mAlertDialog.setPositiveButton("NO") { dialog, id ->
                     dialog.dismiss()
                 }
@@ -394,8 +425,10 @@ class RecyclerItemStockTransOrderBodyWithHeaderAdapter() :
                     over_ProductControlOrder("StockTransOrderBody",data[adapterPosition])
                     when(cookie_data.status){
                         0-> {//成功
-                            is_closed.setText("true")
+                            //is_closed.setText("true")
                            // close_time.setText(Calendar.getInstance().getTime().toString())
+                            data.removeAt(adapterPosition)
+                            notifyItemRemoved(adapterPosition)
                             Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
 
                         }
@@ -457,7 +490,7 @@ class RecyclerItemStockTransOrderBodyWithHeaderAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -504,7 +537,7 @@ class RecyclerItemStockTransOrderBodyWithHeaderAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -550,7 +583,7 @@ class RecyclerItemStockTransOrderBodyWithHeaderAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -596,7 +629,7 @@ class RecyclerItemStockTransOrderBodyWithHeaderAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()

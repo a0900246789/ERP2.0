@@ -44,9 +44,9 @@ class cookie_data : Application() {
         lateinit var scan_qrcode:String
         lateinit var scan_card_number:String
         lateinit var dept:String
-        const val username:String="System"//"System"
-        const val password:String="cvFm9Mq6"//"cvFm9Mq6"
-        const val URL:String="http://140.125.46.125:8000"
+        const val username:String="System"//"One"
+        const val password:String="cvFm9Mq6"//"eb2014326"
+        const val URL:String="http://sunwhiteerptest.ddns.net:8000"//"http://118.168.43.235:8000"//"http://140.125.46.125:8000"
         val date = SimpleDateFormat("yyyy-MM-dd")
         val currentDate = date.format(Date())
         val datetime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -115,12 +115,21 @@ class cookie_data : Application() {
         var currentAdapter:String=""
         var itemposition:Int=0
         lateinit var recyclerView: RecyclerView
+        lateinit var first_recyclerView: RecyclerView
+        lateinit var second_recyclerView: RecyclerView
+        lateinit var third_recyclerView: RecyclerView
+
         lateinit var Add_View: View
 
+        var limited_days_ComboboxData: MutableList<Int> = mutableListOf<Int>()//採購交期協調限制天數
         var customer_id_ComboboxData: MutableList<String> = mutableListOf<String>()//客戶編號
+        var customer_abbreviation_ComboboxData: MutableList<String> = mutableListOf<String>()//客戶簡稱
+        var customer_booking_prefix_ComboboxData: MutableList<String> = mutableListOf<String>()//客戶訂艙通知單前置碼
         var cont_id_ComboboxData: MutableList<String> = mutableListOf<String>()//櫃編(去除年度)
         var cont_code_ComboboxData: MutableList<String> = mutableListOf<String>()//櫃編
+        var cont_age_ComboboxData: MutableList<String> = mutableListOf<String>()//櫃編年度
         var product_id_ComboboxData: MutableList<String> = mutableListOf<String>()//產品編號
+        var product_name_ComboboxData: MutableList<String> = mutableListOf<String>()//產品名稱
         var product_type_id_ComboboxData: MutableList<String> = mutableListOf<String>()//產品型號
         var cont_type_code_ComboboxData: MutableList<String> = mutableListOf<String>()//櫃型代號
         var port_id_ComboboxData: MutableList<String> = mutableListOf<String>()//港口編號
@@ -129,15 +138,19 @@ class cookie_data : Application() {
         var store_area_id_name_ComboboxData: MutableList<String> = mutableListOf<String>()//儲區id+名稱
         var store_local_ComboboxData: MutableList<String> = mutableListOf<String>()//儲位
         var shipping_number_ComboboxData: MutableList<String> = mutableListOf<String>()//船公司代號
+        var shipping_name_ComboboxData: MutableList<String> = mutableListOf<String>()//船公司簡稱
+        var shipping_number_name_ComboboxData: MutableList<String> = mutableListOf<String>()//船公司-代號-簡稱
         var item_id_ComboboxData: MutableList<String> = mutableListOf<String>()//料件編號
         var Filter_item_id_ComboboxData: MutableList<String> = mutableListOf<String>()//料件編號(篩選過)
         var item_name_ComboboxData: MutableList<String> = mutableListOf<String>()//料件名稱
+        var item_id_name_ComboboxData: MutableList<String> = mutableListOf<String>()//料件編號+名稱
         var semi_finished_product_number_ComboboxData: MutableList<String> = mutableListOf<String>()//半成品編號
         var is_exemption_ComboboxData: MutableList<Boolean> = mutableListOf<Boolean>()//免驗
         var pline_name_ComboboxData: MutableList<String> = mutableListOf<String>()//生產線名稱
         var pline_id_ComboboxData: MutableList<String> = mutableListOf<String>()//生產線編號
         var pline_id_name_ComboboxData: MutableList<String> = mutableListOf<String>()//生產線編號名稱
         var out_sourceing_ComboboxData: MutableList<Boolean> = mutableListOf<Boolean>()//生產線托外
+        var pline_vender_id_ComboboxData: MutableList<String> = mutableListOf<String>()//生產線廠商編號
         var dept_name_ComboboxData: MutableList<String> = mutableListOf<String>()//部門
 
         var card_number_ComboboxData: MutableList<String> = mutableListOf<String>()//員工卡號
@@ -155,6 +168,8 @@ class cookie_data : Application() {
         var device_id_ComboboxData: MutableList<String> = mutableListOf<String>()//設備編號
         var vender_id_ComboboxData: MutableList<String> = mutableListOf<String>()//廠商編號
         var vender_abbreviation_ComboboxData: MutableList<String> = mutableListOf<String>()//廠商簡稱
+        var vender_id_halfname_ComboboxData: MutableList<String> = mutableListOf<String>()//廠商編號簡稱
+        var vender_card_number_ComboboxData: MutableList<String> = mutableListOf<String>()//聯絡廠商的員工id
         var maintain_type_ComboboxData: MutableList<String> = mutableListOf<String>()//維護類別
 
         var ProductControlOrderHeader_id_ComboboxData: MutableList<String> = mutableListOf<String>()//生產管制單號
@@ -164,9 +179,13 @@ class cookie_data : Application() {
         var ProductControlOrderBody_A_semi_finished_prod_number_ComboboxData: MutableList<String> = mutableListOf<String>()//生產管制單身-半成品編號
         var ProductControlOrderBody_A_pline_id_ComboboxData: MutableList<String> = mutableListOf<String>()//生產管制單身-生產線
         var ProductControlOrderBody_A_complete_date_ComboboxData: MutableList<String?> = mutableListOf<String?>()//生產管制單身-實際完工日期
+        var ProductControlOrderBody_A_est_complete_date_ComboboxData: MutableList<String?> = mutableListOf<String?>()//生產管制單身-預際完工日期
+        var ProductControlOrderBody_A_is_closed_ComboboxData: MutableList<Boolean> = mutableListOf<Boolean>()//生產管制單身-是否結案
+        var ProductControlOrderBody_A_is_re_make_ComboboxData: MutableList<Boolean> = mutableListOf<Boolean>()//生產管制單身-重工
         var ProductControlOrderBody_D_prod_batch_code_ComboboxData: MutableList<String> = mutableListOf<String>()//生產管制單批號
         var MasterScheduledOrderHeader_id_ComboboxData: MutableList<String> = mutableListOf<String>()//主排單號
         var CustomerOrderHeader_poNo_ComboboxData: MutableList<String> = mutableListOf<String>()//客戶訂單單號
+        var CustomerOrderHeader_swe_ComboboxData: MutableList<String?> = mutableListOf<String?>()//客戶訂單單頭-swe
         var MeHeader_id_ComboboxData: MutableList<String> = mutableListOf<String>()//工程編制單號
         var MeBody_process_number_ComboboxData: MutableList<String> = mutableListOf<String>()//工程編制單身-編號
         var MeBody_work_option_ComboboxData: MutableList<String> = mutableListOf<String>()//工程編制單身-作業項目
@@ -176,8 +195,10 @@ class cookie_data : Application() {
         var PurchaseBatchOrder_is_closed_ComboboxData: MutableList<Boolean> = mutableListOf<Boolean>()//採購單批號-結案
         var PurchaseOrderHeader_poNo_ComboboxData: MutableList<String> = mutableListOf<String>()//採購單頭-單號
         var PurchaseOrderHeader_vender_name_ComboboxData: MutableList<String> = mutableListOf<String>()//採購單頭-廠商簡稱
+
         var PurchaseOrderBody_poNo_ComboboxData: MutableList<String> = mutableListOf<String>()//採購單身-單號
         var PurchaseOrderBody_body_id_ComboboxData: MutableList<String> = mutableListOf<String>()//採購單身-編號
+        var PurchaseOrderBody_item_id_ComboboxData: MutableList<String> = mutableListOf<String>()//採購單身-料件編號
         var PurchaseInlineOrderBody_id_ComboboxData: MutableList<String> = mutableListOf<String>()//內聯單編號
         var VenderShipmentHeader_poNo_ComboboxData: MutableList<String?> = mutableListOf<String?>()//廠商進貨單(單頭)-進貨單號
         var VenderShipmentHeader_purchase_date_ComboboxData: MutableList<String?> = mutableListOf<String?>()//廠商進貨單(單頭)-進貨日期
@@ -190,6 +211,20 @@ class cookie_data : Application() {
         var StockTransOrderHeader_prod_ctrl_order_number_ComboboxData: MutableList<String> = mutableListOf<String>()//庫存異動單(單頭)-生產管制單編號
         var StockTransOrderHeader_main_trans_code_ComboboxData: MutableList<String> = mutableListOf<String>()//庫存異動單(單頭)-主異動別代號
         var StockTransOrderHeader_sec_trans_code_ComboboxData: MutableList<String> = mutableListOf<String>()//庫存異動單(單頭)-次異動別代號
+        var OAReference_oa_referenceNO_ComboboxData: MutableList<String> = mutableListOf<String>()//OAReference01
+        var OAReference_oa_referenceNO1_ComboboxData: MutableList<String> = mutableListOf<String>()//OAReference02
+        var OAReference_oa_referenceNO2_ComboboxData: MutableList<String> = mutableListOf<String>()//OAReference03
+        var OAReference_oa_referenceNO3_ComboboxData: MutableList<String> = mutableListOf<String>()//OAReference04
+        var BookingNoticeHeader_id_ComboboxData: MutableList<String> = mutableListOf<String>()//訂艙通知單-單頭-訂艙管制單號
+        var BookingNoticeHeader_notice_numbe_ComboboxData: MutableList<String> = mutableListOf<String>()//訂艙通知單-單頭-訂艙通知號碼
+        var BookingNoticeHeader_customer_poNo_ComboboxData: MutableList<String> = mutableListOf<String>()//訂艙通知單-單頭-客戶訂單單號
+        var BookingNoticeHeader_oa_referenceNO1_ComboboxData: MutableList<String> = mutableListOf<String>()//訂艙通知單-單頭-OA1
+        var OAFileDeliveryRecordBody_trackingNo_ComboboxData: MutableList<String> = mutableListOf<String>()//OA文件寄送記錄(單身)-寄件單據號碼
+        var OAFileDeliveryRecordBody_booking_noticeNo_ComboboxData: MutableList<String> = mutableListOf<String>()//OA文件寄送記錄(單身)-訂艙通知號碼
+        var StackingControlListHeader_code_ComboboxData: MutableList<String> = mutableListOf<String>()//疊櫃管制單(單頭)-單號
+        var StackingControlListHeader_contNo_ComboboxData: MutableList<String> = mutableListOf<String>()//疊櫃管制單(單頭)-櫃編
+        var StackingControlListHeader_cont_type_code_ComboboxData: MutableList<String> = mutableListOf<String>()//疊櫃管制單(單頭)-櫃型代號
+
     }
 }
 class MainActivity : AppCompatActivity() {
@@ -212,7 +247,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun gettoken() {
         val request= Request.Builder()
-            .url("http://140.125.46.125:8000/login")
+            .url(cookie_data.URL+"/login")
             .header("User-Agent","ERP_MOBILE")
             .build()
         cookie_data.okHttpClient.newCall(request).enqueue(object : Callback {
@@ -250,7 +285,7 @@ class MainActivity : AppCompatActivity() {
             .add("csrfmiddlewaretoken", cookie_data.tokenValue)
             .build()
         val request = Request.Builder()
-            .url("http://140.125.46.125:8000/login")
+            .url(cookie_data.URL+"/login")
             .header("User-Agent", "ERP_MOBILE")
             .post(body)
             .build()

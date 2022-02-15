@@ -105,7 +105,7 @@ class PopUpOutSourceFragment(filter:String) : DialogFragment() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/production_control_sheet_management")
+                    .url(cookie_data.URL+"/production_control_sheet_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()

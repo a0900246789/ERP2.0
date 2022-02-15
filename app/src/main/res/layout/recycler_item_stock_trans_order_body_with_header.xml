@@ -43,7 +43,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:id="@+id/item_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,14 +52,14 @@
             android:hint="料件編號"
             android:background="#E1E1E1"
             >
-            <AutoCompleteTextView
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_item_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
 
                 >
-            </AutoCompleteTextView>
+            </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -200,7 +199,6 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:id="@+id/prod_ctrl_order_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -210,18 +208,17 @@
             android:hint="生產管制單編號"
             android:background="#E1E1E1"
             >
-            <AutoCompleteTextView
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_prod_ctrl_order_number"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
 
                 >
-            </AutoCompleteTextView>
+            </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:id="@+id/purchase_order_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -231,14 +228,14 @@
             android:hint="採購單編號"
             android:background="#E1E1E1"
             >
-            <AutoCompleteTextView
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_purchase_order_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
 
                 >
-            </AutoCompleteTextView>
+            </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -285,7 +282,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:id="@+id/is_rework"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -295,18 +291,17 @@
             android:hint="重工"
             android:background="#E1E1E1"
             >
-            <AutoCompleteTextView
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_is_rework"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
                 android:text="false"
                 >
-            </AutoCompleteTextView>
+            </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:id="@+id/_dept"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -316,18 +311,17 @@
             android:hint="需求單位"
             android:background="#E1E1E1"
             >
-            <AutoCompleteTextView
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_dept"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
 
                 >
-            </AutoCompleteTextView>
+            </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:id="@+id/main_trans_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -337,18 +331,17 @@
             android:hint="主異動別代號"
             android:background="#E1E1E1"
             >
-            <AutoCompleteTextView
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_main_trans_code"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
 
                 >
-            </AutoCompleteTextView>
+            </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:id="@+id/sec_trans_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -358,14 +351,14 @@
             android:hint="次異動別代號"
             android:background="#E1E1E1"
             >
-            <AutoCompleteTextView
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_sec_trans_code"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
 
                 >
-            </AutoCompleteTextView>
+            </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -392,13 +385,13 @@
 
         </Button>
         <Button
-            android:id="@+id/lock_btn"
+            android:id="@+id/next_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edit_btn"
             android:layout_marginTop="16dp"
-            android:text="鎖定"
+            android:text="下一筆"
             android:visibility="invisible">
 
         </Button>
@@ -408,9 +401,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lock_btn"
+            app:layout_constraintTop_toBottomOf="@id/next_btn"
             android:layout_marginTop="16dp"
-            android:text="結案"
+            android:text="發料"
             android:visibility="invisible">
 
         </Button>

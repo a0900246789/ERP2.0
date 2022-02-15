@@ -245,11 +245,11 @@ class RecyclerItemProductControlOrderBodyDAdapter() :
                             newData.est_complete_date_vender=est_complete_date_vender.text.toString()
                         }
                         est_complete_date_vender.inputType=InputType.TYPE_NULL
-                        newData.est_output=est_output.text.toString().toInt()
+                        newData.est_output=est_output.text.toString().toDouble()
                         est_output.inputType=InputType.TYPE_NULL
-                        newData.actual_output_vender=actual_output_vender.text.toString().toInt()
+                        newData.actual_output_vender=actual_output_vender.text.toString().toDouble()
                         actual_output_vender.inputType=InputType.TYPE_NULL
-                        newData.quantity_delivered=quantity_delivered.text.toString().toInt()
+                        newData.quantity_delivered=quantity_delivered.text.toString().toDouble()
                         quantity_delivered.inputType=InputType.TYPE_NULL
                         newData.is_urgent=is_urgent.text.toString().toBoolean()
                         is_urgent.isClickable=false
@@ -507,7 +507,7 @@ class RecyclerItemProductControlOrderBodyDAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -560,7 +560,7 @@ class RecyclerItemProductControlOrderBodyDAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -612,7 +612,7 @@ class RecyclerItemProductControlOrderBodyDAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -664,7 +664,7 @@ class RecyclerItemProductControlOrderBodyDAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()

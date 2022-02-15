@@ -38,7 +38,7 @@ class RecyclerItemVenderShipmentBodySimplifyAdapter(SelectFilter:String) :
     val timeF = SimpleDateFormat("HH:mm:ss", Locale.TAIWAN)
     init {
         // println(SelectFilter)
-        data=filter(data)
+        data=filter(data)//濾掉免驗=true
         data=sort(data,SelectFilter)
 
     }
@@ -55,39 +55,14 @@ class RecyclerItemVenderShipmentBodySimplifyAdapter(SelectFilter:String) :
     }
     fun sort(data:ArrayList<VenderShipmentBody>,filter:String): ArrayList<VenderShipmentBody>{
         var sortedList:List<VenderShipmentBody> = data
-        when(filter){
-            "進貨日期"->{
-                sortedList  = data.sortedWith(
-                    compareBy(
-                        { cookie_data.VenderShipmentHeader_purchase_date_ComboboxData[cookie_data.VenderShipmentHeader_poNo_ComboboxData.indexOf(it.poNo) ]}
-                    )
-                )
-            }
-            "廠商編號"->{
-                sortedList  = data.sortedWith(
-                    compareBy(
-                        { cookie_data.VenderShipmentHeader_vender_id_ComboboxData[cookie_data.VenderShipmentHeader_poNo_ComboboxData.indexOf(it.poNo) ]}
-                    )
-                )
-            }
-            "進貨單號"->{
-                sortedList  = data.sortedWith(
-                    compareBy(
-                        { it.poNo }
-                    )
-                )
-            }
-            "項次"->{
-                sortedList  = data.sortedWith(
-                    compareBy(
-                        { it.section }
-                    )
-                )
-            }
-
-
-        }
-
+        sortedList  = data.sortedWith(
+            compareBy(
+                { cookie_data.VenderShipmentHeader_purchase_date_ComboboxData[cookie_data.VenderShipmentHeader_poNo_ComboboxData.indexOf(it.poNo) ]},
+                { cookie_data.VenderShipmentHeader_vender_id_ComboboxData[cookie_data.VenderShipmentHeader_poNo_ComboboxData.indexOf(it.poNo) ]},
+                { it.poNo },
+                { it.section }
+            )
+        )
         return sortedList.toCollection(java.util.ArrayList())
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -169,11 +144,10 @@ class RecyclerItemVenderShipmentBodySimplifyAdapter(SelectFilter:String) :
         holder.is_special_case.inputType=InputType.TYPE_NULL*/
 
 
-
-        holder.deletebtn.isVisible=true
         holder.edit_btn.isVisible=true
-        holder.lockbtn.isVisible=true
-        holder.overbtn.isVisible=true
+        holder.next_btn.isVisible=true
+        //holder.lockbtn.isVisible=true
+        //holder.overbtn.isVisible=true
     }
 
     override fun getItemCount(): Int {
@@ -182,15 +156,15 @@ class RecyclerItemVenderShipmentBodySimplifyAdapter(SelectFilter:String) :
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var purchase_date=itemView.findViewById<TextInputEditText>(R.id.edit_purchase_date)
-        var vender_id=itemView.findViewById<AutoCompleteTextView>(R.id.edit_vender_id)
+        var vender_id=itemView.findViewById<TextInputEditText>(R.id.edit_vender_id)
         var vender_shipment_id=itemView.findViewById<TextInputEditText>(R.id.edit_vender_shipment_id)
-        var item_name=itemView.findViewById<AutoCompleteTextView>(R.id.edit_item_name)
+        var item_name=itemView.findViewById<TextInputEditText>(R.id.edit_item_name)
 
         var poNo=itemView.findViewById<TextInputEditText>(R.id.edit_poNo)
         var section=itemView.findViewById<TextInputEditText>(R.id.edit_section)
-        var item_id=itemView.findViewById<AutoCompleteTextView>(R.id.edit_item_id)
+        var item_id=itemView.findViewById<TextInputEditText>(R.id.edit_item_id)
         var purchase_count=itemView.findViewById<TextInputEditText>(R.id.edit_purchase_count)
-        var prod_batch_code=itemView.findViewById<AutoCompleteTextView>(R.id.edit_prod_batch_code)
+        var prod_batch_code=itemView.findViewById<TextInputEditText>(R.id.edit_prod_batch_code)
 
         var qc_date=itemView.findViewById<TextInputEditText>(R.id.edit_qc_date)
 
@@ -201,9 +175,9 @@ class RecyclerItemVenderShipmentBodySimplifyAdapter(SelectFilter:String) :
         //var is_special_case=itemView.findViewById<AutoCompleteTextView>(R.id.edit_is_special_case)
 
         var edit_btn=itemView.findViewById<Button>(R.id.edit_btn)
-        var deletebtn=itemView.findViewById<Button>(R.id.delete_btn)
-        var lockbtn=itemView.findViewById<Button>(R.id.lock_btn)
-        var overbtn=itemView.findViewById<Button>(R.id.over_btn)
+        var next_btn=itemView.findViewById<Button>(R.id.next_btn)
+       // var lockbtn=itemView.findViewById<Button>(R.id.lock_btn)
+        //var overbtn=itemView.findViewById<Button>(R.id.over_btn)
 
         var layout=itemView.findViewById<ConstraintLayout>(R.id.constraint_layout)
         var edit=false
@@ -284,7 +258,7 @@ class RecyclerItemVenderShipmentBodySimplifyAdapter(SelectFilter:String) :
                             newData.qc_date=qc_date.text.toString().substring(0,qc_date.text.toString().indexOf("("))
                         }
                         qc_date.inputType=InputType.TYPE_NULL
-                        println(newData.qc_date)
+                        //println(newData.qc_date)
 
                         when(checkResult.text.toString()){
                             "待判定"->{
@@ -331,6 +305,11 @@ class RecyclerItemVenderShipmentBodySimplifyAdapter(SelectFilter:String) :
                                 data[adapterPosition] = newData//更改渲染資料
                                 //editor.setText(cookie_data.username)
                                 Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                                if(checkResult.text.toString()=="允收"){
+                                    over_Purchase("VenderShipmentBody",data[adapterPosition])
+                                    Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                                }
+
                             }
                             1->{//失敗
                                 Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
@@ -350,8 +329,16 @@ class RecyclerItemVenderShipmentBodySimplifyAdapter(SelectFilter:String) :
                 }
 
             }
+
+            //下一筆
+            next_btn.setOnClickListener {
+                if(adapterPosition+1<=data.size){
+                    cookie_data.recyclerView.smoothScrollToPosition(adapterPosition+1)
+                }
+
+            }
             //刪除按鈕
-            deletebtn.setOnClickListener {
+           /* deletebtn.setOnClickListener {
                 //Log.d("GSON", "msg: ${data}\n")
                 val mAlertDialog = AlertDialog.Builder(itemView.context)
                 mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
@@ -377,10 +364,10 @@ class RecyclerItemVenderShipmentBodySimplifyAdapter(SelectFilter:String) :
                 }
                 mAlertDialog.show()
 
-            }
+            }*/
 
             //鎖定按鈕
-            lockbtn.setOnClickListener {
+           /* lockbtn.setOnClickListener {
                 //Log.d("GSON", "msg: ${data}\n")
                 val mAlertDialog = AlertDialog.Builder(itemView.context)
                 mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
@@ -405,10 +392,10 @@ class RecyclerItemVenderShipmentBodySimplifyAdapter(SelectFilter:String) :
                 }
                 mAlertDialog.show()
 
-            }
+            }*/
 
             //結案按鈕
-            overbtn.setOnClickListener {
+          /*  overbtn.setOnClickListener {
                 //Log.d("GSON", "msg: ${data}\n")
                 val mAlertDialog = AlertDialog.Builder(itemView.context)
                 mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
@@ -433,7 +420,9 @@ class RecyclerItemVenderShipmentBodySimplifyAdapter(SelectFilter:String) :
                 }
                 mAlertDialog.show()
 
-            }
+            }*/
+
+
         }
         private fun edit_Purchase(operation:String,oldData:VenderShipmentBody,newData:VenderShipmentBody) {
             val old =JSONObject()
@@ -493,7 +482,7 @@ class RecyclerItemVenderShipmentBodySimplifyAdapter(SelectFilter:String) :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/purchase_order_management")
+                .url(cookie_data.URL+"/purchase_order_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -539,7 +528,7 @@ class RecyclerItemVenderShipmentBodySimplifyAdapter(SelectFilter:String) :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/purchase_order_management")
+                .url(cookie_data.URL+"/purchase_order_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -584,7 +573,7 @@ class RecyclerItemVenderShipmentBodySimplifyAdapter(SelectFilter:String) :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/purchase_order_management")
+                .url(cookie_data.URL+"/purchase_order_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -629,7 +618,7 @@ class RecyclerItemVenderShipmentBodySimplifyAdapter(SelectFilter:String) :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/purchase_order_management")
+                .url(cookie_data.URL+"/purchase_order_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()

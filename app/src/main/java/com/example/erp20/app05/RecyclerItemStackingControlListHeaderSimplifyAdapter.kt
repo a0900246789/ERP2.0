@@ -47,31 +47,13 @@ class RecyclerItemStackingControlListHeaderSimplifyAdapter(SelectFilter:String) 
     }
     fun sort(data:ArrayList<StackingControlListHeader>,filter:String): ArrayList<StackingControlListHeader>{
         var sortedList:List<StackingControlListHeader> = data
-        when(filter){
-            "預開始時間"->{
-                sortedList  = data.sortedWith(
-                    compareBy(
-                        { it.est_start_stacking_date}
-                    )
-                )
-            }
-            "急單"->{
-                sortedList  = data.sortedWith(
-                    compareBy(
-                        { it.is_urgent}
-                    )
-                )
-            }
-            "櫃編"->{
-                sortedList  = data.sortedWith(
-                    compareBy(
-                        { it.contNo}
-                    )
-                )
-            }
-
-        }
-
+        sortedList  = data.sortedWith(
+            compareBy(
+                { it.est_start_stacking_date},
+                { it.is_urgent},
+                { it.contNo}
+            )
+        )
         return sortedList.toCollection(java.util.ArrayList())
     }
 
@@ -201,8 +183,9 @@ class RecyclerItemStackingControlListHeaderSimplifyAdapter(SelectFilter:String) 
         holder.remark.isTextInputLayoutFocusedRectEnabled=false*/
         holder.deletebtn.isVisible=true
         holder.edit_btn.isVisible=true
-        holder.lockbtn.isVisible=true
-        holder.overbtn.isVisible=true
+        holder.next_btn.isVisible=true
+        //holder.lockbtn.isVisible=true
+       // holder.overbtn.isVisible=true
     }
 
     override fun getItemCount(): Int {
@@ -211,10 +194,10 @@ class RecyclerItemStackingControlListHeaderSimplifyAdapter(SelectFilter:String) 
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         //var code=itemView.findViewById<TextInputEditText>(R.id.edit_code)
-        var contNo=itemView.findViewById<AutoCompleteTextView>(R.id.edit_contNo)
+        var contNo=itemView.findViewById<TextInputEditText>(R.id.edit_contNo)
         //var work_year=itemView.findViewById<TextInputEditText>(R.id.edit_work_year)
         var customer_poNo=itemView.findViewById<TextInputEditText>(R.id.edit_customer_poNo)
-        var cont_type_code=itemView.findViewById<AutoCompleteTextView>(R.id.edit_cont_type_code)
+        var cont_type_code=itemView.findViewById<TextInputEditText>(R.id.edit_cont_type_code)
         /*var sws=itemView.findViewById<TextInputEditText>(R.id.edit_sws)
         var swe=itemView.findViewById<TextInputEditText>(R.id.edit_swe)
         var shipping_order_No=itemView.findViewById<TextInputEditText>(R.id.edit_shipping_order_No)
@@ -231,7 +214,7 @@ class RecyclerItemStackingControlListHeaderSimplifyAdapter(SelectFilter:String) 
         var worker=itemView.findViewById<TextInputEditText>(R.id.edit_worker)
         var start_stacking_date=itemView.findViewById<TextInputEditText>(R.id.edit_start_stacking_date)
         var stop_stacking_date=itemView.findViewById<TextInputEditText>(R.id.edit_stop_stacking_date)*/
-        var is_urgent=itemView.findViewById<AutoCompleteTextView>(R.id.edit_is_urgent)
+        var is_urgent=itemView.findViewById<TextInputEditText>(R.id.edit_is_urgent)
 
         //var urgent_deadline=itemView.findViewById<TextInputEditText>(R.id.edit_urgent_deadline)
        // var is_finished=itemView.findViewById<AutoCompleteTextView>(R.id.edit_is_finished)
@@ -239,8 +222,9 @@ class RecyclerItemStackingControlListHeaderSimplifyAdapter(SelectFilter:String) 
 
         var edit_btn=itemView.findViewById<Button>(R.id.edit_btn)
         var deletebtn=itemView.findViewById<Button>(R.id.delete_btn)
-        var lockbtn=itemView.findViewById<Button>(R.id.lock_btn)
-        var overbtn=itemView.findViewById<Button>(R.id.over_btn)
+        var next_btn=itemView.findViewById<Button>(R.id.next_btn)
+        //var lockbtn=itemView.findViewById<Button>(R.id.lock_btn)
+       // var overbtn=itemView.findViewById<Button>(R.id.over_btn)
        /* var creator=itemView.findViewById<AutoCompleteTextView>(R.id.edit_creator)
         var creator_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_create_time)
         var editor=itemView.findViewById<AutoCompleteTextView>(R.id.edit_editor)
@@ -359,7 +343,7 @@ class RecyclerItemStackingControlListHeaderSimplifyAdapter(SelectFilter:String) 
                         remark.isFocusableInTouchMode=true
                         remark.isTextInputLayoutFocusedRectEnabled=true*/
                         editTime=true
-                        est_start_stacking_date.requestFocus()
+                        stacking_date.requestFocus()
                         edit_btn.text = "完成"
                     }
                     "完成"->{
@@ -556,7 +540,15 @@ class RecyclerItemStackingControlListHeaderSimplifyAdapter(SelectFilter:String) 
 
             }
 
-            //鎖定按鈕
+            //下一筆
+            next_btn.setOnClickListener {
+                if(adapterPosition+1<=data.size){
+                    cookie_data.recyclerView.smoothScrollToPosition(adapterPosition+1)
+                }
+
+            }
+
+        /*    //鎖定按鈕
             lockbtn.setOnClickListener {
                 //Log.d("GSON", "msg: ${data}\n")
                 val mAlertDialog = AlertDialog.Builder(itemView.context)
@@ -582,9 +574,9 @@ class RecyclerItemStackingControlListHeaderSimplifyAdapter(SelectFilter:String) 
                 }
                 mAlertDialog.show()
 
-            }
+            }*/
 
-            //結案按鈕
+          /*  //結案按鈕
             overbtn.setOnClickListener {
                 //Log.d("GSON", "msg: ${data}\n")
                 val mAlertDialog = AlertDialog.Builder(itemView.context)
@@ -610,7 +602,7 @@ class RecyclerItemStackingControlListHeaderSimplifyAdapter(SelectFilter:String) 
                 }
                 mAlertDialog.show()
 
-            }
+            }*/
         }
         private fun edit_Stacking(operation:String,oldData:StackingControlListHeader,newData:StackingControlListHeader) {
             val old =JSONObject()
@@ -680,7 +672,7 @@ class RecyclerItemStackingControlListHeaderSimplifyAdapter(SelectFilter:String) 
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/stacking_control_management")
+                .url(cookie_data.URL+"/stacking_control_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -737,7 +729,7 @@ class RecyclerItemStackingControlListHeaderSimplifyAdapter(SelectFilter:String) 
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/stacking_control_management")
+                .url(cookie_data.URL+"/stacking_control_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -793,7 +785,7 @@ class RecyclerItemStackingControlListHeaderSimplifyAdapter(SelectFilter:String) 
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/stacking_control_management")
+                .url(cookie_data.URL+"/stacking_control_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -849,7 +841,7 @@ class RecyclerItemStackingControlListHeaderSimplifyAdapter(SelectFilter:String) 
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/stacking_control_management")
+                .url(cookie_data.URL+"/stacking_control_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()

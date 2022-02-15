@@ -155,9 +155,16 @@
     </string-array>
 
     <string-array name="combobox07">
-        <item>備料作業</item>
-        <item>發料確認作業</item>
+        <item>備料/發料作業</item>
     </string-array>
+
+    <string-array name="combobox07_filter">
+        <item>需求日期</item>
+        <item>料件編號/名稱</item>
+        <item>生產管制單編號</item>
+        <item>需求單位</item>
+    </string-array>
+
 
     <string-array name="combobox09">
         <item>生產完工報工(生產線)</item>
@@ -165,6 +172,23 @@
         <item>退料作業(報廢品)</item>
     </string-array>
 
+    <string-array name="combobox10">
+        <item>採購件</item>
+        <item>託外加工件</item>
+    </string-array>
+
+    <string-array name="combobox13">
+        <item>訂艙通知單(維護)</item>
+        <item>OA reference no(維護)</item>
+        <item>OA文件寄送紀錄(查詢/維護)</item>
+        <item>PO#相關資料(查詢)</item>
+    </string-array>
+
+    <string-array name="combobox13_1_filter">
+        <item>訂艙管制單號</item>
+        <item>訂艙通知號碼</item>
+        <item>PO#</item>
+    </string-array>
 
     <string-array name="absent">
         <item>無</item>

@@ -154,8 +154,9 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter2(Filter:String) :
         holder.remark.isTextInputLayoutFocusedRectEnabled=false*/
         holder.deletebtn.isVisible=true
         holder.edit_btn.isVisible=true
-        holder.lockbtn.isVisible=true
-        holder.overbtn.isVisible=true
+        holder.next_btn.isVisible=true
+        //holder.lockbtn.isVisible=true
+       // holder.overbtn.isVisible=true
         holder.item_detail_btn.isVisible=true
     }
 
@@ -177,8 +178,9 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter2(Filter:String) :
 
         var edit_btn=itemView.findViewById<Button>(R.id.edit_btn)
         var deletebtn=itemView.findViewById<Button>(R.id.delete_btn)
-        var lockbtn=itemView.findViewById<Button>(R.id.lock_btn)
-        var overbtn=itemView.findViewById<Button>(R.id.over_btn)
+        var next_btn=itemView.findViewById<Button>(R.id.next_btn)
+       // var lockbtn=itemView.findViewById<Button>(R.id.lock_btn)
+       // var overbtn=itemView.findViewById<Button>(R.id.over_btn)
         var item_detail_btn=itemView.findViewById<Button>(R.id.item_detail_btn)
         /*var creator=itemView.findViewById<AutoCompleteTextView>(R.id.edit_creator)
         var creator_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_create_time)
@@ -211,8 +213,18 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter2(Filter:String) :
             val combobox=itemView.resources.getStringArray(R.array.combobox_yes_no)
             val arrayAdapter= ArrayAdapter(itemView.context,R.layout.combobox_item,combobox)
             val arrayAdapter01= ArrayAdapter(itemView.context,R.layout.combobox_item,relativeCombobox01)
-            val arrayAdapter02= ArrayAdapter(itemView.context,R.layout.combobox_item,relativeCombobox02)
+            //val arrayAdapter02= ArrayAdapter(itemView.context,R.layout.combobox_item,relativeCombobox02)
             var arrayAdapter03= ArrayAdapter(itemView.context,R.layout.combobox_item,relativeCombobox03)
+            var inv_code_m="M06"
+            //println(inv_code_m)
+            var ArrayList:ArrayList<String> = ArrayList<String>()
+
+            for(i in 0 until cookie_data.inv_code_s_inv_code_m_ComboboxData.size){
+                if(cookie_data.inv_code_s_inv_code_m_ComboboxData[i]==inv_code_m){
+                    ArrayList.add(cookie_data.inv_code_name_s_ComboboxData[i])
+                }
+            }
+            arrayAdapter03= ArrayAdapter(itemView.context,R.layout.combobox_item,ArrayList)
             var relativeCombobox04:ArrayList<String> = ArrayList<String>()
             for(i in 0 until cookie_data.PurchaseBatchOrder_batch_id_ComboboxData.size){
                 if(cookie_data.PurchaseBatchOrder_is_closed_ComboboxData[i]){
@@ -223,7 +235,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter2(Filter:String) :
             }
             //println(relativeCombobox04)
             val arrayAdapter04= ArrayAdapter(itemView.context,R.layout.combobox_item,relativeCombobox04)
-            var relativeCombobox05:ArrayList<String> = ArrayList<String>()
+            /*var relativeCombobox05:ArrayList<String> = ArrayList<String>()
             for(i in 0 until cookie_data.ProductControlOrderBody_A_complete_date_ComboboxData.size){
                 if(cookie_data.ProductControlOrderBody_A_complete_date_ComboboxData[i]!=null){
                     relativeCombobox05.add(cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData[i]+"\n"+
@@ -234,7 +246,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter2(Filter:String) :
                 }
             }
             //println(relativeCombobox05)
-            val arrayAdapter05= ArrayAdapter(itemView.context,R.layout.combobox_item,relativeCombobox05)
+            val arrayAdapter05= ArrayAdapter(itemView.context,R.layout.combobox_item,relativeCombobox05)*/
 
             //異動日期
             date.setOnClickListener {
@@ -270,18 +282,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter2(Filter:String) :
 
             //主異動次別
             main_trans_code.setOnItemClickListener { parent, view, position, id ->
-                var inv_code_m=main_trans_code.text.toString().substring(0,main_trans_code.text.toString().indexOf(" "))
-                //println(inv_code_m)
-                var ArrayList:ArrayList<String> = ArrayList<String>()
 
-                for(i in 0 until cookie_data.inv_code_s_inv_code_m_ComboboxData.size){
-                    if(cookie_data.inv_code_s_inv_code_m_ComboboxData[i]==inv_code_m){
-                        ArrayList.add(cookie_data.inv_code_name_s_ComboboxData[i])
-                    }
-                }
-
-                arrayAdapter03= ArrayAdapter(itemView.context,R.layout.combobox_item,ArrayList)
-                sec_trans_code.setAdapter(arrayAdapter03)
             }
 
 
@@ -298,13 +299,13 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter2(Filter:String) :
                         temp_dept=dept.text.toString()
                         dept.setAdapter(arrayAdapter01)
                         temp_main_trans_code=main_trans_code.text.toString()
-                        main_trans_code.setAdapter(arrayAdapter02)
+                        //main_trans_code.setAdapter(arrayAdapter02)
                         temp_sec_trans_code=sec_trans_code.text.toString()
-                        //sec_trans_code.setAdapter(arrayAdapter03)
+                        sec_trans_code.setAdapter(arrayAdapter03)
                         temp_purchase_order_id=purchase_order_id.text.toString()
                         purchase_order_id.setAdapter(arrayAdapter04)
                         temp_prod_ctrl_order_number=prod_ctrl_order_number.text.toString()
-                        prod_ctrl_order_number.setAdapter(arrayAdapter05)
+                        //prod_ctrl_order_number.setAdapter(arrayAdapter05)
 
                         illustrate.isClickable=true
                         illustrate.isFocusable=true
@@ -418,7 +419,15 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter2(Filter:String) :
 
             }
 
-            //鎖定按鈕
+            //下一筆
+            next_btn.setOnClickListener {
+                if(adapterPosition+1<=data.size){
+                    cookie_data.recyclerView.smoothScrollToPosition(adapterPosition+1)
+                }
+
+            }
+
+         /*   //鎖定按鈕
             lockbtn.setOnClickListener {
                 //Log.d("GSON", "msg: ${data}\n")
                 val mAlertDialog = AlertDialog.Builder(itemView.context)
@@ -472,7 +481,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter2(Filter:String) :
                 }
                 mAlertDialog.show()
 
-            }
+            }*/
 
             //單身
             item_detail_btn.setOnClickListener {
@@ -517,7 +526,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter2(Filter:String) :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -558,7 +567,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter2(Filter:String) :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -598,7 +607,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter2(Filter:String) :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -638,7 +647,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter2(Filter:String) :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -661,7 +670,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter2(Filter:String) :
     fun addItem(addData:StockTransOrderHeader){
         data.add(data.size,addData)
         notifyItemInserted(data.size)
-        //itemData.count+=1//cookie_data.itemCount+=1
+        cookie_data.recyclerView.smoothScrollToPosition(data.size)
     }
 
 

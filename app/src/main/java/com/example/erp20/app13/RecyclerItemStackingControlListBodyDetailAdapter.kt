@@ -1,4 +1,4 @@
-package com.example.erp20.RecyclerAdapter
+package com.example.erp20.app05
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,59 +25,88 @@ import kotlin.collections.ArrayList
 import android.widget.ArrayAdapter
 
 
-class RecyclerItemCustomerOrderBodyAdapter() :
-    RecyclerView.Adapter<RecyclerItemCustomerOrderBodyAdapter.ViewHolder>() {
-    private var itemData: ShowCustomerOrderBody =Gson().fromJson(cookie_data.response_data, ShowCustomerOrderBody::class.java)
-    private var data: ArrayList<CustomerOrderBody> =itemData.data
-    var relativeCombobox01=cookie_data.product_id_ComboboxData
+class RecyclerItemStackingControlListBodyDetailAdapter(Cond_code:String) :
+    RecyclerView.Adapter<RecyclerItemStackingControlListBodyDetailAdapter.ViewHolder>() {
+    private var itemData: ShowStackingControlListBody =Gson().fromJson(cookie_data.response_data, ShowStackingControlListBody::class.java)
+    private var data: ArrayList<StackingControlListBody> =itemData.data
+    var Cond_code=Cond_code
+    init {
+        // println(SelectFilter)
+        //data=filter(data,FilterTopic,FilterContent)
+        data=sort(data)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemCustomerOrderBodyAdapter.ViewHolder {
-        val v= LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_customer_order_body,parent,false)
+    }
+    /*fun filter(data: java.util.ArrayList<BookingNoticeHeader>, filterTopic:String, filterContent:String): java.util.ArrayList<BookingNoticeHeader> {
+        var ArrayList: java.util.ArrayList<BookingNoticeHeader> =
+            java.util.ArrayList<BookingNoticeHeader>()
+        if(filterTopic=="訂艙管制單號"){
+            for(i in 0 until data.size){
+                if(data[i]._id==filterContent){
+                    ArrayList.add(data[i])
+                }
+            }
+        }
+        else if(filterTopic=="訂艙通知號碼"){
+            for(i in 0 until data.size){
+                if(data[i].notice_number==filterContent){
+                    ArrayList.add(data[i])
+                }
+            }
+        }
+        else if(filterTopic=="PO#"){
+            for(i in 0 until data.size){
+                if(data[i].customer_poNo==filterContent){
+                    ArrayList.add(data[i])
+                }
+            }
+        }
+        return ArrayList
+    }*/
+    fun sort(data: java.util.ArrayList<StackingControlListBody>): java.util.ArrayList<StackingControlListBody> {
+        var sortedList:List<StackingControlListBody> = data
+
+        sortedList  = data.sortedWith(
+            compareBy(
+                { it.product_id },
+            )
+        )
+
+        return sortedList.toCollection(java.util.ArrayList())
+    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val v= LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_stacking_control_list_body_detail,parent,false)
         return ViewHolder(v)
 
     }
 
-    override fun onBindViewHolder(holder: RecyclerItemCustomerOrderBodyAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         //Log.d("GSON", "msg: ${itemData.data[position]}\n")
-        holder.poNo.setText(data[position].poNo)
-        holder.poNo.inputType=InputType.TYPE_NULL
+
         holder.product_id.setText(data[position].product_id)
         holder.product_id.inputType=InputType.TYPE_NULL
-        holder.quantity_of_order.setText(data[position].quantity_of_order.toString())
-        holder.quantity_of_order.inputType=InputType.TYPE_NULL
-        holder.quantity_delivered.setText(data[position].quantity_delivered.toString())
-        holder.quantity_delivered.inputType=InputType.TYPE_NULL
-        holder.unit_of_measurement.setText(data[position].unit_of_measurement)
-        holder.unit_of_measurement.inputType=InputType.TYPE_NULL
-
-        holder.body_id .setText(data[position].body_id )
-        holder.section.setText(data[position].section)
-
+        holder.product_name.setText(cookie_data.product_name_ComboboxData[cookie_data.product_id_ComboboxData.indexOf(data[position].product_id)])
+        holder.product_name.inputType=InputType.TYPE_NULL
+        holder.count.setText(data[position].count.toString())
+        holder.count.inputType=InputType.TYPE_NULL
+        holder.master_order_number.setText(data[position].master_order_number)
+        holder.master_order_number.inputType=InputType.TYPE_NULL
+        holder.cont_code.setText(Cond_code)
+        holder.cont_code.inputType=InputType.TYPE_NULL
 
 
 
 
-        holder.creator.setText(data[position].creator)
-        holder.creator_time.setText(data[position].create_time)
-        holder.editor.setText(data[position].editor)
-        holder.editor_time.setText(data[position].edit_time)
-        holder.lock.setText(data[position].Lock.toString())
-        holder.lock_time.setText(data[position].lock_time)
-        holder.invalid.setText(data[position].invalid.toString())
-        holder.invalid_time.setText(data[position].invalid_time)
-        holder.is_closed.setText(data[position].is_closed.toString())
-        holder.close_time.setText(data[position].close_time)
+
         holder.remark.setText(data[position].remark)
         holder.remark.isClickable=false
         holder.remark.isFocusable=false
         holder.remark.isFocusableInTouchMode=false
         holder.remark.isTextInputLayoutFocusedRectEnabled=false
-        holder.deletebtn.isVisible=true
+       /* holder.deletebtn.isVisible=true
         holder.edit_btn.isVisible=true
         holder.lockbtn.isVisible=true
-        holder.overbtn.isVisible=true
-
+        holder.overbtn.isVisible=true*/
     }
 
     override fun getItemCount(): Int {
@@ -85,33 +114,22 @@ class RecyclerItemCustomerOrderBodyAdapter() :
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        var poNo=itemView.findViewById<TextInputEditText>(R.id.edit_poNo)
-        var product_id=itemView.findViewById<AutoCompleteTextView>(R.id.edit_product_id)
-        var quantity_of_order=itemView.findViewById<TextInputEditText>(R.id.edit_quantity_of_order)
-        var quantity_delivered=itemView.findViewById<TextInputEditText>(R.id.edit_quantity_delivered)
-        var unit_of_measurement=itemView.findViewById<TextInputEditText>(R.id.edit_unit_of_measurement)
-        var body_id=itemView.findViewById<AutoCompleteTextView>(R.id.edit_body_id)
-        var section=itemView.findViewById<AutoCompleteTextView>(R.id.edit_section)
 
+        var product_id=itemView.findViewById<TextInputEditText>(R.id.edit_product_id)
+        var product_name=itemView.findViewById<TextInputEditText>(R.id.edit_product_name)
+        var count=itemView.findViewById<TextInputEditText>(R.id.edit_count)
+        var master_order_number=itemView.findViewById<TextInputEditText>(R.id.edit_master_order_number)
+        var cont_code=itemView.findViewById<TextInputEditText>(R.id.edit_cont_code)
 
 
         var edit_btn=itemView.findViewById<Button>(R.id.edit_btn)
         var deletebtn=itemView.findViewById<Button>(R.id.delete_btn)
         var lockbtn=itemView.findViewById<Button>(R.id.lock_btn)
         var overbtn=itemView.findViewById<Button>(R.id.over_btn)
-        var creator=itemView.findViewById<AutoCompleteTextView>(R.id.edit_creator)
-        var creator_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_create_time)
-        var editor=itemView.findViewById<AutoCompleteTextView>(R.id.edit_editor)
-        var editor_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_edit_time)
-        var lock=itemView.findViewById<AutoCompleteTextView>(R.id.edit_lock)
-        var lock_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_lock_time)
-        var invalid=itemView.findViewById<AutoCompleteTextView>(R.id.edit_invalid)
-        var invalid_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_invalid_time)
-        var is_closed=itemView.findViewById<AutoCompleteTextView>(R.id.edit_is_closed)
-        var close_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_close_time)
+
         var remark=itemView.findViewById<TextInputEditText>(R.id.edit_remark)
-        lateinit var oldData:CustomerOrderBody
-        lateinit var newData:CustomerOrderBody
+        lateinit var oldData:StackingControlListBody
+        lateinit var newData:StackingControlListBody
         init {
             itemView.setOnClickListener{
                 val position:Int=adapterPosition
@@ -119,43 +137,47 @@ class RecyclerItemCustomerOrderBodyAdapter() :
 
             }
 
-            val arrayAdapter01=ArrayAdapter(itemView.context,R.layout.combobox_item,relativeCombobox01)
+            val combobox=itemView.resources.getStringArray(R.array.combobox_yes_no)
+            val arrayAdapter= ArrayAdapter(itemView.context,R.layout.combobox_item,combobox)
 
-            //編輯按鈕
+           /* //編輯按鈕
             edit_btn.setOnClickListener {
                 when(edit_btn.text){
                     "編輯"->{
                         oldData=itemData.data[adapterPosition]
                         //Log.d("GSON", "msg: ${oldData.id}\n")
-                        poNo.inputType=InputType.TYPE_CLASS_TEXT
+                        //code.inputType=InputType.TYPE_CLASS_TEXT
+                        //header_id.inputType=InputType.TYPE_CLASS_TEXT
                         product_id.setAdapter(arrayAdapter01)
-                        quantity_of_order.inputType=InputType.TYPE_CLASS_NUMBER
-                        quantity_delivered.inputType=InputType.TYPE_CLASS_NUMBER
-                        unit_of_measurement.inputType=InputType.TYPE_CLASS_TEXT
-
+                        master_order_number.setAdapter(arrayAdapter02)
+                        count.inputType=InputType.TYPE_CLASS_NUMBER
+                        store_area.setAdapter(arrayAdapter03)
+                        store_local.setAdapter(arrayAdapter04)
 
 
                         remark.isClickable=true
                         remark.isFocusable=true
                         remark.isFocusableInTouchMode=true
                         remark.isTextInputLayoutFocusedRectEnabled=true
-                        poNo.requestFocus()
+                        product_id.requestFocus()
                         edit_btn.text = "完成"
                     }
                     "完成"->{
-                        newData= CustomerOrderBody()
-                        newData.poNo=poNo.text.toString()
-                        poNo.inputType=InputType.TYPE_NULL
+                        newData= StackingControlListBody()
+                        newData.code=code.text.toString()
+                        code.inputType=InputType.TYPE_NULL
+                        newData.header_id=header_id.text.toString()
+                        header_id.inputType=InputType.TYPE_NULL
                         newData.product_id=product_id.text.toString()
                         product_id.setAdapter(null)
-                        newData.quantity_of_order=quantity_of_order.text.toString().toInt()
-                        quantity_of_order.inputType=InputType.TYPE_NULL
-                        newData.quantity_delivered=quantity_delivered.text.toString().toInt()
-                        quantity_delivered.inputType=InputType.TYPE_NULL
-                        newData.unit_of_measurement=unit_of_measurement.text.toString()
-                        unit_of_measurement.inputType=InputType.TYPE_NULL
-
-
+                        newData.master_order_number=master_order_number.text.toString()
+                        master_order_number.setAdapter(null)
+                        newData.count=count.text.toString().toInt()
+                        count.inputType=InputType.TYPE_NULL
+                        newData.store_area=store_area.text.toString()
+                        store_area.setAdapter(null)
+                        newData.store_local=store_local.text.toString()
+                        store_local.setAdapter(null)
 
 
                         newData.remark=remark.text.toString()
@@ -165,7 +187,7 @@ class RecyclerItemCustomerOrderBodyAdapter() :
                         remark.isTextInputLayoutFocusedRectEnabled=false
                         //Log.d("GSON", "msg: ${oldData}\n")
                         //Log.d("GSON", "msg: ${newData.remark}\n")
-                        edit_CustomerOrder("CustomerOrder","body",oldData,newData)//更改資料庫資料
+                        edit_Stacking("StackingControlListBody",oldData,newData)//更改資料庫資料
                         when(cookie_data.status){
                             0-> {//成功
                                 itemData.data[adapterPosition] = newData//更改渲染資料
@@ -174,12 +196,13 @@ class RecyclerItemCustomerOrderBodyAdapter() :
                             }
                             1->{//失敗
                                 Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
-                                poNo.setText(oldData.poNo)
+                                code.setText(oldData.code)
+                                header_id.setText(oldData.header_id)
                                 product_id.setText(oldData.product_id)
-                                quantity_of_order.setText(oldData.quantity_of_order.toString())
-                                quantity_delivered.setText(oldData.quantity_delivered.toString())
-                                unit_of_measurement.setText(oldData.unit_of_measurement)
-
+                                master_order_number.setText(oldData.master_order_number)
+                                count.setText(oldData.count.toString())
+                                store_area.setText(oldData.store_area)
+                                store_local.setText(oldData.store_local)
 
 
 
@@ -204,7 +227,7 @@ class RecyclerItemCustomerOrderBodyAdapter() :
                     dialog.dismiss()
                 }
                 mAlertDialog.setNegativeButton("YES") { dialog, id ->
-                    delete_CustomerOrder("CustomerOrder","body",data[adapterPosition])
+                    delete_Stacking("StackingControlListBody",data[adapterPosition])
                     when(cookie_data.status){
                         0-> {//成功
                             data.removeAt(adapterPosition)
@@ -233,7 +256,7 @@ class RecyclerItemCustomerOrderBodyAdapter() :
                     dialog.dismiss()
                 }
                 mAlertDialog.setNegativeButton("YES") { dialog, id ->
-                    lock_CustomerOrder("CustomerOrder","body",data[adapterPosition])
+                    lock_Stacking("StackingControlListBody",data[adapterPosition])
                     when(cookie_data.status){
                         0-> {//成功
                             lock.setText("true")
@@ -261,7 +284,7 @@ class RecyclerItemCustomerOrderBodyAdapter() :
                     dialog.dismiss()
                 }
                 mAlertDialog.setNegativeButton("YES") { dialog, id ->
-                    over_CustomerOrder("CustomerOrder","body",data[adapterPosition])
+                    over_Stacking("StackingControlListBody",data[adapterPosition])
                     when(cookie_data.status){
                         0-> {//成功
                             is_closed.setText("true")
@@ -276,24 +299,28 @@ class RecyclerItemCustomerOrderBodyAdapter() :
                 }
                 mAlertDialog.show()
 
-            }
+            }*/
         }
-        private fun edit_CustomerOrder(operation:String,target:String,oldData:CustomerOrderBody,newData:CustomerOrderBody) {
+        private fun edit_Stacking(operation:String,oldData:StackingControlListBody,newData:StackingControlListBody) {
             val old =JSONObject()
-            old.put("poNo",oldData.poNo)
+            old.put("code",oldData.code)
+            old.put("header_id",oldData.header_id)
             old.put("product_id",oldData.product_id)
-            old.put("quantity_of_order",oldData.quantity_of_order)
-            old.put("quantity_delivered",oldData.quantity_delivered)
-            old.put("unit_of_measurement",oldData.unit_of_measurement)
+            old.put("master_order_number",oldData.master_order_number)
+            old.put("count",oldData.count)
+            old.put("store_area",oldData.store_area)
+            old.put("store_local",oldData.store_local)
 
 
             old.put("remark",oldData.remark)
             val new =JSONObject()
-            new.put("poNo",newData.poNo)
+            new.put("code",newData.code)
+            new.put("header_id",newData.header_id)
             new.put("product_id",newData.product_id)
-            new.put("quantity_of_order",newData.quantity_of_order)
-            new.put("quantity_delivered",newData.quantity_delivered)
-            new.put("unit_of_measurement",newData.unit_of_measurement)
+            new.put("master_order_number",newData.master_order_number)
+            new.put("count",newData.count)
+            new.put("store_area",newData.store_area)
+            new.put("store_local",newData.store_local)
 
 
             new.put("editor",cookie_data.username)
@@ -302,16 +329,15 @@ class RecyclerItemCustomerOrderBodyAdapter() :
             data.put(old)
             data.put((new))
             val body = FormBody.Builder()
+                .add("operation",operation)
                 .add("data",data.toString())
                 .add("username", cookie_data.username)
-                .add("operation", operation)
-                .add("target",target)
                 .add("action",cookie_data.Actions.CHANGE)
                 .add("csrfmiddlewaretoken", cookie_data.tokenValue)
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/custom_order_management")
+                .url(cookie_data.URL+"/stacking_control_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -330,28 +356,28 @@ class RecyclerItemCustomerOrderBodyAdapter() :
 
 
         }
-        private fun delete_CustomerOrder(operation:String,target:String,deleteData:CustomerOrderBody) {
+        private fun delete_Stacking(operation:String,deleteData:StackingControlListBody) {
             val delete = JSONObject()
-            delete.put("poNo",deleteData.poNo)
+            delete.put("code",deleteData.code)
+            delete.put("header_id",deleteData.header_id)
             delete.put("product_id",deleteData.product_id)
-            delete.put("quantity_of_order",deleteData.quantity_of_order)
-            delete.put("quantity_delivered",deleteData.quantity_delivered)
-            delete.put("unit_of_measurement",deleteData.unit_of_measurement)
-
+            delete.put("master_order_number",deleteData.master_order_number)
+            delete.put("count",deleteData.count)
+            delete.put("store_area",deleteData.store_area)
+            delete.put("store_local",deleteData.store_local)
 
             delete.put("remark",deleteData.remark)
             //Log.d("GSON", "msg:${delete}")
             val body = FormBody.Builder()
-                .add("username", cookie_data.username)
                 .add("operation", operation)
-                .add("target", target)
+                .add("username", cookie_data.username)
                 .add("action",cookie_data.Actions.DELETE)
                 .add("data",delete.toString())
                 .add("csrfmiddlewaretoken", cookie_data.tokenValue)
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/custom_order_management")
+                .url(cookie_data.URL+"/stacking_control_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -369,28 +395,28 @@ class RecyclerItemCustomerOrderBodyAdapter() :
             }
 
         }
-        private fun lock_CustomerOrder(operation:String,target:String,lockData:CustomerOrderBody) {
+        private fun lock_Stacking(operation:String,lockData:StackingControlListBody) {
             val lock = JSONObject()
-            lock.put("poNo",lockData.poNo)
+            lock.put("code",lockData.code)
+            lock.put("header_id",lockData.header_id)
             lock.put("product_id",lockData.product_id)
-            lock.put("quantity_of_order",lockData.quantity_of_order)
-            lock.put("quantity_delivered",lockData.quantity_delivered)
-            lock.put("unit_of_measurement",lockData.unit_of_measurement)
-
+            lock.put("master_order_number",lockData.master_order_number)
+            lock.put("count",lockData.count)
+            lock.put("store_area",lockData.store_area)
+            lock.put("store_local",lockData.store_local)
 
             lock.put("remark",lockData.remark)
-            //Log.d("GSON", "msg:${delete}")
+            //Log.d("GSON", "msg:${lock}")
             val body = FormBody.Builder()
-                .add("username", cookie_data.username)
                 .add("operation", operation)
-                .add("target", target)
+                .add("username", cookie_data.username)
                 .add("action",cookie_data.Actions.LOCK)
                 .add("data",lock.toString())
                 .add("csrfmiddlewaretoken", cookie_data.tokenValue)
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/custom_order_management")
+                .url(cookie_data.URL+"/stacking_control_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -408,27 +434,28 @@ class RecyclerItemCustomerOrderBodyAdapter() :
             }
 
         }
-        private fun over_CustomerOrder(operation:String,target:String,overData:CustomerOrderBody) {
+        private fun over_Stacking(operation:String,overData:StackingControlListBody) {
             val over = JSONObject()
-            over.put("poNo",overData.poNo)
+            over.put("code",overData.code)
+            over.put("header_id",overData.header_id)
             over.put("product_id",overData.product_id)
-            over.put("quantity_of_order",overData.quantity_of_order)
-            over.put("quantity_delivered",overData.quantity_delivered)
-            over.put("unit_of_measurement",overData.unit_of_measurement)
+            over.put("master_order_number",overData.master_order_number)
+            over.put("count",overData.count)
+            over.put("store_area",overData.store_area)
+            over.put("store_local",overData.store_local)
 
             over.put("remark",overData.remark)
             //Log.d("GSON", "msg:${delete}")
             val body = FormBody.Builder()
                 .add("username", cookie_data.username)
                 .add("operation", operation)
-                .add("target", target)
                 .add("action",cookie_data.Actions.CLOSE)
                 .add("data",over.toString())
                 .add("csrfmiddlewaretoken", cookie_data.tokenValue)
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/custom_order_management")
+                .url(cookie_data.URL+"/stacking_control_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -448,7 +475,7 @@ class RecyclerItemCustomerOrderBodyAdapter() :
         }
 
     }
-    fun addItem(addData:CustomerOrderBody){
+    fun addItem(addData:StackingControlListBody){
         data.add(itemData.count,addData)
         notifyItemInserted(itemData.count)
         itemData.count+=1//cookie_data.itemCount+=1

@@ -1,4 +1,4 @@
-package com.example.erp20.RecyclerAdapter
+package com.example.erp20.app10
 import android.graphics.Color
 import android.text.InputType
 import android.util.Log
@@ -33,13 +33,13 @@ class RecyclerItemPurchaseBatchOrderAdapter() :
     private var data: ArrayList<PurchaseBatchOrder> =itemData.data
     var relativeCombobox01=cookie_data.ProductControlOrderHeader_id_ComboboxData
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemPurchaseBatchOrderAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v= LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_purchase_batch_order,parent,false)
         return ViewHolder(v)
 
     }
 
-    override fun onBindViewHolder(holder: RecyclerItemPurchaseBatchOrderAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         //Log.d("GSON", "msg: ${itemData.data[position]}\n")
         holder.batch_id.setText(data[position].batch_id)
@@ -535,7 +535,7 @@ class RecyclerItemPurchaseBatchOrderAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/purchase_order_management")
+                .url(cookie_data.URL+"/purchase_order_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -591,7 +591,7 @@ class RecyclerItemPurchaseBatchOrderAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/purchase_order_management")
+                .url(cookie_data.URL+"/purchase_order_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -646,7 +646,7 @@ class RecyclerItemPurchaseBatchOrderAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/purchase_order_management")
+                .url(cookie_data.URL+"/purchase_order_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -701,7 +701,7 @@ class RecyclerItemPurchaseBatchOrderAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/purchase_order_management")
+                .url(cookie_data.URL+"/purchase_order_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()

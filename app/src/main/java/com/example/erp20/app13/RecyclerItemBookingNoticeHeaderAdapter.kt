@@ -1,4 +1,4 @@
-package com.example.erp20.RecyclerAdapter
+package com.example.erp20.app13
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
@@ -32,13 +32,13 @@ class RecyclerItemBookingNoticeHeaderAdapter() :
     var relativeCombobox01=cookie_data.shipping_number_ComboboxData
     var relativeCombobox02=cookie_data.CustomerOrderHeader_poNo_ComboboxData
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemBookingNoticeHeaderAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v= LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_booking_notice_header,parent,false)
         return ViewHolder(v)
 
     }
 
-    override fun onBindViewHolder(holder: RecyclerItemBookingNoticeHeaderAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         //Log.d("GSON", "msg: ${itemData.data[position]}\n")
         holder._id.setText(data[position]._id)
@@ -301,7 +301,7 @@ class RecyclerItemBookingNoticeHeaderAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/shipping_order_management")
+                .url(cookie_data.URL+"/shipping_order_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -339,7 +339,7 @@ class RecyclerItemBookingNoticeHeaderAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/shipping_order_management")
+                .url(cookie_data.URL+"/shipping_order_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -376,7 +376,7 @@ class RecyclerItemBookingNoticeHeaderAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/shipping_order_management")
+                .url(cookie_data.URL+"/shipping_order_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -413,7 +413,7 @@ class RecyclerItemBookingNoticeHeaderAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/shipping_order_management")
+                .url(cookie_data.URL+"/shipping_order_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()

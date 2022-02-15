@@ -16,6 +16,8 @@ import com.example.erp20.app06.Activity06
 import com.example.erp20.app07.Activity07
 import com.example.erp20.app08.Activity08
 import com.example.erp20.app09.Activity09
+import com.example.erp20.app10.Activity10
+import com.example.erp20.app13.Activity13
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,7 +58,8 @@ class HomeFragment : Fragment() {
         val Btn07=getView()?.findViewById<ImageButton>(R.id.btn_07)
         val Btn08=getView()?.findViewById<ImageButton>(R.id.btn_08)
         val Btn09=getView()?.findViewById<ImageButton>(R.id.btn_09)
-
+        val Btn10=getView()?.findViewById<ImageButton>(R.id.btn_10)
+        val Btn13=getView()?.findViewById<ImageButton>(R.id.btn_13)
 
         //01
         Btn01?.setOnClickListener{
@@ -110,6 +113,20 @@ class HomeFragment : Fragment() {
         Btn09?.setOnClickListener{
             //Toast.makeText(activity,"1233211212",Toast.LENGTH_SHORT).show()
             val intent=Intent(activity, Activity09::class.java)
+            startActivity(intent)
+        }
+        //10
+        Btn10?.setOnClickListener{
+            //Toast.makeText(activity,"1233211212",Toast.LENGTH_SHORT).show()
+            val intent=Intent(activity, Activity10::class.java)
+            startActivity(intent)
+        }
+
+
+        //13
+        Btn13?.setOnClickListener{
+            //Toast.makeText(activity,"1233211212",Toast.LENGTH_SHORT).show()
+            val intent=Intent(activity, Activity13::class.java)
             startActivity(intent)
         }
 

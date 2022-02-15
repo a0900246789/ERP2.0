@@ -155,8 +155,9 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter3(Filter_pline:String,Filt
         holder.remark.isTextInputLayoutFocusedRectEnabled=false*/
         holder.deletebtn.isVisible=true
         holder.edit_btn.isVisible=true
-        holder.lockbtn.isVisible=true
-        holder.overbtn.isVisible=true
+        holder.next_btn.isVisible=true
+        //holder.lockbtn.isVisible=true
+        //holder.overbtn.isVisible=true
         holder.item_detail_btn.isVisible=true
     }
 
@@ -178,8 +179,9 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter3(Filter_pline:String,Filt
 
         var edit_btn=itemView.findViewById<Button>(R.id.edit_btn)
         var deletebtn=itemView.findViewById<Button>(R.id.delete_btn)
-        var lockbtn=itemView.findViewById<Button>(R.id.lock_btn)
-        var overbtn=itemView.findViewById<Button>(R.id.over_btn)
+        var next_btn=itemView.findViewById<Button>(R.id.next_btn)
+        //var lockbtn=itemView.findViewById<Button>(R.id.lock_btn)
+       // var overbtn=itemView.findViewById<Button>(R.id.over_btn)
         var item_detail_btn=itemView.findViewById<Button>(R.id.item_detail_btn)
         /*var creator=itemView.findViewById<AutoCompleteTextView>(R.id.edit_creator)
         var creator_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_create_time)
@@ -415,7 +417,15 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter3(Filter_pline:String,Filt
 
             }
 
-            //鎖定按鈕
+            //下一筆
+            next_btn.setOnClickListener {
+                if(adapterPosition+1<=data.size){
+                    cookie_data.recyclerView.smoothScrollToPosition(adapterPosition+1)
+                }
+
+            }
+
+          /*  //鎖定按鈕
             lockbtn.setOnClickListener {
                 //Log.d("GSON", "msg: ${data}\n")
                 val mAlertDialog = AlertDialog.Builder(itemView.context)
@@ -469,7 +479,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter3(Filter_pline:String,Filt
                 }
                 mAlertDialog.show()
 
-            }
+            }*/
 
             //單身
             item_detail_btn.setOnClickListener {
@@ -514,7 +524,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter3(Filter_pline:String,Filt
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -555,7 +565,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter3(Filter_pline:String,Filt
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -595,7 +605,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter3(Filter_pline:String,Filt
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -635,7 +645,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter3(Filter_pline:String,Filt
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -658,6 +668,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter3(Filter_pline:String,Filt
     fun addItem(addData:StockTransOrderHeader){
         data.add(data.size,addData)
         notifyItemInserted(data.size)
+        cookie_data.recyclerView.smoothScrollToPosition(data.size)
         //itemData.count+=1//cookie_data.itemCount+=1
     }
 

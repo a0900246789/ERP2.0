@@ -48,20 +48,10 @@ class RecyclerItemStockTransOrderBodySimplifyAdapter() :
         holder.header_id.inputType=InputType.TYPE_NULL
         holder.body_id.setText(data[position].body_id.substring(data[position].body_id.indexOf("&")+1,data[position].body_id.length))
         holder.body_id.inputType=InputType.TYPE_NULL
-        holder.item_id.setText(data[position].item_id)
+        holder.item_id.setText(data[position].item_id+"\n"+cookie_data.item_name_ComboboxData[cookie_data.item_id_ComboboxData.indexOf(data[position].item_id)])
         holder.item_id.inputType=InputType.TYPE_NULL
-        holder.item_name.setText(cookie_data.item_name_ComboboxData[cookie_data.item_id_ComboboxData.indexOf(data[position].item_id)])
-        holder.item_name.inputType=InputType.TYPE_NULL
         holder.modify_count.setText(data[position].modify_count.toString())
         holder.modify_count.inputType=InputType.TYPE_NULL
-       /* holder.main_trans_code.setText(data[position].main_trans_code)
-        holder.main_trans_code.inputType=InputType.TYPE_NULL
-        holder.sec_trans_code.setText(data[position].sec_trans_code)
-        holder.sec_trans_code.inputType=InputType.TYPE_NULL
-        holder.store_area.setText(data[position].store_area)
-        holder.store_area.inputType=InputType.TYPE_NULL
-        holder.store_local.setText(data[position].store_local)
-        holder.store_local.inputType=InputType.TYPE_NULL*/
         holder.qc_insp_number.setText(data[position].qc_insp_number)
         holder.qc_insp_number.inputType=InputType.TYPE_NULL
         if(data[position].qc_time!=null){
@@ -83,28 +73,8 @@ class RecyclerItemStockTransOrderBodySimplifyAdapter() :
             holder.qc_time.setText(null)
         }
         holder.qc_time.inputType=InputType.TYPE_NULL
-       // holder.ok_count.setText(data[position].ok_count.toString())
-       // holder.ok_count.inputType=InputType.TYPE_NULL
         holder.ng_count.setText(data[position].ng_count.toString())
         holder.ng_count.inputType=InputType.TYPE_NULL
-        /*holder.scrapped_count.setText(data[position].scrapped_count.toString())
-        holder.scrapped_count.inputType=InputType.TYPE_NULL
-        holder.is_rework.setText(data[position].is_rework.toString())
-        holder.is_rework.isClickable=false
-        holder.is_rework.inputType=InputType.TYPE_NULL
-
-
-
-        holder.creator.setText(data[position].creator)
-        holder.creator_time.setText(data[position].create_time)
-        holder.editor.setText(data[position].editor)
-        holder.editor_time.setText(data[position].edit_time)
-        holder.lock.setText(data[position].Lock.toString())
-        holder.lock_time.setText(data[position].lock_time)
-        holder.invalid.setText(data[position].invalid.toString())
-        holder.invalid_time.setText(data[position].invalid_time)
-        holder.is_closed.setText(data[position].is_closed.toString())
-        holder.close_time.setText(data[position].close_time)*/
         holder.remark.setText(data[position].remark)
         holder.remark.isClickable=false
         holder.remark.isFocusable=false
@@ -112,8 +82,8 @@ class RecyclerItemStockTransOrderBodySimplifyAdapter() :
         holder.remark.isTextInputLayoutFocusedRectEnabled=false
         holder.deletebtn.isVisible=true
         holder.edit_btn.isVisible=true
-        holder.lockbtn.isVisible=true
-        holder.overbtn.isVisible=true
+        holder.next_btn.isVisible=true
+        //holder.overbtn.isVisible=true
     }
 
     override fun getItemCount(): Int {
@@ -124,37 +94,21 @@ class RecyclerItemStockTransOrderBodySimplifyAdapter() :
         var header_id=itemView.findViewById<TextInputEditText>(R.id.edit_header_id)
         var body_id=itemView.findViewById<TextInputEditText>(R.id.edit_body_id)
         var item_id=itemView.findViewById<AutoCompleteTextView>(R.id.edit_item_id)
-        var item_name=itemView.findViewById<TextInputEditText>(R.id.edit_item_name)
         var modify_count=itemView.findViewById<TextInputEditText>(R.id.edit_modify_count)
-       // var main_trans_code=itemView.findViewById<AutoCompleteTextView>(R.id.edit_main_trans_code)
-        //var sec_trans_code=itemView.findViewById<AutoCompleteTextView>(R.id.edit_sec_trans_code)
-        //var store_area =itemView.findViewById<AutoCompleteTextView>(R.id.edit_store_area)
-       // var store_local=itemView.findViewById<AutoCompleteTextView>(R.id.edit_store_local)
         var qc_insp_number=itemView.findViewById<TextInputEditText>(R.id.edit_qc_insp_number)
         var qc_time=itemView.findViewById<TextInputEditText>(R.id.edit_qc_time)
-       // var ok_count=itemView.findViewById<TextInputEditText>(R.id.edit_ok_count)
         var ng_count=itemView.findViewById<TextInputEditText>(R.id.edit_ng_count)
-       // var scrapped_count=itemView.findViewById<TextInputEditText>(R.id.edit_scrapped_count)
-        //var is_rework=itemView.findViewById<AutoCompleteTextView>(R.id.edit_is_rework)
+
 
         var edit_btn=itemView.findViewById<Button>(R.id.edit_btn)
         var deletebtn=itemView.findViewById<Button>(R.id.delete_btn)
-        var lockbtn=itemView.findViewById<Button>(R.id.lock_btn)
-        var overbtn=itemView.findViewById<Button>(R.id.over_btn)
-        /*var creator=itemView.findViewById<AutoCompleteTextView>(R.id.edit_creator)
-        var creator_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_create_time)
-        var editor=itemView.findViewById<AutoCompleteTextView>(R.id.edit_editor)
-        var editor_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_edit_time)
-        var lock=itemView.findViewById<AutoCompleteTextView>(R.id.edit_lock)
-        var lock_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_lock_time)
-        var invalid=itemView.findViewById<AutoCompleteTextView>(R.id.edit_invalid)
-        var invalid_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_invalid_time)
-        var is_closed=itemView.findViewById<AutoCompleteTextView>(R.id.edit_is_closed)
-        var close_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_close_time)*/
+        var next_btn=itemView.findViewById<Button>(R.id.next_btn)
+
         var remark=itemView.findViewById<TextInputEditText>(R.id.edit_remark)
         var layout=itemView.findViewById<ConstraintLayout>(R.id.constraint_layout)
         var edit=false
         var temp_qctime=""
+        var temp_item_id=""
         lateinit var oldData:StockTransOrderBody
         lateinit var newData:StockTransOrderBody
         init {
@@ -189,34 +143,19 @@ class RecyclerItemStockTransOrderBodySimplifyAdapter() :
                 }
             }
 
-            item_id.setOnItemClickListener { parent, view, position, id ->
-                item_name.setText(cookie_data.item_name_ComboboxData[cookie_data.item_id_ComboboxData.indexOf(item_id.text.toString())])
-            }
             //編輯按鈕
             edit_btn.setOnClickListener {
                 when(edit_btn.text){
                     "編輯"->{
                         cookie_data.itemposition=adapterPosition
                         oldData=data[adapterPosition]
-                        //Log.d("GSON", "msg: ${oldData.id}\n")
-                        //header_id.inputType=InputType.TYPE_CLASS_TEXT
                         item_id.setAdapter(arrayAdapter01)
-                        //modify_count.inputType=InputType.TYPE_CLASS_NUMBER
-                        /*main_trans_code.setAdapter(arrayAdapter02)
-                        sec_trans_code.setAdapter(arrayAdapter03)
-                        store_area.setAdapter(arrayAdapter04)
-                        store_local.setAdapter(arrayAdapter05)*/
+                        item_id.inputType=InputType.TYPE_CLASS_TEXT
+                        temp_item_id=item_id.text.toString()
                         qc_insp_number.inputType=InputType.TYPE_CLASS_TEXT
-                        //qc_time.inputType=InputType.TYPE_CLASS_DATETIME
                         temp_qctime=qc_time.text.toString()
-                        //ok_count.inputType=InputType.TYPE_CLASS_NUMBER
-                        ng_count.inputType=InputType.TYPE_CLASS_NUMBER
+                        ng_count.inputType=(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL)
                         ng_count.setSelectAllOnFocus(true)
-                        //scrapped_count.inputType=InputType.TYPE_CLASS_NUMBER
-                        //is_rework.setAdapter(arrayAdapter)
-                        //is_rework.isClickable=true
-
-
                         remark.isClickable=true
                         remark.isFocusable=true
                         remark.isFocusableInTouchMode=true
@@ -228,81 +167,61 @@ class RecyclerItemStockTransOrderBodySimplifyAdapter() :
                         edit_btn.setBackgroundColor(Color.parseColor("#FF3700B3"))
                     }
                     "完成"->{
-                        edit=false
-                        newData= oldData.copy()//StockTransOrderBody()
-                        newData.header_id=header_id.text.toString()
-                        header_id.inputType=InputType.TYPE_NULL
-                        newData.item_id=item_id.text.toString()
-                        item_id.setAdapter(null)
-                        newData.modify_count=ng_count.text.toString().toInt()
-                        modify_count.inputType=InputType.TYPE_NULL
-                        newData.ng_count=ng_count.text.toString().toInt()
-                        ng_count.inputType=InputType.TYPE_NULL
-                        /*newData.main_trans_code=main_trans_code.text.toString()
-                        main_trans_code.setAdapter(null)
-                        newData.sec_trans_code=sec_trans_code.text.toString()
-                        sec_trans_code.setAdapter(null)
-                        newData.store_area=store_area.text.toString()
-                        store_area.setAdapter(null)
-                        newData.store_local=store_local.text.toString()
-                        store_local.setAdapter(null)*/
-                        newData.qc_insp_number=qc_insp_number.text.toString()
-                        qc_insp_number.inputType=InputType.TYPE_NULL
-
-                        if(qc_time.text.toString()==""){
-                            newData.qc_time=null
+                        if( item_id.text.toString().trim().isEmpty() || (cookie_data.item_id_name_ComboboxData.indexOf(item_id.text.toString())==-1) ){
+                            Toast.makeText(itemView.context,"Item ID 輸入錯誤", Toast.LENGTH_LONG).show()
                         }
-                        else{
-                            newData.qc_time=qc_time.text.toString().substring(0,qc_time.text.toString().indexOf("("))
-                        }
-                        qc_time.inputType=InputType.TYPE_NULL
-                        /*newData.ok_count=ok_count.text.toString().toInt()
-                        ok_count.inputType=InputType.TYPE_NULL
-                        newData.scrapped_count=scrapped_count.text.toString().toInt()
-                        scrapped_count.inputType=InputType.TYPE_NULL
-                        newData.is_rework=is_rework.text.toString().toBoolean()
-                        is_rework.isClickable=false
-                        is_rework.setAdapter(null)*/
-
-
-                        newData.remark=remark.text.toString()
-                        remark.isClickable=false
-                        remark.isFocusable=false
-                        remark.isFocusableInTouchMode=false
-                        remark.isTextInputLayoutFocusedRectEnabled=false
-                        //Log.d("GSON", "msg: ${oldData}\n")
-                        //Log.d("GSON", "msg: ${newData.remark}\n")
-                        edit_ProductControlOrder("StockTransOrderBody",oldData,newData)//更改資料庫資料
-                        when(cookie_data.status){
-                            0-> {//成功
-                                modify_count.setText(ng_count.text)
-                                data[adapterPosition] = newData//更改渲染資料
-                                //editor.setText(cookie_data.username)
-                                Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                        else {
+                            edit=false
+                            newData= oldData.copy()//StockTransOrderBody()
+                            newData.header_id=header_id.text.toString()
+                            header_id.inputType=InputType.TYPE_NULL
+                            newData.item_id=item_id.text.toString().substring(0,item_id.text.toString().indexOf("\n"))
+                            item_id.setAdapter(null)
+                            item_id.inputType=InputType.TYPE_NULL
+                            newData.modify_count=ng_count.text.toString().toDouble()
+                            modify_count.inputType=InputType.TYPE_NULL
+                            newData.ng_count=ng_count.text.toString().toDouble()
+                            ng_count.inputType=InputType.TYPE_NULL
+                            newData.qc_insp_number=qc_insp_number.text.toString()
+                            qc_insp_number.inputType=InputType.TYPE_NULL
+                            if(qc_time.text.toString()==""){
+                                newData.qc_time=null
                             }
-                            1->{//失敗
-                                Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
-                                //header_id.setText(oldData.header_id)
-                                item_id.setText(oldData.item_id)
-                                //modify_count.setText(oldData.modify_count.toString())
-                               /* main_trans_code.setText(oldData.main_trans_code)
-                                sec_trans_code.setText(oldData.sec_trans_code)
-                                store_area.setText(oldData.store_area)
-                                store_local.setText(oldData.store_local)*/
-                                qc_insp_number.setText(oldData.qc_insp_number)
-                                qc_time.setText(temp_qctime)
-                               // ok_count.setText(oldData.ok_count.toString())
-                                ng_count.setText(oldData.ng_count.toString())
-                                //scrapped_count.setText(oldData.scrapped_count.toString())
-                                //is_rework.setText(oldData.is_rework.toString())
-
-                                remark.setText(oldData.remark)
+                            else{
+                                newData.qc_time=qc_time.text.toString().substring(0,qc_time.text.toString().indexOf("("))
                             }
+                            qc_time.inputType=InputType.TYPE_NULL
+                            newData.remark=remark.text.toString()
+                            remark.isClickable=false
+                            remark.isFocusable=false
+                            remark.isFocusableInTouchMode=false
+                            remark.isTextInputLayoutFocusedRectEnabled=false
+                            //Log.d("GSON", "msg: ${oldData}\n")
+                            //Log.d("GSON", "msg: ${newData.remark}\n")
+                            edit_ProductControlOrder("StockTransOrderBody",oldData,newData)//更改資料庫資料
+                            when(cookie_data.status){
+                                0-> {//成功
+                                    modify_count.setText(ng_count.text)
+                                    data[adapterPosition] = newData//更改渲染資料
+                                    //editor.setText(cookie_data.username)
+                                    Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                                }
+                                1->{//失敗
+                                    Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                                    item_id.setText(temp_item_id)
+                                    qc_insp_number.setText(oldData.qc_insp_number)
+                                    qc_time.setText(temp_qctime)
+                                    ng_count.setText(oldData.ng_count.toString())
+                                    remark.setText(oldData.remark)
+                                }
+                            }
+                            //Log.d("GSON", "msg: ${itemData.data}\n")
+                            edit_btn.text = "編輯"
+                            layout.setBackgroundColor(Color.parseColor("#977C7C"))
+                            edit_btn.setBackgroundColor(Color.parseColor("#FF6200EE"))
                         }
-                        //Log.d("GSON", "msg: ${itemData.data}\n")
-                        edit_btn.text = "編輯"
-                        layout.setBackgroundColor(Color.parseColor("#977C7C"))
-                        edit_btn.setBackgroundColor(Color.parseColor("#FF6200EE"))
+
+
                     }
 
                 }
@@ -337,7 +256,14 @@ class RecyclerItemStockTransOrderBodySimplifyAdapter() :
 
             }
 
-            //鎖定按鈕
+            //下一筆
+            next_btn.setOnClickListener {
+                if(adapterPosition+1<=data.size){
+                    cookie_data.recyclerView.smoothScrollToPosition(adapterPosition+1)
+                }
+            }
+
+          /*  //鎖定按鈕
             lockbtn.setOnClickListener {
                 //Log.d("GSON", "msg: ${data}\n")
                 val mAlertDialog = AlertDialog.Builder(itemView.context)
@@ -391,7 +317,7 @@ class RecyclerItemStockTransOrderBodySimplifyAdapter() :
                 }
                 mAlertDialog.show()
 
-            }
+            }*/
         }
         private fun edit_ProductControlOrder(operation:String,oldData:StockTransOrderBody,newData:StockTransOrderBody) {
             val old =JSONObject()
@@ -442,7 +368,7 @@ class RecyclerItemStockTransOrderBodySimplifyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -489,7 +415,7 @@ class RecyclerItemStockTransOrderBodySimplifyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -535,7 +461,7 @@ class RecyclerItemStockTransOrderBodySimplifyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -581,7 +507,7 @@ class RecyclerItemStockTransOrderBodySimplifyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/inventory_management")
+                .url(cookie_data.URL+"/inventory_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -602,9 +528,9 @@ class RecyclerItemStockTransOrderBodySimplifyAdapter() :
 
     }
     fun addItem(addData:StockTransOrderBody){
-        data.add(itemData.count,addData)
-        notifyItemInserted(itemData.count)
-        itemData.count+=1//cookie_data.itemCount+=1
+        data.add(data.size,addData)
+        notifyItemInserted(data.size)
+        cookie_data.recyclerView.smoothScrollToPosition(data.size)
     }
 
 

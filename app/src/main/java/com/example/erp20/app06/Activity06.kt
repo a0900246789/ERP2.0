@@ -66,60 +66,6 @@ class Activity06 : AppCompatActivity() {
             theTextView?.text = autoCompleteTextView?.text
 
             when(autoCompleteTextView?.text.toString()){
-                /*"生產完工報工(生產線)"->{
-                    show_relative_combobox("PLineBasicInfo","all","False", PLineBasicInfo())
-                    show_combobox("ProductControlOrderBody_A","condition","False",
-                        ProductControlOrderBody_A()
-                    )
-                    //println(comboboxData)
-                    val data = comboboxData.toMutableList()
-                    comboboxData.removeAll(comboboxData)
-                    for(i in 0 until data.size){
-                        comboboxData.add( data[i]+" "+ cookie_data.pline_name_ComboboxData[cookie_data.pline_id_ComboboxData.indexOf(data[i])] )
-                    }
-                    var comboboxData_set=comboboxData.distinct()
-                    //println(comboboxData_set)
-
-                    //combobox show
-                    val item = LayoutInflater.from(this).inflate(R.layout.filter_combobox2, null)
-                    val mAlertDialog = AlertDialog.Builder(this)
-                    mAlertDialog.setTitle("篩選排序") //set alertdialog title
-                    mAlertDialog.setView(item)
-                    //filter_combobox選單內容
-                    val comboboxView=item.findViewById<AutoCompleteTextView>(R.id.autoCompleteText)
-                    val comboboxView2=item.findViewById<AutoCompleteTextView>(R.id.autoCompleteText2)
-                    val combobox2=resources.getStringArray(R.array.productControlSort2)
-                    comboboxView.setAdapter(ArrayAdapter(this,R.layout.combobox_item,comboboxData_set))
-                    comboboxView2.setAdapter(ArrayAdapter(this,R.layout.combobox_item,combobox2))
-                    mAlertDialog.setPositiveButton("取消") { dialog, id ->
-                        dialog.dismiss()
-                    }
-                    mAlertDialog.setNegativeButton("確定") { dialog, id ->
-                        //println(comboboxView.text)
-                        selectFilter =comboboxView.text.toString().substring(0,comboboxView.text.toString().indexOf(" "))
-                        //println(selectFilter)
-                        show_relative_combobox("ItemBasicInfo","all","False", ItemBasicInfo())
-                        show_relative_combobox("ProductControlOrderHeader","all","False", ProductControlOrderHeader())
-                        show_relative_combobox("MeBody","all","False", MeBody())
-                        show_header_body_filter("ProductControlOrderBody_A","condition","False",selectFilter)//type=all or condition
-                        when(cookie_data.status)
-                        {
-                            0->{
-                                Toast.makeText(this, "資料載入", Toast.LENGTH_SHORT).show()
-                                recyclerView.layoutManager= LinearLayoutManager(this)//設定Linear格式
-                                ProductControlOrderBody_A_Detail_adapter3= RecyclerItemProductControlOrderBodyADetailAdapter3(comboboxView2.text.toString())
-                                recyclerView.adapter=ProductControlOrderBody_A_Detail_adapter3//找對應itemAdapter
-                                //addbtn?.isEnabled=true
-                            }
-                            1->{
-                                Toast.makeText(this, cookie_data.msg, Toast.LENGTH_SHORT).show()
-                            }
-                        }
-
-                    }
-                    mAlertDialog.show()
-
-                }*/
                 "領料申請"->{
                     show_relative_combobox("PLineBasicInfo","all","False", PLineBasicInfo())
                     val item = LayoutInflater.from(this).inflate(R.layout.filter_combobox2, null)
@@ -179,6 +125,7 @@ class Activity06 : AppCompatActivity() {
                                 recyclerView.layoutManager= LinearLayoutManager(this)//設定Linear格式
                                 StockTransOrderHeaderSimplify_adapter3= RecyclerItemStockTransOrderHeaderSimplifyAdapter3(selectFilter2,selectFilter)
                                 recyclerView.adapter=StockTransOrderHeaderSimplify_adapter3//找對應itemAdapter
+                                cookie_data.recyclerView=recyclerView
                                 addbtn?.isEnabled=true
                             }
                             1->{
@@ -190,71 +137,7 @@ class Activity06 : AppCompatActivity() {
                     mAlertDialog.show()
 
                 }
-                /*"退料作業(報廢品)"->{
-                    val item = LayoutInflater.from(this).inflate(R.layout.filter_combobox, null)
-                    val mAlertDialog = AlertDialog.Builder(this)
-                    //mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
-                    mAlertDialog.setTitle("篩選日期") //set alertdialog title
-                    //mAlertDialog.setMessage("確定要登出?") //set alertdialog message
-                    mAlertDialog.setView(item)
-                    //filter_combobox選單內容
-                    val comboboxView=item.findViewById<AutoCompleteTextView>(R.id.autoCompleteText)
-                    val dateF = SimpleDateFormat("yyyy-MM-dd(EEEE)", Locale.TAIWAN)
-                    var C= Calendar.getInstance()
-                    C.set(Calendar.DAY_OF_MONTH,1)
-                    var Date= dateF.format(C.time)
-                    comboboxView.setText(Date)
-                    comboboxView.setOnClickListener {
-                        var c= Calendar.getInstance()
-                        val year= c.get(Calendar.YEAR)
-                        val month = c.get(Calendar.MONTH)
-                        val day = c.get(Calendar.DAY_OF_MONTH)
-                        var datePicker = DatePickerDialog(item.context,
-                            DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                                val SelectedDate= Calendar.getInstance()
-                                SelectedDate.set(Calendar.YEAR,mYear)
-                                SelectedDate.set(Calendar.MONTH,mMonth)
-                                SelectedDate.set(Calendar.DAY_OF_MONTH,mDay)
-                                val Date1= dateF.format(SelectedDate.time)
-                                comboboxView.setText(Date1)
-                            },year,month,day).show()
-                    }
-                    //comboboxView.setAdapter(ArrayAdapter(this,R.layout.combobox_item,comboboxData))
-                    mAlertDialog.setPositiveButton("取消") { dialog, id ->
-                        dialog.dismiss()
-                    }
-                    mAlertDialog.setNegativeButton("確定") { dialog, id ->
-                        //println(comboboxView.text)
-                        selectFilter=comboboxView.text.toString().substring(0,comboboxView.text.toString().indexOf("("))
-                        //println(selectFilter)
-                        show_header_body("StockTransOrderHeader","all","False")//type=combobox or all
-                        show_relative_combobox("PLineBasicInfo","all","False", PLineBasicInfo())
-                        show_relative_combobox("InvChangeTypeM","all","False", InvChangeTypeM())
-                        show_relative_combobox("InvChangeTypeS","all","False", InvChangeTypeS())
-                        show_relative_combobox("PurchaseOrderHeader","all","False", PurchaseOrderHeader())
-                        show_relative_combobox("PurchaseOrderBody","all","False", PurchaseOrderBody())
-                        show_relative_combobox("PurchaseBatchOrder","all","False", PurchaseBatchOrder())
-                        show_relative_combobox("ProductControlOrderBody_A","all","False", ProductControlOrderBody_A())
-                        show_relative_combobox("MeBody","all","False", MeBody())
-                        show_relative_combobox("ItemBasicInfo","all","False", ItemBasicInfo())
-                        when(cookie_data.status)
-                        {
-                            0->{
-                                Toast.makeText(this, "資料載入", Toast.LENGTH_SHORT).show()
-                                recyclerView.layoutManager= LinearLayoutManager(this)//設定Linear格式
-                                StockTransOrderHeaderSimplify_adapter2= RecyclerItemStockTransOrderHeaderSimplifyAdapter2(selectFilter)
-                                recyclerView.adapter=StockTransOrderHeaderSimplify_adapter2//找對應itemAdapter
-                                addbtn?.isEnabled=true
-                            }
-                            1->{
-                                Toast.makeText(this, cookie_data.msg, Toast.LENGTH_SHORT).show()
-                            }
-                        }
 
-                    }
-                    mAlertDialog.show()
-
-                }*/
 
             }
         }
@@ -262,6 +145,7 @@ class Activity06 : AppCompatActivity() {
         addbtn?.setOnClickListener {
             when(autoCompleteTextView?.text.toString()){
                 "領料申請"->{
+                    cookie_data.recyclerView=recyclerView
                     show_relative_combobox("StockTransOrderHeader","all","False", StockTransOrderHeader())
                     val item = LayoutInflater.from(this).inflate(R.layout.recycler_item_stock_trans_order_header_simplify, null)
                     val mAlertDialog = AlertDialog.Builder(this)
@@ -290,7 +174,7 @@ class Activity06 : AppCompatActivity() {
                         }
                     }
                     val arrayAdapter04= ArrayAdapter(item.context,R.layout.combobox_item,relativeCombobox04)
-                    var relativeCombobox05: ArrayList<String> = ArrayList<String>()
+                   /* var relativeCombobox05: ArrayList<String> = ArrayList<String>()
                     for(i in 0 until cookie_data.ProductControlOrderBody_A_complete_date_ComboboxData.size){
                         if(cookie_data.ProductControlOrderBody_A_complete_date_ComboboxData[i]!=null){
                             relativeCombobox05.add(
@@ -304,7 +188,7 @@ class Activity06 : AppCompatActivity() {
                             )
                         }
                     }
-                    val arrayAdapter05= ArrayAdapter(item.context,R.layout.combobox_item,relativeCombobox05)
+                    val arrayAdapter05= ArrayAdapter(item.context,R.layout.combobox_item,relativeCombobox05)*/
 
                     var _id=item.findViewById<TextInputEditText>(R.id.edit_id)
                     _id.inputType= InputType.TYPE_CLASS_NUMBER
@@ -328,7 +212,7 @@ class Activity06 : AppCompatActivity() {
                     var purchase_order_id=item.findViewById<AutoCompleteTextView>(R.id.edit_purchase_order_id)
                     purchase_order_id.setAdapter(arrayAdapter04)
                     var prod_ctrl_order_number=item.findViewById<AutoCompleteTextView>(R.id.edit_prod_ctrl_order_number)
-                    prod_ctrl_order_number.setAdapter(arrayAdapter05)
+                   // prod_ctrl_order_number.setAdapter(arrayAdapter05)
                     var illustrate=item.findViewById<TextInputEditText>(R.id.edit_illustrate)
 
                     //異動日期
@@ -618,7 +502,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/production_control_sheet_management")
+                    .url(cookie_data.URL+"/production_control_sheet_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -652,7 +536,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/production_control_sheet_management")
+                    .url(cookie_data.URL+"/production_control_sheet_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -683,7 +567,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/inventory_management")
+                    .url(cookie_data.URL+"/inventory_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -735,7 +619,7 @@ class Activity06 : AppCompatActivity() {
                     .build()
 
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/inventory_management")
+                    .url(cookie_data.URL+"/inventory_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -782,7 +666,7 @@ class Activity06 : AppCompatActivity() {
                     .build()
 
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/inventory_management")
+                    .url(cookie_data.URL+"/inventory_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -821,7 +705,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/production_control_sheet_management")
+                    .url(cookie_data.URL+"/production_control_sheet_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -875,7 +759,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/production_control_sheet_management")
+                    .url(cookie_data.URL+"/production_control_sheet_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -914,7 +798,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -957,7 +841,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1003,7 +887,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1046,7 +930,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1089,7 +973,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1132,7 +1016,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1175,7 +1059,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1218,7 +1102,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1261,7 +1145,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/master_scheduled_order_management")
+                    .url(cookie_data.URL+"/master_scheduled_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1307,7 +1191,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1351,7 +1235,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/custom_order_management")
+                    .url(cookie_data.URL+"/custom_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1396,7 +1280,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1440,7 +1324,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1492,7 +1376,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/special_basic_management")
+                    .url(cookie_data.URL+"/special_basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1537,7 +1421,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/special_basic_management")
+                    .url(cookie_data.URL+"/special_basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1583,7 +1467,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1633,7 +1517,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/staff_management")
+                    .url(cookie_data.URL+"/staff_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1683,7 +1567,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1728,7 +1612,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1775,7 +1659,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/production_control_sheet_management")
+                    .url(cookie_data.URL+"/production_control_sheet_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1823,7 +1707,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/production_control_sheet_management")
+                    .url(cookie_data.URL+"/production_control_sheet_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1883,7 +1767,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1929,7 +1813,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -1975,7 +1859,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/basic_management")
+                    .url(cookie_data.URL+"/basic_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -2020,7 +1904,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/def_management")
+                    .url(cookie_data.URL+"/def_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -2063,7 +1947,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/purchase_order_management")
+                    .url(cookie_data.URL+"/purchase_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -2117,7 +2001,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/purchase_order_management")
+                    .url(cookie_data.URL+"/purchase_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -2166,7 +2050,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/purchase_order_management")
+                    .url(cookie_data.URL+"/purchase_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -2215,7 +2099,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/purchase_order_management")
+                    .url(cookie_data.URL+"/purchase_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -2266,7 +2150,7 @@ class Activity06 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url("http://140.125.46.125:8000/inventory_management")
+                    .url(cookie_data.URL+"/inventory_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()

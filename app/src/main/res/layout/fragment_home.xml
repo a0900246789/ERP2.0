@@ -22,43 +22,43 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.22"/>
+            app:layout_constraintGuide_percent="0.25"/>
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_H_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.32"/>
+            app:layout_constraintGuide_percent="0.4"/>
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_H_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.42"/>
+            app:layout_constraintGuide_percent="0.55"/>
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_H_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.52"/>
+            app:layout_constraintGuide_percent="0.7"/>
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_H_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.62"/>
+            app:layout_constraintGuide_percent="0.85"/>
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_H_7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.72"/>
+            app:layout_constraintGuide_percent="0.94"/>
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_H_8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.82"/>
+            app:layout_constraintGuide_percent="0.96"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_V_L"
@@ -112,7 +112,7 @@
             android:text="4"
             android:minHeight="0dp"
             android:minWidth="0dp"
-            android:src="@drawable/pur04"
+            android:background="@drawable/btn_04"
             app:layout_constraintLeft_toLeftOf="@id/guideline_V_L"
             app:layout_constraintRight_toLeftOf="@id/btn_05"
             app:layout_constraintTop_toTopOf="@id/guideline_H_2"
@@ -124,7 +124,7 @@
             android:text="5"
             android:minHeight="0dp"
             android:minWidth="0dp"
-            android:src="@drawable/ops05"
+            android:background="@drawable/btn_05"
             app:layout_constraintTop_toTopOf="@id/guideline_H_2"
             app:layout_constraintLeft_toRightOf="@id/btn_04"
             app:layout_constraintRight_toLeftOf="@id/btn_06"
@@ -136,7 +136,7 @@
             android:text="6"
             android:minHeight="0dp"
             android:minWidth="0dp"
-            android:src="@drawable/stk06"
+            android:background="@drawable/btn_06"
             app:layout_constraintTop_toTopOf="@id/guideline_H_2"
             app:layout_constraintLeft_toRightOf="@id/btn_05"
             app:layout_constraintRight_toRightOf="@id/guideline_V_R"
@@ -148,7 +148,7 @@
             android:layout_height="wrap_content"
             android:minHeight="0dp"
             android:minWidth="0dp"
-            android:src="@drawable/pur04"
+            android:background="@drawable/btn_07"
             app:layout_constraintLeft_toLeftOf="@id/guideline_V_L"
             app:layout_constraintRight_toLeftOf="@id/btn_08"
             app:layout_constraintTop_toTopOf="@id/guideline_H_3"
@@ -159,7 +159,7 @@
             android:layout_height="wrap_content"
             android:minHeight="0dp"
             android:minWidth="0dp"
-            android:src="@drawable/ops05"
+            android:background="@drawable/btn_08"
             app:layout_constraintTop_toTopOf="@id/guideline_H_3"
             app:layout_constraintLeft_toRightOf="@id/btn_07"
             app:layout_constraintRight_toLeftOf="@id/btn_09"
@@ -170,11 +170,35 @@
             android:layout_height="wrap_content"
             android:minHeight="0dp"
             android:minWidth="0dp"
-            android:src="@drawable/stk06"
+            android:background="@drawable/btn_09"
             app:layout_constraintTop_toTopOf="@id/guideline_H_3"
             app:layout_constraintLeft_toRightOf="@id/btn_08"
             app:layout_constraintRight_toRightOf="@id/guideline_V_R"
             />
+
+        <ImageButton
+            android:id="@+id/btn_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:background="@drawable/btn_10"
+            app:layout_constraintLeft_toLeftOf="@id/guideline_V_L"
+            app:layout_constraintRight_toLeftOf="@id/btn_08"
+            app:layout_constraintTop_toTopOf="@id/guideline_H_4"
+            />
+        <ImageButton
+            android:id="@+id/btn_13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:background="@drawable/btn_13"
+            app:layout_constraintTop_toTopOf="@id/guideline_H_4"
+            app:layout_constraintLeft_toRightOf="@id/btn_07"
+            app:layout_constraintRight_toLeftOf="@id/btn_09"
+            />
+
 
 
 

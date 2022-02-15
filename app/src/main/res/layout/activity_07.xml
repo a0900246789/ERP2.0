@@ -25,7 +25,7 @@
             android:inputType="none"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            android:text="備料作業">
+            android:text="備料/發料作業">
 
         </AutoCompleteTextView>
 
@@ -37,17 +37,17 @@
         android:layout_marginLeft="32dp"
         >
         <Button
-            android:id="@+id/add_btn"
+            android:id="@+id/find_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="新增"
+            android:text="查詢"
             android:enabled="false"
             android:layout_alignParentLeft="true"></Button>
         <Button
             android:id="@+id/search_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="確定"
+            android:text="作業"
             android:layout_alignParentRight="true"></Button>
 
     </RelativeLayout>

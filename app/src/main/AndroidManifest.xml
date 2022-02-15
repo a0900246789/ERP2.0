@@ -14,6 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ERP20">
+        <activity android:name=".app13.Activity13"
+            android:parentActivityName=".DisplayActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".app10.Activity10"
+            android:parentActivityName=".DisplayActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".app07.Activity07"
             android:parentActivityName=".DisplayActivity"

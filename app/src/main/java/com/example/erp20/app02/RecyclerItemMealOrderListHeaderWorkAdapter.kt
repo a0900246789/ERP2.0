@@ -5,10 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
-import android.widget.Button
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.erp20.Model.*
 import com.example.erp20.R
@@ -21,8 +17,6 @@ import okhttp3.Request
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
-import kotlin.collections.ArrayList
-import android.widget.ArrayAdapter
 
 
 class RecyclerItemMealOrderListHeaderWorkAdapter() :
@@ -55,11 +49,12 @@ class RecyclerItemMealOrderListHeaderWorkAdapter() :
             holder.attendance_rate_people.setText("0")
         }
         else{
-            holder.attendance_rate_people.setText( ((data[position].num_of_leave.toFloat()/data[position].attendance.toFloat())*100).toString() )
+            var S=((data[position].num_of_leave.toFloat()/data[position].attendance.toFloat())*100)
+            holder.attendance_rate_people.setText(String.format("%.2f",S))
         }
         holder.attendance_rate_people.inputType=InputType.TYPE_NULL
 
-        holder.total_work_hour.setText( ((data[position].attendance)*8).toString() )
+        holder.total_work_hour.setText( (((data[position].attendance+data[position].num_of_leave)*8.0)-data[position].total_leave_hours).toString() )
         holder.total_work_hour.inputType=InputType.TYPE_NULL
         holder.total_leave_hours.setText( data[position].total_leave_hours.toString() )
         holder.total_leave_hours.inputType=InputType.TYPE_NULL
@@ -69,7 +64,8 @@ class RecyclerItemMealOrderListHeaderWorkAdapter() :
             holder.attendance_rate_hour.setText("0")
         }
         else{
-            holder.attendance_rate_hour.setText(  ( (  1-( data[position].total_leave_hours / ((data[position].attendance)*8) ) ) *100 ).toString() )
+            var S=( (  1-( data[position].total_leave_hours / ((data[position].attendance)*8) ) ) *100 )
+            holder.attendance_rate_hour.setText(String.format("%.2f",S))
         }
         holder.attendance_rate_hour.inputType=InputType.TYPE_NULL
 
@@ -79,12 +75,13 @@ class RecyclerItemMealOrderListHeaderWorkAdapter() :
             holder.part_rate.setText("0")
         }
         else{
-            holder.part_rate.setText(   ( ( data[position].number_of_overtime_support/( ((data[position].attendance)*8)-data[position].total_leave_hours+data[position].number_of_overtime_support ) )*100).toString())
+            var S=( ( data[position].number_of_overtime_support/( ((data[position].attendance)*8)-data[position].total_leave_hours+data[position].number_of_overtime_support ) )*100)
+
+            holder.part_rate.setText(String.format("%.2f",S))
         }
         holder.part_rate.inputType=InputType.TYPE_NULL
 
-        holder.can_work_hour.setText( ( ((data[position].attendance)*8)
-                                         -data[position].total_leave_hours
+        holder.can_work_hour.setText( (  holder.total_work_hour.text.toString().toDouble()
                                          +data[position].number_of_overtime_support
                                          +data[position].total_support_hours).toString())
 
@@ -216,7 +213,7 @@ class RecyclerItemMealOrderListHeaderWorkAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -269,7 +266,7 @@ class RecyclerItemMealOrderListHeaderWorkAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -321,7 +318,7 @@ class RecyclerItemMealOrderListHeaderWorkAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -373,7 +370,7 @@ class RecyclerItemMealOrderListHeaderWorkAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()

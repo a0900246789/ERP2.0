@@ -75,42 +75,20 @@
                 android:id="@+id/edit_item_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="none"
                 android:textColor="@color/importmant_red"
                 >
             </AutoCompleteTextView>
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
         <com.google.android.material.textfield.TextInputLayout
-
-            android:id="@+id/item_name"
+            android:id="@+id/ok_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/item_id"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginRight="120dp"
-            android:hint="料件名稱"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_item_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:singleLine="true"
-                >
-
-            </com.google.android.material.textfield.TextInputEditText>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ok_count"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/item_name"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="120dp"
-            android:hint="合格數量"
+            android:hint="領料數量"
             android:textColorHint="@color/importmant_red"
             >
             <com.google.android.material.textfield.TextInputEditText
@@ -118,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:singleLine="true"
-                android:inputType="number"
+                android:inputType="number|numberDecimal"
                 android:text="0"
                 android:textColor="@color/importmant_red"
                 >
@@ -229,28 +207,18 @@
 
         </Button>
         <Button
-            android:id="@+id/lock_btn"
+            android:id="@+id/next_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edit_btn"
             android:layout_marginTop="16dp"
-            android:text="鎖定"
+            android:text="下一筆"
             android:visibility="invisible">
 
         </Button>
 
-        <Button
-            android:id="@+id/over_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lock_btn"
-            android:layout_marginTop="16dp"
-            android:text="結案"
-            android:visibility="invisible">
 
-        </Button>
 
         <View
             android:layout_width="match_parent"

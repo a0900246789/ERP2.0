@@ -35,6 +35,17 @@ data class Response(
     val msg: String
 )
 
+data class ShowSysArgPur(
+    val data: ArrayList<SysArgPur>,
+    var count: Int,
+    val status: Int
+)
+data class SysArgPur(
+    var system_code: String="",
+    var limited_days: Int=0,
+):Base()
+
+
 data class ShowProdType(
     val data: ArrayList<ProdType>,
     var count: Int,
@@ -189,6 +200,10 @@ data class CustomBasicInfo(
     var abbreviation: String="",
     var full_name: String="",
     var code : String="",
+    var booking_prefix: String="",
+    var SWE_interval_days: Int=0,
+    var act_shipping_interval_days: Int=0,
+    var arrival_date_interval_days : Int=0,
 ):Base()
 
 data class ShowCarCBasicInfo(
@@ -442,6 +457,8 @@ data class CustomerOrderHeader(
     var cont_count: Int=0,
     var start_cont_id: String="",
     var end_cont_id: String="",
+    var sws:String="",
+    var swe:String="",
     var is_urgent: Boolean=false,
     var urgent_deadline: String?=null,
 ):Base()
@@ -572,9 +589,15 @@ data class BookingNoticeHeader(
     var _id: String="",
     var shipping_number: String="",
     var shipping_order_number: String="",
-    var date: String="",
+    var date: String?=null,
     var customer_poNo: String="",
-):Base()
+    var notice_number: String="",
+    var act_clearance_date: String?=null,
+    var act_shipping_date: String?=null,
+    var oa_referenceNO1: String="",
+    var is_last: Boolean=false,
+
+    ):Base()
 
 data class ShowBookingNoticeBody(
     val data: ArrayList<BookingNoticeBody>,
@@ -600,6 +623,60 @@ data class BookingNoticeLog(
     var shipping_order_number_new: String="",
     var header_id_old: String="",
     var header_id_new: String="",
+):Base()
+
+data class ShowOAReference(
+    val data: ArrayList<OAReference>,
+    var count: Int,
+    val status: Int
+)
+data class OAReference(
+    var oa_referenceNO1: String="",
+    var oa_referenceNO2: String="",
+    var oa_referenceNO3: String="",
+    var oa_referenceNO4: String="",
+):Base()
+
+
+data class ShowOAFileDeliveryRecordHeader(
+    val data: ArrayList<OAFileDeliveryRecordHeader>,
+    var count: Int,
+    val status: Int
+)
+data class OAFileDeliveryRecordHeader(
+    var trackingNo: String="",
+    var courier_company: String="",
+    var delivery_date: String?=null,
+    var arrival_date: String?=null,
+    var receiver: String="",
+    var shippin_billing_month: String="",
+    var billing_date: String?=null,
+):Base()
+
+data class ShowOAFileDeliveryRecordBody(
+    val data: ArrayList<OAFileDeliveryRecordBody>,
+    var count: Int,
+    val status: Int
+)
+data class OAFileDeliveryRecordBody(
+    var _id: String="",
+    var trackingNo: String="",
+    var booking_noticeNo: String="",
+):Base()
+
+data class ShowShippingLog(
+    val data: ArrayList<ShippingLog>,
+    var count: Int,
+    val status: Int
+)
+data class ShippingLog(
+    var _id: String="",
+    var bookingNo: String="",
+    var booking_noticeNo: String="",
+    var shipping_date_old: String="",
+    var shipping_date_new: String="",
+    var is_old: Boolean=false,
+    var is_new: Boolean=false,
 ):Base()
 
 data class ShowDMCILHeader(
@@ -798,9 +875,9 @@ data class ProductControlOrderBody_D(
     var section: Int=0,
     var est_complete_date: String?=null,
     var est_complete_date_vender:  String?=null,
-    var est_output: Int=0,
-    var actual_output_vender: Int=0,
-    var quantity_delivered: Int=0,
+    var est_output: Double=0.0,
+    var actual_output_vender: Double=0.0,
+    var quantity_delivered: Double=0.0,
     var is_urgent: Boolean=false,
     var urgent_deadline: String?=null,
     var notice_matter: String="",
@@ -881,16 +958,16 @@ data class StockTransOrderBody(
     var header_id: String="",
     var body_id: String="",
     var item_id: String="",
-    var modify_count: Int=0,
+    var modify_count: Double=0.0,
     var main_trans_code: String="",
     var sec_trans_code: String="",
     var store_area: String="",
     var store_local: String="",
     var qc_insp_number:String="",
     var qc_time: String?=null,
-    var ok_count: Int=0,
-    var ng_count: Int=0,
-    var scrapped_count: Int=0,
+    var ok_count: Double=0.0,
+    var ng_count: Double=0.0,
+    var scrapped_count: Double=0.0,
     var is_rework: Boolean=false,
 ):Base()
 
@@ -1030,7 +1107,7 @@ data class VenderShipmentBody(
     var poNo: String="",
     var section: String="",
     var item_id: String="",
-    var purchase_count: Int=0,
+    var purchase_count: Double=0.0,
     var batch_id: String="",
     var prod_batch_code: String="",
     var qc_date:String?=null,

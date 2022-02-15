@@ -40,7 +40,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="32dp"
-        android:hint="排序篩選"
+        android:hint="內容"
         app:layout_constraintTop_toBottomOf="@id/one"
         app:layout_constraintLeft_toLeftOf="parent">
 

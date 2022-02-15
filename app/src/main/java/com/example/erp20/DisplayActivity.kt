@@ -102,7 +102,7 @@ class DisplayActivity : AppCompatActivity() {
             .add("login_flag",cookie_data.loginflag)
             .build()
         val request = Request.Builder()
-            .url("http://140.125.46.125:8000/logout")
+            .url(cookie_data.URL+"/logout")
             .header("User-Agent", "ERP_MOBILE")
             .post(body)
             .build()

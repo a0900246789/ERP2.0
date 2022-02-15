@@ -1,4 +1,4 @@
-package com.example.erp20.RecyclerAdapter
+package com.example.erp20.app13
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,34 +25,29 @@ import kotlin.collections.ArrayList
 import android.widget.ArrayAdapter
 
 
-class RecyclerItemBookingNoticeLogAdapter() :
-    RecyclerView.Adapter<RecyclerItemBookingNoticeLogAdapter.ViewHolder>() {
-    private var itemData: ShowBookingNoticeLog =Gson().fromJson(cookie_data.response_data, ShowBookingNoticeLog::class.java)
-    private var data: ArrayList<BookingNoticeLog> =itemData.data
+class RecyclerItemBookingNoticeBodyAdapter() :
+    RecyclerView.Adapter<RecyclerItemBookingNoticeBodyAdapter.ViewHolder>() {
+    private var itemData: ShowBookingNoticeBody =Gson().fromJson(cookie_data.response_data, ShowBookingNoticeBody::class.java)
+    private var data: ArrayList<BookingNoticeBody> =itemData.data
+    var relativeCombobox01=cookie_data.cont_code_ComboboxData
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemBookingNoticeLogAdapter.ViewHolder {
-        val v= LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_booking_notice_log,parent,false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val v= LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_booking_notice_body,parent,false)
         return ViewHolder(v)
 
     }
 
-    override fun onBindViewHolder(holder: RecyclerItemBookingNoticeLogAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         //Log.d("GSON", "msg: ${itemData.data[position]}\n")
-        holder.code.setText(data[position].code)
-        holder.code.inputType=InputType.TYPE_NULL
-        holder.date_time.setText(data[position].date_time)
-        holder.date_time.inputType=InputType.TYPE_NULL
-        holder.shipping_number.setText(data[position].shipping_number)
-        holder.shipping_number.inputType=InputType.TYPE_NULL
-        holder.shipping_order_number_old.setText(data[position].shipping_order_number_old)
-        holder.shipping_order_number_old.inputType=InputType.TYPE_NULL
-        holder.shipping_order_number_new.setText(data[position].shipping_order_number_new)
-        holder.shipping_order_number_new.inputType=InputType.TYPE_NULL
-        holder.header_id_old.setText(data[position].header_id_old)
-        holder.header_id_old.inputType=InputType.TYPE_NULL
-        holder.header_id_new.setText(data[position].header_id_new)
-        holder.header_id_new.inputType=InputType.TYPE_NULL
+        holder.header_id.setText(data[position].header_id)
+        holder.header_id.inputType=InputType.TYPE_NULL
+        holder.body_id.setText(data[position].body_id)
+        holder.body_id.inputType=InputType.TYPE_NULL
+        holder.cont_code.setText(data[position].cont_code)
+        holder.cont_code.inputType=InputType.TYPE_NULL
+
+
 
 
 
@@ -64,15 +59,17 @@ class RecyclerItemBookingNoticeLogAdapter() :
         holder.lock_time.setText(data[position].lock_time)
         holder.invalid.setText(data[position].invalid.toString())
         holder.invalid_time.setText(data[position].invalid_time)
+        holder.is_closed.setText(data[position].is_closed.toString())
+        holder.close_time.setText(data[position].close_time)
         holder.remark.setText(data[position].remark)
         holder.remark.isClickable=false
         holder.remark.isFocusable=false
         holder.remark.isFocusableInTouchMode=false
         holder.remark.isTextInputLayoutFocusedRectEnabled=false
-       // holder.deletebtn.isVisible=true
-       // holder.edit_btn.isVisible=true
-        //holder.lockbtn.isVisible=true
-
+        holder.deletebtn.isVisible=true
+        holder.edit_btn.isVisible=true
+        holder.lockbtn.isVisible=true
+        holder.overbtn.isVisible=true
     }
 
     override fun getItemCount(): Int {
@@ -80,17 +77,15 @@ class RecyclerItemBookingNoticeLogAdapter() :
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        var code=itemView.findViewById<TextInputEditText>(R.id.edit_code)
-        var date_time=itemView.findViewById<TextInputEditText>(R.id.edit_date_time)
-        var shipping_number=itemView.findViewById<TextInputEditText>(R.id.edit_shipping_number)
-        var shipping_order_number_old=itemView.findViewById<TextInputEditText>(R.id.edit_shipping_order_number_old)
-        var shipping_order_number_new=itemView.findViewById<TextInputEditText>(R.id.edit_shipping_order_number_new)
-        var header_id_old=itemView.findViewById<TextInputEditText>(R.id.edit_header_id_old)
-        var header_id_new=itemView.findViewById<TextInputEditText>(R.id.edit_header_id_new)
+        var header_id=itemView.findViewById<TextInputEditText>(R.id.edit_header_id)
+        var body_id=itemView.findViewById<TextInputEditText>(R.id.edit_body_id)
+        var cont_code=itemView.findViewById<AutoCompleteTextView>(R.id.edit_cont_code)
+
 
         var edit_btn=itemView.findViewById<Button>(R.id.edit_btn)
         var deletebtn=itemView.findViewById<Button>(R.id.delete_btn)
         var lockbtn=itemView.findViewById<Button>(R.id.lock_btn)
+        var overbtn=itemView.findViewById<Button>(R.id.over_btn)
         var creator=itemView.findViewById<AutoCompleteTextView>(R.id.edit_creator)
         var creator_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_create_time)
         var editor=itemView.findViewById<AutoCompleteTextView>(R.id.edit_editor)
@@ -99,9 +94,11 @@ class RecyclerItemBookingNoticeLogAdapter() :
         var lock_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_lock_time)
         var invalid=itemView.findViewById<AutoCompleteTextView>(R.id.edit_invalid)
         var invalid_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_invalid_time)
+        var is_closed=itemView.findViewById<AutoCompleteTextView>(R.id.edit_is_closed)
+        var close_time=itemView.findViewById<AutoCompleteTextView>(R.id.edit_close_time)
         var remark=itemView.findViewById<TextInputEditText>(R.id.edit_remark)
-        lateinit var oldData:BookingNoticeLog
-        lateinit var newData:BookingNoticeLog
+        lateinit var oldData:BookingNoticeBody
+        lateinit var newData:BookingNoticeBody
         init {
             itemView.setOnClickListener{
                 val position:Int=adapterPosition
@@ -111,40 +108,36 @@ class RecyclerItemBookingNoticeLogAdapter() :
 
             val combobox=itemView.resources.getStringArray(R.array.combobox_yes_no)
             val arrayAdapter= ArrayAdapter(itemView.context,R.layout.combobox_item,combobox)
+            val arrayAdapter01= ArrayAdapter(itemView.context,R.layout.combobox_item,relativeCombobox01)
 
-/*
             //編輯按鈕
             edit_btn.setOnClickListener {
                 when(edit_btn.text){
                     "編輯"->{
                         oldData=itemData.data[adapterPosition]
                         //Log.d("GSON", "msg: ${oldData.id}\n")
-                        //_id.inputType=InputType.TYPE_CLASS_TEXT
-                        shipping_number.inputType=InputType.TYPE_CLASS_TEXT
-                        shipping_order_number.inputType=InputType.TYPE_CLASS_TEXT
-                        date.inputType=InputType.TYPE_DATETIME_VARIATION_DATE
-                        customer_poNo.inputType=InputType.TYPE_CLASS_TEXT
+                        //header_id.inputType=InputType.TYPE_CLASS_TEXT
+                        //body_id.inputType=InputType.TYPE_CLASS_TEXT
+                        cont_code.setAdapter(arrayAdapter01)
+
 
 
                         remark.isClickable=true
                         remark.isFocusable=true
                         remark.isFocusableInTouchMode=true
                         remark.isTextInputLayoutFocusedRectEnabled=true
-                        shipping_number.requestFocus()
+                        cont_code.requestFocus()
                         edit_btn.text = "完成"
                     }
                     "完成"->{
-                        newData= BookingNoticeHeader()
-                        newData._id=_id.text.toString()
-                        _id.inputType=InputType.TYPE_NULL
-                        newData.shipping_number=shipping_number.text.toString()
-                        shipping_number.inputType=InputType.TYPE_NULL
-                        newData.shipping_order_number=shipping_order_number.text.toString()
-                        shipping_order_number.inputType=InputType.TYPE_NULL
-                        newData.date=date.text.toString()
-                        date.inputType=InputType.TYPE_NULL
-                        newData.customer_poNo=customer_poNo.text.toString()
-                        customer_poNo.inputType=InputType.TYPE_NULL
+                        newData= BookingNoticeBody()
+                        newData.header_id=header_id.text.toString()
+                        header_id.inputType=InputType.TYPE_NULL
+                        newData.body_id=body_id.text.toString()
+                        body_id.inputType=InputType.TYPE_NULL
+                        newData.cont_code=cont_code.text.toString()
+                        cont_code.setAdapter(null)
+
 
 
                         newData.remark=remark.text.toString()
@@ -154,7 +147,7 @@ class RecyclerItemBookingNoticeLogAdapter() :
                         remark.isTextInputLayoutFocusedRectEnabled=false
                         //Log.d("GSON", "msg: ${oldData}\n")
                         //Log.d("GSON", "msg: ${newData.remark}\n")
-                        edit_BookingNotice("BookingNoticeHeader",oldData,newData)//更改資料庫資料
+                        edit_BookingNotice("BookingNoticeBody",oldData,newData)//更改資料庫資料
                         when(cookie_data.status){
                             0-> {//成功
                                 itemData.data[adapterPosition] = newData//更改渲染資料
@@ -163,11 +156,10 @@ class RecyclerItemBookingNoticeLogAdapter() :
                             }
                             1->{//失敗
                                 Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
-                                _id.setText(oldData._id)
-                                shipping_number.setText(oldData.shipping_number)
-                                shipping_order_number.setText(oldData.shipping_order_number)
-                                date.setText(oldData.date)
-                                customer_poNo.setText(oldData.customer_poNo)
+                                header_id.setText(oldData.header_id)
+                                body_id.setText(oldData.body_id)
+                                cont_code.setText(oldData.cont_code)
+
 
 
                                 remark.setText(oldData.remark)
@@ -191,7 +183,7 @@ class RecyclerItemBookingNoticeLogAdapter() :
                     dialog.dismiss()
                 }
                 mAlertDialog.setNegativeButton("YES") { dialog, id ->
-                    delete_BookingNotice("BookingNoticeHeader",data[adapterPosition])
+                    delete_BookingNotice("BookingNoticeBody",data[adapterPosition])
                     when(cookie_data.status){
                         0-> {//成功
                             data.removeAt(adapterPosition)
@@ -220,7 +212,7 @@ class RecyclerItemBookingNoticeLogAdapter() :
                     dialog.dismiss()
                 }
                 mAlertDialog.setNegativeButton("YES") { dialog, id ->
-                    lock_BookingNotice("BookingNoticeHeader",data[adapterPosition])
+                    lock_BookingNotice("BookingNoticeBody",data[adapterPosition])
                     when(cookie_data.status){
                         0-> {//成功
                             lock.setText("true")
@@ -235,24 +227,49 @@ class RecyclerItemBookingNoticeLogAdapter() :
                 }
                 mAlertDialog.show()
 
-            }*/
+            }
+
+            //結案按鈕
+            overbtn.setOnClickListener {
+                //Log.d("GSON", "msg: ${data}\n")
+                val mAlertDialog = AlertDialog.Builder(itemView.context)
+                mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
+                mAlertDialog.setTitle("結案") //set alertdialog title
+                mAlertDialog.setMessage("確定要結案?！") //set alertdialog message
+                mAlertDialog.setPositiveButton("NO") { dialog, id ->
+                    dialog.dismiss()
+                }
+                mAlertDialog.setNegativeButton("YES") { dialog, id ->
+                    over_BookingNotice("BookingNoticeBody",data[adapterPosition])
+                    when(cookie_data.status){
+                        0-> {//成功
+                            is_closed.setText("true")
+                            close_time.setText(Calendar.getInstance().getTime().toString())
+                            Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
+
+                        }
+                        1->{//失敗
+                            Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                mAlertDialog.show()
+
+            }
         }
-        private fun edit_BookingNotice(operation:String,oldData:BookingNoticeHeader,newData:BookingNoticeHeader) {
+        private fun edit_BookingNotice(operation:String,oldData:BookingNoticeBody,newData:BookingNoticeBody) {
             val old =JSONObject()
-            old.put("_id",oldData._id)
-            old.put("shipping_number",oldData.shipping_number)
-            old.put("shipping_order_number",oldData.shipping_order_number)
-            old.put("date",oldData.date)
-            old.put("customer_poNo",oldData.customer_poNo)
+            old.put("header_id",oldData.header_id)
+            old.put("body_id",oldData.body_id)
+            old.put("cont_code",oldData.cont_code)
 
 
             old.put("remark",oldData.remark)
             val new =JSONObject()
-            new.put("_id",newData._id)
-            new.put("shipping_number",newData.shipping_number)
-            new.put("shipping_order_number",newData.shipping_order_number)
-            new.put("date",newData.date)
-            new.put("customer_poNo",newData.customer_poNo)
+            new.put("header_id",newData.header_id)
+            new.put("body_id",newData.body_id)
+            new.put("cont_code",newData.cont_code)
+
 
 
             new.put("editor",cookie_data.username)
@@ -269,7 +286,7 @@ class RecyclerItemBookingNoticeLogAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/shipping_order_management")
+                .url(cookie_data.URL+"/shipping_order_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -288,13 +305,11 @@ class RecyclerItemBookingNoticeLogAdapter() :
 
 
         }
-        private fun delete_BookingNotice(operation:String,deleteData:BookingNoticeHeader) {
+        private fun delete_BookingNotice(operation:String,deleteData:BookingNoticeBody) {
             val delete = JSONObject()
-            delete.put("_id",deleteData._id)
-            delete.put("shipping_number",deleteData.shipping_number)
-            delete.put("shipping_order_number",deleteData.shipping_order_number)
-            delete.put("date",deleteData.date)
-            delete.put("customer_poNo",deleteData.customer_poNo)
+            delete.put("header_id",deleteData.header_id)
+            delete.put("body_id",deleteData.body_id)
+            delete.put("cont_code",deleteData.cont_code)
 
             delete.put("remark",deleteData.remark)
             //Log.d("GSON", "msg:${delete}")
@@ -307,7 +322,7 @@ class RecyclerItemBookingNoticeLogAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/shipping_order_management")
+                .url(cookie_data.URL+"/shipping_order_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -325,13 +340,11 @@ class RecyclerItemBookingNoticeLogAdapter() :
             }
 
         }
-        private fun lock_BookingNotice(operation:String,lockData:BookingNoticeHeader) {
+        private fun lock_BookingNotice(operation:String,lockData:BookingNoticeBody) {
             val lock = JSONObject()
-            lock.put("_id",lockData._id)
-            lock.put("shipping_number",lockData.shipping_number)
-            lock.put("shipping_order_number",lockData.shipping_order_number)
-            lock.put("date",lockData.date)
-            lock.put("customer_poNo",lockData.customer_poNo)
+            lock.put("header_id",lockData.header_id)
+            lock.put("body_id",lockData.body_id)
+            lock.put("cont_code",lockData.cont_code)
 
             lock.put("remark",lockData.remark)
             //Log.d("GSON", "msg:${lock}")
@@ -344,7 +357,42 @@ class RecyclerItemBookingNoticeLogAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/shipping_order_management")
+                .url(cookie_data.URL+"/shipping_order_management")
+                .header("User-Agent", "ERP_MOBILE")
+                .post(body)
+                .build()
+            runBlocking {
+                var job = CoroutineScope(Dispatchers.IO).launch {
+                    var response = cookie_data.okHttpClient.newCall(request).execute()
+                    cookie_data.response_data=response.body?.string().toString()
+                    Log.d("GSON", "msg:${cookie_data.response_data}")
+
+                }
+                job.join()
+                val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
+                cookie_data.status=responseInfo.status
+                cookie_data.msg=responseInfo.msg
+            }
+
+        }
+        private fun over_BookingNotice(operation:String,overData:BookingNoticeBody) {
+            val over = JSONObject()
+            over.put("header_id",overData.header_id)
+            over.put("body_id",overData.body_id)
+            over.put("cont_code",overData.cont_code)
+
+            over.put("remark",overData.remark)
+            //Log.d("GSON", "msg:${delete}")
+            val body = FormBody.Builder()
+                .add("username", cookie_data.username)
+                .add("operation", operation)
+                .add("action",cookie_data.Actions.CLOSE)
+                .add("data",over.toString())
+                .add("csrfmiddlewaretoken", cookie_data.tokenValue)
+                .add("login_flag", cookie_data.loginflag)
+                .build()
+            val request = Request.Builder()
+                .url(cookie_data.URL+"/shipping_order_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -363,10 +411,8 @@ class RecyclerItemBookingNoticeLogAdapter() :
 
         }
 
-
     }
-
-    fun addItem(addData:BookingNoticeLog){
+    fun addItem(addData:BookingNoticeBody){
         data.add(itemData.count,addData)
         notifyItemInserted(itemData.count)
         itemData.count+=1//cookie_data.itemCount+=1

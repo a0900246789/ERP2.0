@@ -133,7 +133,7 @@ class RecyclerItemProductControlOrderBodyDSimplifyAdapter() :
     }
 
     override fun getItemCount(): Int {
-        return itemData.count//cookie_data.itemCount
+        return data.size//cookie_data.itemCount
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -145,7 +145,7 @@ class RecyclerItemProductControlOrderBodyDSimplifyAdapter() :
         var est_output =itemView.findViewById<TextInputEditText>(R.id.edit_est_output)
         var actual_output_vender=itemView.findViewById<TextInputEditText>(R.id.edit_actual_output_vender)
         var quantity_delivered=itemView.findViewById<TextInputEditText>(R.id.edit_quantity_delivered)
-        var is_urgent=itemView.findViewById<AutoCompleteTextView>(R.id.edit_is_urgent)
+        var is_urgent=itemView.findViewById<TextInputEditText>(R.id.edit_is_urgent)
        /* var urgent_deadline=itemView.findViewById<TextInputEditText>(R.id.edit_urgent_deadline)
         var notice_matter=itemView.findViewById<TextInputEditText>(R.id.edit_notice_matter)
         var v_notice_matter=itemView.findViewById<TextInputEditText>(R.id.edit_v_notice_matter)
@@ -523,7 +523,7 @@ class RecyclerItemProductControlOrderBodyDSimplifyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -576,7 +576,7 @@ class RecyclerItemProductControlOrderBodyDSimplifyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -628,7 +628,7 @@ class RecyclerItemProductControlOrderBodyDSimplifyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
@@ -680,7 +680,7 @@ class RecyclerItemProductControlOrderBodyDSimplifyAdapter() :
                 .add("login_flag", cookie_data.loginflag)
                 .build()
             val request = Request.Builder()
-                .url("http://140.125.46.125:8000/production_control_sheet_management")
+                .url(cookie_data.URL+"/production_control_sheet_management")
                 .header("User-Agent", "ERP_MOBILE")
                 .post(body)
                 .build()
