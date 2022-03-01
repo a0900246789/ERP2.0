@@ -77,7 +77,7 @@ class STK06changeFragment : Fragment() {
         }
         //搜尋按鈕
         searchbtn?.setOnClickListener {
-            theTextView?.text = autoCompleteTextView?.text
+
 
             when(autoCompleteTextView?.text.toString()){
                 "生產管制單(單頭)"->{

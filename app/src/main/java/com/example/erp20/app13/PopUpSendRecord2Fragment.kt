@@ -1,19 +1,22 @@
-package com.example.erp20.app01
+package com.example.erp20.app13
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.content.res.Resources
+import android.graphics.Rect
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.inputmethod.InputMethodManager
+import android.view.View
+import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.erp20.Model.*
 import com.example.erp20.R
 import com.example.erp20.cookie_data
+import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,249 +27,74 @@ import okhttp3.Request
 import org.json.JSONObject
 import java.util.ArrayList
 
-class Activity01 : AppCompatActivity() {
-    private lateinit var VenderShipmentHeader_adapter: RecyclerItemVenderShipmentHeaderAdapter
-    private lateinit var VenderShipmentBody_Simplify_adapter: RecyclerItemVenderShipmentBodySimplifyAdapter
-    var comboboxData: MutableList<String> = mutableListOf<String>()
-    lateinit var selectFilter:String
-    lateinit var recyclerView:RecyclerView
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
 
+/**
+ * A simple [Fragment] subclass.
+ * Use the [PopUpSendRecordFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class PopUpSendRecordFragment2(filter_trackingNo:String) : DialogFragment() {
+    private lateinit var OAFileDeliveryRecord2_adapter: RecyclerItemOAFileDeliveryRecord2Adapter
+    var filter_trackingNo=filter_trackingNo
+    lateinit var recyclerView:RecyclerView
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setWidthPercent(100)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_01)
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-
-
-        val recyclerView=findViewById<RecyclerView>(R.id.recyclerView)
-
-        //combobox選單內容
-        val autoCompleteTextView=findViewById<AutoCompleteTextView>(R.id.autoCompleteText)
-        //val combobox=resources.getStringArray(R.array.comboboxSale01change)
-        //val arrayAdapter= ArrayAdapter(this,R.layout.combobox_item,combobox)
-        //autoCompleteTextView?.setAdapter(arrayAdapter)
-
-        val searchbtn=findViewById<Button>(R.id.search_btn)
-        val addbtn=findViewById<Button>(R.id.add_btn)
-        //每次換選單內容add_btn失靈
-        autoCompleteTextView?.setOnItemClickListener { parent, view, position, id ->
-            addbtn?.isEnabled=false
-        }
-        //搜尋按鈕
-        searchbtn?.setOnClickListener {
-
-
-            when(autoCompleteTextView?.text.toString()){
-               /* "品質檢驗"->{
-                    //combobox show
-                    val item = LayoutInflater.from(this).inflate(R.layout.filter_combobox, null)
-                    val mAlertDialog = AlertDialog.Builder(this)
-                    mAlertDialog.setTitle("篩選排序") //set alertdialog title
-                    mAlertDialog.setView(item)
-                    //filter_combobox選單內容
-                    val comboboxView=item.findViewById<AutoCompleteTextView>(R.id.autoCompleteText)
-                    val combobox=resources.getStringArray(R.array.VenderShipmentSort)
-                    comboboxView.setAdapter(ArrayAdapter(this,R.layout.combobox_item,combobox))
-                    mAlertDialog.setPositiveButton("取消") { dialog, id ->
-                        dialog.dismiss()
-                    }
-                    mAlertDialog.setNegativeButton("確定") { dialog, id ->
-                        //println(comboboxView.text)
-                        selectFilter =comboboxView.text.toString()
-                        //println(selectFilter)
-                        show_header_body("VenderShipmentBody","condition","False")//type=all or condition
-                        show_relative_combobox("VenderShipmentHeader","all","False", VenderShipmentHeader())
-                        show_relative_combobox("ItemBasicInfo","all","False", ItemBasicInfo())
-                        show_relative_combobox("VenderBasicInfo","all","False", VenderBasicInfo())
-                        //show_relative_combobox("ProductControlOrderBody_D","all","False", ProductControlOrderBody_D())
-                        when(cookie_data.status)
-                        {
-                            0->{
-                                Toast.makeText(this, "資料載入", Toast.LENGTH_SHORT).show()
-                                recyclerView.layoutManager= LinearLayoutManager(this)//設定Linear格式
-                                VenderShipmentBody_Simplify_adapter= RecyclerItemVenderShipmentBodySimplifyAdapter(selectFilter)
-                                recyclerView.adapter=VenderShipmentBody_Simplify_adapter//找對應itemAdapter
-                                cookie_data.recyclerView=recyclerView
-                                //addbtn?.isEnabled=true
-                            }
-                            1->{
-                                Toast.makeText(this, cookie_data.msg, Toast.LENGTH_SHORT).show()
-                            }
-                        }
-
-                    }
-                    mAlertDialog.show()
-
-                }*/
-                "品質檢驗"->{
-                        //println(selectFilter)
-                        show_header_body("VenderShipmentBody","condition","False")//type=all or condition
-                        show_relative_combobox("VenderShipmentHeader","all","False", VenderShipmentHeader())
-                        show_relative_combobox("ItemBasicInfo","all","False", ItemBasicInfo())
-                        show_relative_combobox("VenderBasicInfo","all","False", VenderBasicInfo())
-                        //show_relative_combobox("ProductControlOrderBody_D","all","False", ProductControlOrderBody_D())
-                        when(cookie_data.status)
-                        {
-                            0->{
-                                Toast.makeText(this, "資料載入", Toast.LENGTH_SHORT).show()
-                                recyclerView.layoutManager= LinearLayoutManager(this)//設定Linear格式
-                                VenderShipmentBody_Simplify_adapter= RecyclerItemVenderShipmentBodySimplifyAdapter("")
-                                recyclerView.adapter=VenderShipmentBody_Simplify_adapter//找對應itemAdapter
-                                cookie_data.recyclerView=recyclerView
-                                //addbtn?.isEnabled=true
-                            }
-                            1->{
-                                Toast.makeText(this, cookie_data.msg, Toast.LENGTH_SHORT).show()
-                            }
-                        }
-
-
-                }
-
-            }
-
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
         }
     }
 
-
-
-
-
-
-    private fun show_header_body(operation:String,view_type:String,view_hide:String) {
-        when(operation){
-            "VenderShipmentHeader"->{
-                val body = FormBody.Builder()
-                    .add("username", cookie_data.username)
-                    .add("operation", operation)
-                    .add("action", cookie_data.Actions.VIEW)
-                    .add("view_type",view_type)
-                    .add("view_hide",view_hide)
-                    .add("csrfmiddlewaretoken", cookie_data.tokenValue)
-                    .add("login_flag", cookie_data.loginflag)
-                    .build()
-                val request = Request.Builder()
-                    .url(cookie_data.URL+"/purchase_order_management")
-                    .header("User-Agent", "ERP_MOBILE")
-                    .post(body)
-                    .build()
-                runBlocking {
-                    var job = CoroutineScope(Dispatchers.IO).launch {
-                        var response = cookie_data.okHttpClient.newCall(request).execute()
-                        cookie_data.response_data=response.body?.string().toString()
-                        Log.d("GSON", "msg:${cookie_data.response_data}")
-
-                    }
-                    job.join()
-                    val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
-                    cookie_data.status=responseInfo.status
-                    if(responseInfo.msg !=null){
-                        cookie_data.msg=responseInfo.msg
-                    }
-                    //Log.d("GSON", "msg:${responseInfo}")
-                }
-            }
-            "VenderShipmentBody"->{
-                val filter = JSONObject()
-                filter.put("is_closed",false)
-                val body = FormBody.Builder()
-                    .add("username", cookie_data.username)
-                    .add("operation", operation)
-                    .add("action", cookie_data.Actions.VIEW)
-                    .add("view_type",view_type)
-                    .add("view_hide",view_hide)
-                    .add("data",filter.toString())
-                    .add("csrfmiddlewaretoken", cookie_data.tokenValue)
-                    .add("login_flag", cookie_data.loginflag)
-                    .build()
-                val request = Request.Builder()
-                    .url(cookie_data.URL+"/purchase_order_management")
-                    .header("User-Agent", "ERP_MOBILE")
-                    .post(body)
-                    .build()
-                runBlocking {
-                    var job = CoroutineScope(Dispatchers.IO).launch {
-                        var response = cookie_data.okHttpClient.newCall(request).execute()
-                        cookie_data.response_data=response.body?.string().toString()
-                        Log.d("GSON", "msg:${cookie_data.response_data}")
-
-                    }
-                    job.join()
-                    val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
-                    cookie_data.status=responseInfo.status
-                    if(responseInfo.msg !=null){
-                        cookie_data.msg=responseInfo.msg
-                    }
-                    //Log.d("GSON", "msg:${responseInfo}")
-                }
-            }
-
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_pop_up_send_record2, container, false)
     }
 
-    private fun <T>show_combobox(operation:String,view_type:String,view_hide:String,fmt:T) {
-        when(fmt)
-        {
-            is ProductControlOrderBody_A ->{
-                val filter = JSONObject()
-                filter.put("is_closed",false)
-                val body = FormBody.Builder()
-                    .add("username", cookie_data.username)
-                    .add("operation", operation)
-                    .add("action", cookie_data.Actions.VIEW)
-                    .add("view_type",view_type)
-                    .add("view_hide",view_hide)
-                    .add("data",filter.toString())
-                    .add("csrfmiddlewaretoken", cookie_data.tokenValue)
-                    .add("login_flag", cookie_data.loginflag)
-                    .build()
-                val request = Request.Builder()
-                    .url(cookie_data.URL+"/production_control_sheet_management")
-                    .header("User-Agent", "ERP_MOBILE")
-                    .post(body)
-                    .build()
-                runBlocking {
-                    var job = CoroutineScope(Dispatchers.IO).launch {
-                        var response = cookie_data.okHttpClient.newCall(request).execute()
-                        var responseinfo=response.body?.string().toString()
-                        //Log.d("GSON", "msg:${responseinfo}")
-                        var json= Gson().fromJson(responseinfo, ShowProductControlOrderBody_A::class.java)
-                        when(json.status){
-                            0->{
-                                cookie_data.status =json.status
-                                var data: ArrayList<ProductControlOrderBody_A> =json.data
-                                comboboxData.removeAll(comboboxData)
-                                for(i in 0 until data.size){
-                                    comboboxData.add(data[i].pline_id)
-                                }
-                                Log.d("GSON", "msg:${comboboxData}")
-                            }
-                            1->{
-                                var fail= Gson().fromJson(responseinfo, Response::class.java)
-                                cookie_data.msg =fail.msg
-                                cookie_data.status =fail.status
-                            }
-                        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-                    }
-                    job.join()
+        show_header_body_filter("OAFileDeliveryRecordHeader","condition","False",filter_trackingNo)
 
-
-                }
-            }
+        var popUpName=view.findViewById<TextView>(R.id.popUpName)
+        popUpName.text="文件寄送紀錄"
+        val recyclerView=view.findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.layoutManager= LinearLayoutManager(view.context)//設定Linear格式
+        OAFileDeliveryRecord2_adapter= RecyclerItemOAFileDeliveryRecord2Adapter()
+        recyclerView.adapter=OAFileDeliveryRecord2_adapter//找對應itemAdapter
+        cookie_data.recyclerView=recyclerView
+        //關閉
+        var dismiss=view.findViewById<Button>(R.id.dismiss_btn)
+        dismiss?.setOnClickListener {
+            cookie_data.recyclerView= cookie_data.first_recyclerView
+            dismiss()
         }
+
+
+
     }
 
     //異動資料單頭單身過濾
     private fun show_header_body_filter(operation:String,view_type:String,view_hide:String,selectedfilter:String) {
         when(operation){
-            "ProductControlOrderBody_A"->{
+            "OAFileDeliveryRecordHeader"->{
                 val filter = JSONObject()
-                filter.put("is_closed",false)
-                filter.put("pline_id",selectedfilter)
+                filter.put("trackingNo",selectedfilter)
                 val body = FormBody.Builder()
                     .add("username", cookie_data.username)
                     .add("operation", operation)
@@ -278,7 +106,7 @@ class Activity01 : AppCompatActivity() {
                     .add("login_flag", cookie_data.loginflag)
                     .build()
                 val request = Request.Builder()
-                    .url(cookie_data.URL+"/production_control_sheet_management")
+                    .url(cookie_data.URL+"/shipping_order_management")
                     .header("User-Agent", "ERP_MOBILE")
                     .post(body)
                     .build()
@@ -301,6 +129,52 @@ class Activity01 : AppCompatActivity() {
         }
     }
 
+    private fun <T>add_header_body(operation:String,addData:T) {
+
+        when(addData)
+        {
+            is BookingNoticeBody ->{
+                val add = JSONObject()
+                add.put("header_id",addData.header_id)
+                add.put("body_id",addData.body_id)
+                add.put("cont_code",addData.cont_code)
+
+
+                add.put("remark",addData.remark)
+                add.put("creator", cookie_data.username)
+                add.put("editor", cookie_data.username)
+                Log.d("GSON", "msg:${add}")
+                val body = FormBody.Builder()
+                    .add("username", cookie_data.username)
+                    .add("operation", operation)
+                    .add("action", cookie_data.Actions.ADD)
+                    .add("data",add.toString())
+                    .add("csrfmiddlewaretoken", cookie_data.tokenValue)
+                    .add("login_flag", cookie_data.loginflag)
+                    .build()
+
+                val request = Request.Builder()
+                    .url(cookie_data.URL+"/shipping_order_management")
+                    .header("User-Agent", "ERP_MOBILE")
+                    .post(body)
+                    .build()
+                runBlocking {
+                    var job = CoroutineScope(Dispatchers.IO).launch {
+                        var response = cookie_data.okHttpClient.newCall(request).execute()
+                        cookie_data.response_data=response.body?.string().toString()
+                        Log.d("GSON", "msg:${cookie_data.response_data}")
+                    }
+                    job.join()
+                    val responseInfo = Gson().fromJson(cookie_data.response_data, Response::class.java)
+                    cookie_data.status=responseInfo.status
+                    cookie_data.msg=responseInfo.msg
+                }
+            }
+
+        }
+
+
+    }
 
     private fun <T>show_relative_combobox(operation:String,view_type:String,view_hide:String,fmt:T) {
         when(fmt)
@@ -859,14 +733,15 @@ class Activity01 : AppCompatActivity() {
                                 cookie_data.item_id_ComboboxData.removeAll(cookie_data.item_id_ComboboxData)
                                 cookie_data.item_name_ComboboxData.removeAll(cookie_data.item_name_ComboboxData)
                                 cookie_data.semi_finished_product_number_ComboboxData.removeAll(
-                                    cookie_data.semi_finished_product_number_ComboboxData
-                                )
+                                    cookie_data.semi_finished_product_number_ComboboxData)
                                 cookie_data.is_exemption_ComboboxData.removeAll(cookie_data.is_exemption_ComboboxData)
+                                cookie_data.item_id_name_ComboboxData.removeAll(cookie_data.item_id_name_ComboboxData)
                                 for(i in 0 until data.size){
                                     cookie_data.item_id_ComboboxData.add(data[i]._id)
                                     cookie_data.item_name_ComboboxData.add(data[i].name)
                                     cookie_data.semi_finished_product_number_ComboboxData.add(data[i].semi_finished_product_number)
                                     cookie_data.is_exemption_ComboboxData.add(data[i].is_exemption)
+                                    cookie_data.item_id_name_ComboboxData.add(data[i]._id+"\n"+data[i].name)
                                 }
                                 //Log.d("GSON", "msg:${comboboxData}")
                             }
@@ -1002,10 +877,12 @@ class Activity01 : AppCompatActivity() {
                                 var data: ArrayList<PLineBasicInfo> =json.data
                                 cookie_data.pline_name_ComboboxData.removeAll(cookie_data.pline_name_ComboboxData)
                                 cookie_data.pline_id_ComboboxData.removeAll(cookie_data.pline_id_ComboboxData)
+                                cookie_data.pline_id_name_ComboboxData.removeAll(cookie_data.pline_id_name_ComboboxData)
                                 cookie_data.out_sourceing_ComboboxData.removeAll(cookie_data.out_sourceing_ComboboxData)
                                 for(i in 0 until data.size){
                                     cookie_data.pline_name_ComboboxData.add(data[i].name)
                                     cookie_data.pline_id_ComboboxData.add(data[i]._id)
+                                    cookie_data.pline_id_name_ComboboxData.add(data[i]._id+" "+data[i].name)
                                     cookie_data.out_sourceing_ComboboxData.add(data[i].is_outsourcing)
                                 }
                                 //Log.d("GSON", "msg:${comboboxData}")
@@ -1099,8 +976,10 @@ class Activity01 : AppCompatActivity() {
                                 cookie_data.status =json.status
                                 var data: ArrayList<InvChangeTypeM> =json.data
                                 cookie_data.inv_code_m_ComboboxData.removeAll(cookie_data.inv_code_m_ComboboxData)
+                                cookie_data.inv_code_name_m_ComboboxData.removeAll(cookie_data.inv_code_name_m_ComboboxData)
                                 for(i in 0 until data.size){
                                     cookie_data.inv_code_m_ComboboxData.add(data[i].inv_code_m)
+                                    cookie_data.inv_code_name_m_ComboboxData.add(data[i].inv_code_m+" "+data[i].inv_name_m)
                                 }
                                 //Log.d("GSON", "msg:${comboboxData}")
                             }
@@ -1142,8 +1021,12 @@ class Activity01 : AppCompatActivity() {
                                 cookie_data.status =json.status
                                 var data: ArrayList<InvChangeTypeS> =json.data
                                 cookie_data.inv_code_s_ComboboxData.removeAll(cookie_data.inv_code_s_ComboboxData)
+                                cookie_data.inv_code_name_s_ComboboxData.removeAll(cookie_data.inv_code_name_s_ComboboxData)
+                                cookie_data.inv_code_s_inv_code_m_ComboboxData.removeAll(cookie_data.inv_code_s_inv_code_m_ComboboxData)
                                 for(i in 0 until data.size){
                                     cookie_data.inv_code_s_ComboboxData.add(data[i].inv_code_s)
+                                    cookie_data.inv_code_name_s_ComboboxData.add(data[i].inv_code_s+" "+data[i].inv_name_s)
+                                    cookie_data.inv_code_s_inv_code_m_ComboboxData.add(data[i].inv_code_m)
                                 }
                                 //Log.d("GSON", "msg:${comboboxData}")
                             }
@@ -1192,6 +1075,65 @@ class Activity01 : AppCompatActivity() {
                                 for(i in 0 until data.size){
                                     cookie_data.ProductControlOrderHeader_id_ComboboxData.add(data[i]._id)
                                     cookie_data.ProductControlOrderHeader_poNo_ComboboxData.add(data[i].customer_poNo)
+                                }
+                                //Log.d("GSON", "msg:${comboboxData}")
+                            }
+                            1->{
+                                var fail= Gson().fromJson(responseinfo, Response::class.java)
+                                cookie_data.msg =fail.msg
+                                cookie_data.status =fail.status
+                            }
+                        }
+
+                    }
+                    job.join()
+
+
+                }
+            }
+            is ProductControlOrderBody_A ->{
+                val body = FormBody.Builder()
+                    .add("username", cookie_data.username)
+                    .add("operation", operation)
+                    .add("action", cookie_data.Actions.VIEW)
+                    .add("view_type",view_type)
+                    .add("view_hide",view_hide)
+                    .add("csrfmiddlewaretoken", cookie_data.tokenValue)
+                    .add("login_flag", cookie_data.loginflag)
+                    .build()
+                val request = Request.Builder()
+                    .url(cookie_data.URL+"/production_control_sheet_management")
+                    .header("User-Agent", "ERP_MOBILE")
+                    .post(body)
+                    .build()
+                runBlocking {
+                    var job = CoroutineScope(Dispatchers.IO).launch {
+                        var response = cookie_data.okHttpClient.newCall(request).execute()
+                        var responseinfo=response.body?.string().toString()
+                        var json= Gson().fromJson(responseinfo, ShowProductControlOrderBody_A::class.java)
+                        when(json.status){
+                            0->{
+                                cookie_data.status =json.status
+                                var data: ArrayList<ProductControlOrderBody_A> =json.data
+                                cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData.removeAll(
+                                    cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData)
+                                cookie_data.ProductControlOrderBody_A_me_code_ComboboxData.removeAll(
+                                    cookie_data.ProductControlOrderBody_A_me_code_ComboboxData)
+                                cookie_data.ProductControlOrderBody_A_semi_finished_prod_number_ComboboxData.removeAll(
+                                    cookie_data.ProductControlOrderBody_A_semi_finished_prod_number_ComboboxData)
+                                cookie_data.ProductControlOrderBody_A_pline_id_ComboboxData.removeAll(
+                                    cookie_data.ProductControlOrderBody_A_pline_id_ComboboxData)
+                                cookie_data.ProductControlOrderBody_A_complete_date_ComboboxData.removeAll(
+                                    cookie_data.ProductControlOrderBody_A_complete_date_ComboboxData)
+
+                                for(i in 0 until data.size){
+                                    cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData.add(data[i].prod_ctrl_order_number)
+                                    cookie_data.ProductControlOrderBody_A_me_code_ComboboxData.add(data[i].me_code)
+                                    cookie_data.ProductControlOrderBody_A_semi_finished_prod_number_ComboboxData.add(data[i].semi_finished_prod_number)
+                                    cookie_data.ProductControlOrderBody_A_pline_id_ComboboxData.add(data[i].pline_id)
+                                    cookie_data.ProductControlOrderBody_A_complete_date_ComboboxData.add(data[i].complete_date)
+
+
                                 }
                                 //Log.d("GSON", "msg:${comboboxData}")
                             }
@@ -1393,7 +1335,7 @@ class Activity01 : AppCompatActivity() {
                 val body = FormBody.Builder()
                     .add("username", cookie_data.username)
                     .add("operation", operation)
-                    .add("action",cookie_data.Actions.VIEW)
+                    .add("action", cookie_data.Actions.VIEW)
                     .add("view_type",view_type)
                     .add("view_hide",view_hide)
                     .add("csrfmiddlewaretoken", cookie_data.tokenValue)
@@ -1412,11 +1354,15 @@ class Activity01 : AppCompatActivity() {
                         when(json.status){
                             0->{
                                 cookie_data.status=json.status
-                                var data: java.util.ArrayList<VenderShipmentHeader> =json.data
-                                cookie_data.VenderShipmentHeader_poNo_ComboboxData.removeAll(cookie_data.VenderShipmentHeader_poNo_ComboboxData)
-                                cookie_data.VenderShipmentHeader_purchase_date_ComboboxData.removeAll(cookie_data.VenderShipmentHeader_purchase_date_ComboboxData)
-                                cookie_data.VenderShipmentHeader_vender_id_ComboboxData.removeAll(cookie_data.VenderShipmentHeader_vender_id_ComboboxData)
-                                cookie_data.VenderShipmentHeader_vender_shipment_id_ComboboxData.removeAll(cookie_data.VenderShipmentHeader_vender_shipment_id_ComboboxData)
+                                var data: ArrayList<VenderShipmentHeader> =json.data
+                                cookie_data.VenderShipmentHeader_poNo_ComboboxData.removeAll(
+                                    cookie_data.VenderShipmentHeader_poNo_ComboboxData)
+                                cookie_data.VenderShipmentHeader_purchase_date_ComboboxData.removeAll(
+                                    cookie_data.VenderShipmentHeader_purchase_date_ComboboxData)
+                                cookie_data.VenderShipmentHeader_vender_id_ComboboxData.removeAll(
+                                    cookie_data.VenderShipmentHeader_vender_id_ComboboxData)
+                                cookie_data.VenderShipmentHeader_vender_shipment_id_ComboboxData.removeAll(
+                                    cookie_data.VenderShipmentHeader_vender_shipment_id_ComboboxData)
                                 for(i in 0 until data.size){
                                     cookie_data.VenderShipmentHeader_poNo_ComboboxData.add(data[i].poNo)
                                     cookie_data.VenderShipmentHeader_purchase_date_ComboboxData.add(data[i].purchase_date)
@@ -1439,6 +1385,296 @@ class Activity01 : AppCompatActivity() {
 
                 }
             }
+            is PurchaseOrderHeader ->{
+                val body = FormBody.Builder()
+                    .add("username", cookie_data.username)
+                    .add("operation", operation)
+                    .add("action", cookie_data.Actions.VIEW)
+                    .add("view_type",view_type)
+                    .add("view_hide",view_hide)
+                    .add("csrfmiddlewaretoken", cookie_data.tokenValue)
+                    .add("login_flag", cookie_data.loginflag)
+                    .build()
+                val request = Request.Builder()
+                    .url(cookie_data.URL+"/purchase_order_management")
+                    .header("User-Agent", "ERP_MOBILE")
+                    .post(body)
+                    .build()
+                runBlocking {
+                    var job = CoroutineScope(Dispatchers.IO).launch {
+                        var response = cookie_data.okHttpClient.newCall(request).execute()
+                        var responseinfo=response.body?.string().toString()
+                        var json= Gson().fromJson(responseinfo, ShowPurchaseOrderHeader::class.java)
+                        when(json.status){
+                            0->{
+                                cookie_data.status=json.status
+                                var data: ArrayList<PurchaseOrderHeader> =json.data
+                                cookie_data.PurchaseOrderHeader_poNo_ComboboxData.removeAll(
+                                    cookie_data.PurchaseOrderHeader_poNo_ComboboxData)
+                                cookie_data.PurchaseOrderHeader_vender_name_ComboboxData.removeAll(
+                                    cookie_data.PurchaseOrderHeader_vender_name_ComboboxData)
+
+                                for(i in 0 until data.size){
+                                    cookie_data.PurchaseOrderHeader_poNo_ComboboxData.add(data[i].poNo)
+                                    cookie_data.PurchaseOrderHeader_vender_name_ComboboxData.add(data[i].vender_name)
+
+                                }
+                                //Log.d("GSON", "msg:${comboboxData}")
+                            }
+                            1->{
+                                var fail= Gson().fromJson(responseinfo, Response::class.java)
+                                cookie_data.msg=fail.msg
+                                cookie_data.status=fail.status
+                            }
+                        }
+
+                    }
+                    job.join()
+
+
+                }
+            }
+            is PurchaseOrderBody ->{
+                val body = FormBody.Builder()
+                    .add("username", cookie_data.username)
+                    .add("operation", operation)
+                    .add("action", cookie_data.Actions.VIEW)
+                    .add("view_type",view_type)
+                    .add("view_hide",view_hide)
+                    .add("csrfmiddlewaretoken", cookie_data.tokenValue)
+                    .add("login_flag", cookie_data.loginflag)
+                    .build()
+                val request = Request.Builder()
+                    .url(cookie_data.URL+"/purchase_order_management")
+                    .header("User-Agent", "ERP_MOBILE")
+                    .post(body)
+                    .build()
+                runBlocking {
+                    var job = CoroutineScope(Dispatchers.IO).launch {
+                        var response = cookie_data.okHttpClient.newCall(request).execute()
+                        var responseinfo=response.body?.string().toString()
+                        var json= Gson().fromJson(responseinfo, ShowPurchaseOrderBody::class.java)
+                        when(json.status){
+                            0->{
+                                cookie_data.status=json.status
+                                var data: ArrayList<PurchaseOrderBody> =json.data
+                                cookie_data.PurchaseOrderBody_poNo_ComboboxData.removeAll(
+                                    cookie_data.PurchaseOrderBody_poNo_ComboboxData)
+                                cookie_data.PurchaseOrderBody_body_id_ComboboxData.removeAll(
+                                    cookie_data.PurchaseOrderBody_body_id_ComboboxData)
+
+                                for(i in 0 until data.size){
+                                    cookie_data.PurchaseOrderBody_poNo_ComboboxData.add(data[i].poNo)
+                                    cookie_data.PurchaseOrderBody_body_id_ComboboxData.add(data[i].body_id)
+
+                                }
+                                //Log.d("GSON", "msg:${comboboxData}")
+                            }
+                            1->{
+                                var fail= Gson().fromJson(responseinfo, Response::class.java)
+                                cookie_data.msg=fail.msg
+                                cookie_data.status=fail.status
+                            }
+                        }
+
+                    }
+                    job.join()
+
+
+                }
+            }
+            is PurchaseBatchOrder ->{
+                val body = FormBody.Builder()
+                    .add("username", cookie_data.username)
+                    .add("operation", operation)
+                    .add("action", cookie_data.Actions.VIEW)
+                    .add("view_type",view_type)
+                    .add("view_hide",view_hide)
+                    .add("csrfmiddlewaretoken", cookie_data.tokenValue)
+                    .add("login_flag", cookie_data.loginflag)
+                    .build()
+                val request = Request.Builder()
+                    .url(cookie_data.URL+"/purchase_order_management")
+                    .header("User-Agent", "ERP_MOBILE")
+                    .post(body)
+                    .build()
+                runBlocking {
+                    var job = CoroutineScope(Dispatchers.IO).launch {
+                        var response = cookie_data.okHttpClient.newCall(request).execute()
+                        var responseinfo=response.body?.string().toString()
+                        var json= Gson().fromJson(responseinfo, ShowPurchaseBatchOrder::class.java)
+                        when(json.status){
+                            0->{
+                                cookie_data.status=json.status
+                                var data: ArrayList<PurchaseBatchOrder> =json.data
+                                cookie_data.PurchaseBatchOrder_batch_id_ComboboxData.removeAll(
+                                    cookie_data.PurchaseBatchOrder_batch_id_ComboboxData)
+                                cookie_data.PurchaseBatchOrder_purchase_order_id_ComboboxData.removeAll(
+                                    cookie_data.PurchaseBatchOrder_purchase_order_id_ComboboxData)
+                                cookie_data.PurchaseBatchOrder_is_closed_ComboboxData.removeAll(
+                                    cookie_data.PurchaseBatchOrder_is_closed_ComboboxData)
+
+                                for(i in 0 until data.size){
+                                    cookie_data.PurchaseBatchOrder_batch_id_ComboboxData.add(data[i].batch_id)
+                                    cookie_data.PurchaseBatchOrder_purchase_order_id_ComboboxData.add(data[i].purchase_order_id)
+                                    cookie_data.PurchaseBatchOrder_is_closed_ComboboxData.add(data[i].is_closed)
+                                }
+                                //Log.d("GSON", "msg:${comboboxData}")
+                            }
+                            1->{
+                                var fail= Gson().fromJson(responseinfo, Response::class.java)
+                                cookie_data.msg=fail.msg
+                                cookie_data.status=fail.status
+                            }
+                        }
+
+                    }
+                    job.join()
+
+
+                }
+            }
+            is StockTransOrderHeader ->{
+                val body = FormBody.Builder()
+                    .add("username", cookie_data.username)
+                    .add("operation", operation)
+                    .add("action", cookie_data.Actions.VIEW)
+                    .add("view_type",view_type)
+                    .add("view_hide",view_hide)
+                    .add("csrfmiddlewaretoken", cookie_data.tokenValue)
+                    .add("login_flag", cookie_data.loginflag)
+                    .build()
+                val request = Request.Builder()
+                    .url(cookie_data.URL+"/inventory_management")
+                    .header("User-Agent", "ERP_MOBILE")
+                    .post(body)
+                    .build()
+                runBlocking {
+                    var job = CoroutineScope(Dispatchers.IO).launch {
+                        var response = cookie_data.okHttpClient.newCall(request).execute()
+                        var responseinfo=response.body?.string().toString()
+                        var json= Gson().fromJson(responseinfo, ShowStockTransOrderHeader::class.java)
+                        when(json.status){
+                            0->{
+                                cookie_data.status=json.status
+                                var data: ArrayList<StockTransOrderHeader> =json.data
+                                cookie_data.StockTransOrderHeader_id_ComboboxData.removeAll(
+                                    cookie_data.StockTransOrderHeader_id_ComboboxData)
+
+                                for(i in 0 until data.size){
+                                    cookie_data.StockTransOrderHeader_id_ComboboxData.add(data[i]._id)
+                                }
+                                //Log.d("GSON", "msg:${cookie_data.StockTransOrderHeader_id_ComboboxData}")
+                            }
+                            1->{
+                                var fail= Gson().fromJson(responseinfo, Response::class.java)
+                                cookie_data.msg=fail.msg
+                                cookie_data.status=fail.status
+                            }
+                        }
+
+                    }
+                    job.join()
+
+
+                }
+            }
+            is StackingControlListHeader ->{
+                val body = FormBody.Builder()
+                    .add("username", cookie_data.username)
+                    .add("operation", operation)
+                    .add("action", cookie_data.Actions.VIEW)
+                    .add("view_type",view_type)
+                    .add("view_hide",view_hide)
+                    .add("csrfmiddlewaretoken", cookie_data.tokenValue)
+                    .add("login_flag", cookie_data.loginflag)
+                    .build()
+                val request = Request.Builder()
+                    .url(cookie_data.URL+"/stacking_control_management")
+                    .header("User-Agent", "ERP_MOBILE")
+                    .post(body)
+                    .build()
+                runBlocking {
+                    var job = CoroutineScope(Dispatchers.IO).launch {
+                        var response = cookie_data.okHttpClient.newCall(request).execute()
+                        var responseinfo=response.body?.string().toString()
+                        var json= Gson().fromJson(responseinfo, ShowStackingControlListHeader::class.java)
+                        when(json.status){
+                            0->{
+                                cookie_data.status=json.status
+                                var data: ArrayList<StackingControlListHeader> =json.data
+                                cookie_data.StackingControlListHeader_code_ComboboxData.removeAll(
+                                    cookie_data.StackingControlListHeader_code_ComboboxData)
+                                cookie_data.StackingControlListHeader_contNo_ComboboxData.removeAll(
+                                    cookie_data.StackingControlListHeader_contNo_ComboboxData)
+                                cookie_data.StackingControlListHeader_cont_type_code_ComboboxData.removeAll(
+                                    cookie_data.StackingControlListHeader_cont_type_code_ComboboxData)
+
+                                for(i in 0 until data.size){
+                                    cookie_data.StackingControlListHeader_code_ComboboxData.add(data[i].code)
+                                    cookie_data.StackingControlListHeader_contNo_ComboboxData.add(data[i].contNo)
+                                    cookie_data.StackingControlListHeader_cont_type_code_ComboboxData.add(data[i].cont_type_code)
+                                }
+
+                            }
+                            1->{
+                                var fail= Gson().fromJson(responseinfo, Response::class.java)
+                                cookie_data.msg=fail.msg
+                                cookie_data.status=fail.status
+                            }
+                        }
+
+                    }
+                    job.join()
+
+
+                }
+            }
+            is OAFileDeliveryRecordBody ->{
+                val body = FormBody.Builder()
+                    .add("username", cookie_data.username)
+                    .add("operation", operation)
+                    .add("action", cookie_data.Actions.VIEW)
+                    .add("view_type",view_type)
+                    .add("view_hide",view_hide)
+                    .add("csrfmiddlewaretoken", cookie_data.tokenValue)
+                    .add("login_flag", cookie_data.loginflag)
+                    .build()
+                val request = Request.Builder()
+                    .url(cookie_data.URL+"/shipping_order_management")
+                    .header("User-Agent", "ERP_MOBILE")
+                    .post(body)
+                    .build()
+                runBlocking {
+                    var job = CoroutineScope(Dispatchers.IO).launch {
+                        var response = cookie_data.okHttpClient.newCall(request).execute()
+                        var responseinfo=response.body?.string().toString()
+                        var json= Gson().fromJson(responseinfo, ShowOAFileDeliveryRecordBody::class.java)
+                        when(json.status){
+                            0->{
+                                cookie_data.status=json.status
+                                var data: ArrayList<OAFileDeliveryRecordBody> =json.data
+                                cookie_data.OAFileDeliveryRecordBody_trackingNo_ComboboxData.removeAll(cookie_data.OAFileDeliveryRecordBody_trackingNo_ComboboxData)
+                                cookie_data.OAFileDeliveryRecordBody_booking_noticeNo_ComboboxData.removeAll(cookie_data.OAFileDeliveryRecordBody_booking_noticeNo_ComboboxData)
+                                for(i in 0 until data.size){
+                                    cookie_data.OAFileDeliveryRecordBody_trackingNo_ComboboxData.add(data[i].trackingNo)
+                                    cookie_data.OAFileDeliveryRecordBody_booking_noticeNo_ComboboxData.add(data[i].booking_noticeNo)
+                                }
+                                //Log.d("GSON", "msg:${cookie_data.StockTransOrderHeader_id_ComboboxData}")
+                            }
+                            1->{
+                                var fail= Gson().fromJson(responseinfo, Response::class.java)
+                                cookie_data.msg=fail.msg
+                                cookie_data.status=fail.status
+                            }
+                        }
+
+                    }
+                    job.join()
+
+
+                }
+            }
 
         }
 
@@ -1446,15 +1682,31 @@ class Activity01 : AppCompatActivity() {
     }
 
 
-
-
-    //點擊旁邊自動收起鍵盤
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        if (currentFocus != null) {
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
-        }
-        return super.dispatchTouchEvent(ev)
+    fun DialogFragment.setWidthPercent(percentage: Int) {
+        val percent = percentage.toFloat() / 100
+        val dm = Resources.getSystem().displayMetrics
+        val rect = dm.run { Rect(0, 0, widthPixels, heightPixels) }
+        val percentWidth = rect.width() * percent
+        dialog?.window?.setLayout(percentWidth.toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
+    /*companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment PopUpSendRecordFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            PopUpSendRecordFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
+    }*/
 }

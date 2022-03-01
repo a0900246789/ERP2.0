@@ -19,6 +19,7 @@ import com.example.erp20.R
 import com.example.erp20.app06.RecyclerItemStockTransOrderHeaderSimplifyAdapter3
 import com.example.erp20.cookie_data
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,6 +35,7 @@ class Activity13 : AppCompatActivity() {
     private lateinit var BookingNotice_adapter: RecyclerItemBookingNoticeAdapter
     private lateinit var OAReference_adapter: RecyclerItemOAReferenceAdapter
     private lateinit var OAFileDeliveryRecordMain_adapter: RecyclerItemOAFileDeliveryRecordMainAdapter
+    private lateinit var OAFileDeliveryRecordBill_adapter: RecyclerItemOAFileDeliveryRecordBillAdapter
     private lateinit var CustomerOrderHeader_adapter: RecyclerItemCustomerOrderHeaderAdapter
     var comboboxData: MutableList<String> = mutableListOf<String>()
     lateinit var  allComboboxData: java.util.ArrayList<StockTransOrderBody>
@@ -51,8 +53,7 @@ class Activity13 : AppCompatActivity() {
     }
     override fun onResume() {
         super.onResume()
-        val theTextView = findViewById<TextView>(R.id._text)
-
+        
         val recyclerView=findViewById<RecyclerView>(R.id.recyclerView)
 
         //combobox選單內容
@@ -63,11 +64,11 @@ class Activity13 : AppCompatActivity() {
 
         val searchbtn=findViewById<Button>(R.id.search_btn)
         val addbtn=findViewById<Button>(R.id.add_btn)
-
+        autoCompleteTextView.setOnItemClickListener { parent, view, position, id ->
+            addbtn.isEnabled=false
+        }
         //搜尋按鈕
         searchbtn?.setOnClickListener {
-            theTextView?.text = autoCompleteTextView?.text
-
             when(autoCompleteTextView?.text.toString()){
                 "訂艙通知單(維護)"->{
                     show_relative_combobox("BookingNoticeHeader","all","False", BookingNoticeHeader())
@@ -457,6 +458,64 @@ class Activity13 : AppCompatActivity() {
                                         recyclerView?.layoutManager= LinearLayoutManager(this)//設定Linear格式
                                         CustomerOrderHeader_adapter= RecyclerItemCustomerOrderHeaderAdapter(selectFilter)
                                         recyclerView?.adapter=CustomerOrderHeader_adapter//找對應itemAdapter
+                                        cookie_data.recyclerView=recyclerView
+                                        //addbtn?.isEnabled=true
+                                    }
+                                    1->{
+                                        Toast.makeText(this, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+
+                            }
+                            mAlertDialog.show()
+                        }
+                        1->{
+                            Toast.makeText(this, cookie_data.msg, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                }
+                "快遞公司月對帳單(查詢)"->{
+                    show_relative_combobox("OAFileDeliveryRecordHeader","all","False", OAFileDeliveryRecordHeader())
+                    when(cookie_data.status)
+                    {
+                        0->{
+                            val item = LayoutInflater.from(this).inflate(R.layout.filter_combobox2, null)
+                            val mAlertDialog = AlertDialog.Builder(this)
+                            //mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
+                            mAlertDialog.setTitle("篩選") //set alertdialog title
+                            //mAlertDialog.setMessage("確定要登出?") //set alertdialog message
+                            mAlertDialog.setView(item)
+                            //filter_combobox選單內容
+                            val comboboxView=item.findViewById<AutoCompleteTextView>(R.id.autoCompleteText)
+                            comboboxView.inputType=InputType.TYPE_CLASS_TEXT
+                            val inputText=item.findViewById<TextInputLayout>(R.id.one)
+                            inputText.hint=""
+                            comboboxView.setHint("快遞公司")
+                            var data1=cookie_data.OAFileDeliveryRecordHeader_courier_company_ComboboxData.distinct()
+                            comboboxView.setAdapter(ArrayAdapter(this,R.layout.combobox_item,data1))
+                            val comboboxView2=item.findViewById<AutoCompleteTextView>(R.id.autoCompleteText2)
+                            comboboxView2.inputType=InputType.TYPE_CLASS_TEXT
+                            val inputText2=item.findViewById<TextInputLayout>(R.id.two)
+                            inputText2.hint=""
+                            comboboxView2.setHint("結帳月份")
+                            var data2=cookie_data.OAFileDeliveryRecordHeader_shippin_billing_month_ComboboxData.distinct()
+                            comboboxView2.setAdapter(ArrayAdapter(this,R.layout.combobox_item,data2))
+                            mAlertDialog.setPositiveButton("取消") { dialog, id ->
+                                dialog.dismiss()
+                            }
+                            mAlertDialog.setNegativeButton("確定") { dialog, id ->
+                                //println(comboboxView.text)
+                                selectFilter=comboboxView.text.toString()
+                                selectFilter2=comboboxView2.text.toString()
+                                show_header_body("OAFileDeliveryRecordHeader","all","False")//type=combobox or all
+                                when(cookie_data.status)
+                                {
+                                    0->{
+                                        Toast.makeText(this, "資料載入", Toast.LENGTH_SHORT).show()
+                                        recyclerView?.layoutManager= LinearLayoutManager(this)//設定Linear格式
+                                        OAFileDeliveryRecordBill_adapter= RecyclerItemOAFileDeliveryRecordBillAdapter(selectFilter,selectFilter2)
+                                        recyclerView?.adapter=OAFileDeliveryRecordBill_adapter//找對應itemAdapter
                                         cookie_data.recyclerView=recyclerView
                                         //addbtn?.isEnabled=true
                                     }
@@ -3455,6 +3514,51 @@ class Activity13 : AppCompatActivity() {
                                 for(i in 0 until data.size){
                                     cookie_data.OAFileDeliveryRecordBody_trackingNo_ComboboxData.add(data[i].trackingNo)
                                     cookie_data.OAFileDeliveryRecordBody_booking_noticeNo_ComboboxData.add(data[i].booking_noticeNo)
+                                }
+                                //Log.d("GSON", "msg:${cookie_data.StockTransOrderHeader_id_ComboboxData}")
+                            }
+                            1->{
+                                var fail= Gson().fromJson(responseinfo, Response::class.java)
+                                cookie_data.msg=fail.msg
+                                cookie_data.status=fail.status
+                            }
+                        }
+
+                    }
+                    job.join()
+
+
+                }
+            }
+            is OAFileDeliveryRecordHeader ->{
+                val body = FormBody.Builder()
+                    .add("username", cookie_data.username)
+                    .add("operation", operation)
+                    .add("action", cookie_data.Actions.VIEW)
+                    .add("view_type",view_type)
+                    .add("view_hide",view_hide)
+                    .add("csrfmiddlewaretoken", cookie_data.tokenValue)
+                    .add("login_flag", cookie_data.loginflag)
+                    .build()
+                val request = Request.Builder()
+                    .url(cookie_data.URL+"/shipping_order_management")
+                    .header("User-Agent", "ERP_MOBILE")
+                    .post(body)
+                    .build()
+                runBlocking {
+                    var job = CoroutineScope(Dispatchers.IO).launch {
+                        var response = cookie_data.okHttpClient.newCall(request).execute()
+                        var responseinfo=response.body?.string().toString()
+                        var json= Gson().fromJson(responseinfo, ShowOAFileDeliveryRecordHeader::class.java)
+                        when(json.status){
+                            0->{
+                                cookie_data.status=json.status
+                                var data: ArrayList<OAFileDeliveryRecordHeader> =json.data
+                                cookie_data.OAFileDeliveryRecordHeader_courier_company_ComboboxData.removeAll(cookie_data.OAFileDeliveryRecordHeader_courier_company_ComboboxData)
+                                cookie_data.OAFileDeliveryRecordHeader_shippin_billing_month_ComboboxData.removeAll(cookie_data.OAFileDeliveryRecordHeader_shippin_billing_month_ComboboxData)
+                                for(i in 0 until data.size){
+                                    cookie_data.OAFileDeliveryRecordHeader_courier_company_ComboboxData.add(data[i].courier_company)
+                                    cookie_data.OAFileDeliveryRecordHeader_shippin_billing_month_ComboboxData.add(data[i].shippin_billing_month)
                                 }
                                 //Log.d("GSON", "msg:${cookie_data.StockTransOrderHeader_id_ComboboxData}")
                             }

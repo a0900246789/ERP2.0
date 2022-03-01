@@ -72,7 +72,7 @@ class Sale01changeFragment : Fragment() {
         }
         //搜尋按鈕
         searchbtn?.setOnClickListener {
-            theTextView?.text = autoCompleteTextView?.text
+
 
             when(autoCompleteTextView?.text.toString()){
                 "客戶訂單(單頭)"->{

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/one"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="32dp"
+        android:hint="預計開工日期(必填)"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+
+            >
+
+        </AutoCompleteTextView>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/two"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="32dp"
+        android:hint="生產線編號"
+        app:layout_constraintTop_toBottomOf="@id/one"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteText2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            >
+
+        </AutoCompleteTextView>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/three"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="32dp"
+        android:hint="料件"
+        app:layout_constraintTop_toBottomOf="@id/two"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteText3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            >
+
+        </AutoCompleteTextView>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/four"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="32dp"
+        android:hint="生產管制單編號"
+        app:layout_constraintTop_toBottomOf="@id/three"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteText4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            >
+
+        </AutoCompleteTextView>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

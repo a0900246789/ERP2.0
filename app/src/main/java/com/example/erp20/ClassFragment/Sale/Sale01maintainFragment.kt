@@ -78,7 +78,7 @@ class Sale01maintainFragment : Fragment() {
 
         //搜尋按鈕
         searchbtn?.setOnClickListener {
-            theTextView?.text = autoCompleteTextView?.text
+
 
             when(autoCompleteTextView?.text.toString()){
                 "產品型號"->{

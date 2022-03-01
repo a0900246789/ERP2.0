@@ -122,11 +122,29 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter3(Filter_pline:String,Filt
             holder.prod_ctrl_order_number.setText("")
         }
         else{
-            holder.prod_ctrl_order_number.setText(data[position].prod_ctrl_order_number+"\n"+
-                    cookie_data.item_name_ComboboxData[cookie_data.semi_finished_product_number_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_semi_finished_prod_number_ComboboxData[cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData.indexOf(data[position].prod_ctrl_order_number)])]+"\n"+
-                    cookie_data.pline_name_ComboboxData[cookie_data.pline_id_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_pline_id_ComboboxData[cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData.indexOf(data[position].prod_ctrl_order_number)])]+"\n"+
-                    cookie_data.MeBody_work_option_ComboboxData[cookie_data.MeBody_process_number_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_me_code_ComboboxData[cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData.indexOf(data[position].prod_ctrl_order_number)])]
-            )
+            var one=data[position].prod_ctrl_order_number
+            var two=""
+            var three=""
+            var four=""
+                if(cookie_data.item_id_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_semi_finished_prod_number_ComboboxData[cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData.indexOf(data[position].prod_ctrl_order_number)])!=-1){
+                    two=cookie_data.item_name_ComboboxData[cookie_data.item_id_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_semi_finished_prod_number_ComboboxData[cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData.indexOf(data[position].prod_ctrl_order_number)])]
+                }
+                else{
+                    two="none"
+                }
+                if(cookie_data.pline_id_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_pline_id_ComboboxData[cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData.indexOf(data[position].prod_ctrl_order_number)])!=-1){
+                    three=cookie_data.pline_name_ComboboxData[cookie_data.pline_id_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_pline_id_ComboboxData[cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData.indexOf(data[position].prod_ctrl_order_number)])]
+                }
+                else{
+                    three="none"
+                }
+                if(cookie_data.MeBody_process_number_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_me_code_ComboboxData[cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData.indexOf(data[position].prod_ctrl_order_number)])!=-1){
+                    four= cookie_data.MeBody_work_option_ComboboxData[cookie_data.MeBody_process_number_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_me_code_ComboboxData[cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData.indexOf(data[position].prod_ctrl_order_number)])]
+                }
+                else{
+                    four="none"
+                }
+            holder.prod_ctrl_order_number.setText(one+"\n"+two+"\n"+three+"\n"+four)
         }
         holder.prod_ctrl_order_number.inputType=InputType.TYPE_NULL
         holder.illustrate.setText(data[position].illustrate)
@@ -238,18 +256,37 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter3(Filter_pline:String,Filt
             //println(relativeCombobox04)
             val arrayAdapter04= ArrayAdapter(itemView.context,R.layout.combobox_item,relativeCombobox04)
             //05
-           /* var relativeCombobox05:ArrayList<String> = ArrayList<String>()
+            var relativeCombobox05:ArrayList<String> = ArrayList<String>()
             for(i in 0 until cookie_data.ProductControlOrderBody_A_complete_date_ComboboxData.size){
+                var one=""
+                var two=""
+                var three=""
+                var four=""
                 if(cookie_data.ProductControlOrderBody_A_complete_date_ComboboxData[i]!=null){
-                    relativeCombobox05.add(cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData[i]+"\n"+
-                            cookie_data.item_name_ComboboxData[cookie_data.semi_finished_product_number_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_semi_finished_prod_number_ComboboxData[i])]+"\n"+
-                            cookie_data.pline_name_ComboboxData[cookie_data.pline_id_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_pline_id_ComboboxData[i])]+"\n"+
-                            cookie_data.MeBody_work_option_ComboboxData[cookie_data.MeBody_process_number_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_me_code_ComboboxData[i])]
-                    )
+                    one=cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData[i]
+                    if(cookie_data.item_id_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_semi_finished_prod_number_ComboboxData[i])!=-1){
+                        two=cookie_data.item_name_ComboboxData[cookie_data.item_id_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_semi_finished_prod_number_ComboboxData[i])]
+                    }
+                    else{
+                        two="none"
+                    }
+                    if(cookie_data.pline_id_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_pline_id_ComboboxData[i])!=-1){
+                        three=cookie_data.pline_name_ComboboxData[cookie_data.pline_id_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_pline_id_ComboboxData[i])]
+                    }
+                    else{
+                        three="none"
+                    }
+                    if(cookie_data.MeBody_process_number_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_me_code_ComboboxData[i])!=-1){
+                        four= cookie_data.MeBody_work_option_ComboboxData[cookie_data.MeBody_process_number_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_me_code_ComboboxData[i])]
+                    }
+                    else{
+                        four="none"
+                    }
+                    relativeCombobox05.add(one+"\n"+two+"\n"+three+"\n"+four)
                 }
             }
             //println(relativeCombobox05)
-            val arrayAdapter05= ArrayAdapter(itemView.context,R.layout.combobox_item,relativeCombobox05)*/
+            val arrayAdapter05= ArrayAdapter(itemView.context,R.layout.combobox_item,relativeCombobox05)
 
             //異動日期
             date.setOnClickListener {
@@ -302,9 +339,10 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter3(Filter_pline:String,Filt
                         sec_trans_code.setAdapter(arrayAdapter03)
                         temp_purchase_order_id=purchase_order_id.text.toString()
                         purchase_order_id.setAdapter(arrayAdapter04)
+                        purchase_order_id.inputType=InputType.TYPE_CLASS_TEXT
                         temp_prod_ctrl_order_number=prod_ctrl_order_number.text.toString()
-                        //prod_ctrl_order_number.setAdapter(arrayAdapter05)
-
+                        prod_ctrl_order_number.setAdapter(arrayAdapter05)
+                        prod_ctrl_order_number.inputType=InputType.TYPE_CLASS_TEXT
                         illustrate.isClickable=true
                         illustrate.isFocusable=true
                         illustrate.isFocusableInTouchMode=true
@@ -341,6 +379,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter3(Filter_pline:String,Filt
                             newData.purchase_order_id=purchase_order_id.text.toString().substring(0,purchase_order_id.text.toString().indexOf(" "))
                         }
                         purchase_order_id.setAdapter(null)
+                        purchase_order_id.inputType=InputType.TYPE_NULL
                         if(prod_ctrl_order_number.text.toString()==""){
                             newData.prod_ctrl_order_number=""
                         }
@@ -348,6 +387,7 @@ class RecyclerItemStockTransOrderHeaderSimplifyAdapter3(Filter_pline:String,Filt
                             newData.prod_ctrl_order_number=prod_ctrl_order_number.text.toString().substring(0,prod_ctrl_order_number.text.toString().indexOf("\n"))
                         }
                         prod_ctrl_order_number.setAdapter(null)
+                        prod_ctrl_order_number.inputType=InputType.TYPE_NULL
                         newData.illustrate=illustrate.text.toString()
                         illustrate.isClickable=false
                         illustrate.isFocusable=false

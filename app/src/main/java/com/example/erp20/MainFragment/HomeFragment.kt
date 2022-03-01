@@ -10,6 +10,7 @@ import android.widget.ImageButton
 import com.example.erp20.*
 import com.example.erp20.app01.Activity01
 import com.example.erp20.app02.Activity02
+import com.example.erp20.app03.Activity03
 import com.example.erp20.app04.Activity04
 import com.example.erp20.app05.Activity05
 import com.example.erp20.app06.Activity06
@@ -76,7 +77,7 @@ class HomeFragment : Fragment() {
         //03
         Btn03?.setOnClickListener{
             //Toast.makeText(activity,"1233211212",Toast.LENGTH_SHORT).show()
-            val intent=Intent(activity, STK_Activity::class.java)
+            val intent=Intent(activity, Activity03::class.java)
             startActivity(intent)
         }
         //04

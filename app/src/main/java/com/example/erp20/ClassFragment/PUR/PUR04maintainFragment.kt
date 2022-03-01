@@ -57,7 +57,7 @@ class PUR04maintainFragment : Fragment() {
         }
         //搜尋按鈕
         searchbtn?.setOnClickListener {
-            theTextView?.text = autoCompleteTextView?.text
+
 
             when(autoCompleteTextView?.text.toString()){
                 "廠商基本資料維護"->{

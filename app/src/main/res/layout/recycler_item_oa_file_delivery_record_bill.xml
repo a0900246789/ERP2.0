@@ -8,10 +8,6 @@
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_layout"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/underline2"
@@ -21,18 +17,36 @@
         >
 
         <com.google.android.material.textfield.TextInputLayout
-
-            android:id="@+id/_id"
+            android:id="@+id/courier_company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginRight="120dp"
-            android:hint="庫存異動單號"
+            android:hint="Express Company"
+            android:background="#E1E1E1"
+
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_courier_company"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/shippin_billing_month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/courier_company"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="船務結帳月份"
             android:textColorHint="@color/importmant_red"
             >
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_id"
+                android:id="@+id/edit_shippin_billing_month"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:singleLine="true"
@@ -44,149 +58,64 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-
-            android:id="@+id/date"
+            android:id="@+id/billing_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/_id"
+            app:layout_constraintTop_toBottomOf="@id/shippin_billing_month"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginRight="120dp"
-            android:hint="異動日期"
-            android:textColorHint="@color/importmant_red"
+            android:hint="結帳日期"
             >
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_date"
+                android:id="@+id/edit_billing_date"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:singleLine="true"
-                android:inputType="date"
-                android:hint="2021-01-01"
-                android:textColor="@color/importmant_red"
+                android:inputType="none"
                 >
 
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:id="@+id/_dept"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/date"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="120dp"
-            android:hint="異動單位"
-            android:background="#E1E1E1"
-            >
-            <AutoCompleteTextView
-                android:id="@+id/edit_dept"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none"
-
-                >
-            </AutoCompleteTextView>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:id="@+id/main_trans_code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/_dept"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="120dp"
-            android:hint="主異動別代號"
-            android:background="#E1E1E1"
-            >
-            <AutoCompleteTextView
-                android:id="@+id/edit_main_trans_code"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none"
-
-                >
-            </AutoCompleteTextView>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:id="@+id/sec_trans_code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/main_trans_code"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="120dp"
-            android:hint="次異動別代號"
-            android:background="#E1E1E1"
-            >
-            <AutoCompleteTextView
-                android:id="@+id/edit_sec_trans_code"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none"
-                >
-            </AutoCompleteTextView>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:id="@+id/purchase_order_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/sec_trans_code"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="120dp"
-            android:hint="採購單編號"
-            android:background="#E1E1E1"
-            >
-            <AutoCompleteTextView
-                android:id="@+id/edit_purchase_order_id"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-
-                >
-            </AutoCompleteTextView>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:id="@+id/prod_ctrl_order_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/purchase_order_id"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="120dp"
-            android:hint="生產管制單編號"
-            android:background="#E1E1E1"
-            >
-            <AutoCompleteTextView
-                android:id="@+id/edit_prod_ctrl_order_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-
-                >
-            </AutoCompleteTextView>
-        </com.google.android.material.textfield.TextInputLayout>
 
 
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/illustrate"
+            android:id="@+id/is_closed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/prod_ctrl_order_number"
+            app:layout_constraintTop_toBottomOf="@id/billing_date"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginRight="120dp"
-            android:hint="備註"
+            android:hint="已結帳"
             >
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_illustrate"
+                android:id="@+id/edit_is_closed"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/trackingNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/is_closed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="Tracking#"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_trackingNo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
                 android:inputType="none"
                 >
 
@@ -195,53 +124,63 @@
 
 
 
-        <Button
-            android:id="@+id/delete_btn"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/delivery_date"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="16dp"
-            android:text="刪除"
-            android:visibility="invisible">
+            app:layout_constraintTop_toBottomOf="@+id/trackingNo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="120dp"
+            android:hint="Delivery Date"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_delivery_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:inputType="none"
+                >
 
-        </Button>
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
         <Button
             android:id="@+id/edit_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/delete_btn"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="16dp"
             android:text="編輯"
             android:visibility="invisible">
 
         </Button>
+
         <Button
             android:id="@+id/next_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_btn"
             android:layout_marginTop="16dp"
             android:text="下一筆"
-            android:visibility="invisible">
+            android:visibility="invisible"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_btn">
 
         </Button>
 
-
-
         <Button
-            android:id="@+id/item_detail_btn"
+            android:id="@+id/send_record_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/next_btn"
             android:layout_marginTop="16dp"
-            android:text="料件明細"
+            android:text="寄送紀錄"
             android:visibility="invisible">
 
         </Button>
+
 
         <View
             android:layout_width="match_parent"

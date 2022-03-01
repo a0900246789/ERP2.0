@@ -65,7 +65,7 @@ class MES03maintainFragment : Fragment() {
         }
         //搜尋按鈕
         searchbtn?.setOnClickListener {
-            theTextView?.text = autoCompleteTextView?.text
+
 
             when(autoCompleteTextView?.text.toString()){
                 "工程編制表維護(單頭)"->{

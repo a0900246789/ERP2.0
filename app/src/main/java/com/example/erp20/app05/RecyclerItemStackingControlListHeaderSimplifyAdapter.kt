@@ -41,7 +41,7 @@ class RecyclerItemStackingControlListHeaderSimplifyAdapter(SelectFilter:String) 
     val dateF = SimpleDateFormat("yyyy-MM-dd(EEEE)", Locale.TAIWAN)
     val timeF = SimpleDateFormat("HH:mm:ss", Locale.TAIWAN)
     init {
-        println(SelectFilter)
+        //println(SelectFilter)
         data=sort(data,SelectFilter)
 
     }

@@ -69,7 +69,7 @@ class Produce02maintainFragment : Fragment() {
         }
         //搜尋按鈕
         searchbtn?.setOnClickListener {
-            theTextView?.text = autoCompleteTextView?.text
+
 
             when(autoCompleteTextView?.text.toString()){
 

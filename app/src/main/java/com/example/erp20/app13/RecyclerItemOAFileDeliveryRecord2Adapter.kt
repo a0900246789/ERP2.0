@@ -1,6 +1,5 @@
 package com.example.erp20.app13
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.content.Context
 import android.content.ContextWrapper
 import android.text.InputType
@@ -31,43 +30,58 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class RecyclerItemOAFileDeliveryRecordMainAdapter(filter_trackingNo:String) :
-    RecyclerView.Adapter<RecyclerItemOAFileDeliveryRecordMainAdapter.ViewHolder>() {
+class RecyclerItemOAFileDeliveryRecord2Adapter() :
+    RecyclerView.Adapter<RecyclerItemOAFileDeliveryRecord2Adapter.ViewHolder>() {
     private var itemData: ShowOAFileDeliveryRecordHeader =Gson().fromJson(cookie_data.response_data, ShowOAFileDeliveryRecordHeader::class.java)
     private var data: ArrayList<OAFileDeliveryRecordHeader> =itemData.data
 
     val dateF = SimpleDateFormat("yyyy-MM-dd(EEEE)", Locale.TAIWAN)
-    val dateF2 = SimpleDateFormat("yyyy-MM", Locale.TAIWAN)
+
     init {
         // println(SelectFilter)
-        data=filter(data,filter_trackingNo)
-        data=sort(data)
+        //data=filter(data,FilterTopic,FilterContent)
+        //data=sort(data)
 
     }
-
-    fun filter(data: java.util.ArrayList<OAFileDeliveryRecordHeader>, filter_trackingNo:String): java.util.ArrayList<OAFileDeliveryRecordHeader> {
-        var ArrayList: java.util.ArrayList<OAFileDeliveryRecordHeader> =
-            java.util.ArrayList<OAFileDeliveryRecordHeader>()
-        for(i in 0 until data.size){
-            if(data[i].trackingNo==filter_trackingNo){
-                ArrayList.add(data[i])
+    /*fun filter(data: java.util.ArrayList<BookingNoticeHeader>, filterTopic:String, filterContent:String): java.util.ArrayList<BookingNoticeHeader> {
+        var ArrayList: java.util.ArrayList<BookingNoticeHeader> =
+            java.util.ArrayList<BookingNoticeHeader>()
+        if(filterTopic=="訂艙管制單號"){
+            for(i in 0 until data.size){
+                if(data[i]._id==filterContent){
+                    ArrayList.add(data[i])
+                }
+            }
+        }
+        else if(filterTopic=="訂艙通知號碼"){
+            for(i in 0 until data.size){
+                if(data[i].notice_number==filterContent){
+                    ArrayList.add(data[i])
+                }
+            }
+        }
+        else if(filterTopic=="PO#"){
+            for(i in 0 until data.size){
+                if(data[i].customer_poNo==filterContent){
+                    ArrayList.add(data[i])
+                }
             }
         }
         return ArrayList
-    }
-    fun sort(data: java.util.ArrayList<OAFileDeliveryRecordHeader>): java.util.ArrayList<OAFileDeliveryRecordHeader> {
+    }*/
+    /*fun sort(data: java.util.ArrayList<OAFileDeliveryRecordHeader>): java.util.ArrayList<OAFileDeliveryRecordHeader> {
         var sortedList:List<OAFileDeliveryRecordHeader> = data
 
         sortedList  = data.sortedWith(
             compareBy(
-                { it.trackingNo },
+                { it.cont_code },
             )
         )
 
         return sortedList.toCollection(java.util.ArrayList())
-    }
+    }*/
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v= LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_oa_file_delivery_record_main,parent,false)
+        val v= LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_oa_file_delivery_record2,parent,false)
         return ViewHolder(v)
 
     }
@@ -142,8 +156,6 @@ class RecyclerItemOAFileDeliveryRecordMainAdapter(filter_trackingNo:String) :
         holder.billing_date.inputType=InputType.TYPE_NULL
         holder.is_closed.setText(data[position].is_closed.toString())
         holder.is_closed.inputType=InputType.TYPE_NULL
-        holder.invalid.setText(data[position].invalid.toString())
-        holder.invalid.inputType=InputType.TYPE_NULL
 
 
         holder.remark.setText(data[position].remark)
@@ -151,11 +163,11 @@ class RecyclerItemOAFileDeliveryRecordMainAdapter(filter_trackingNo:String) :
         holder.remark.isFocusable=false
         holder.remark.isFocusableInTouchMode=false
         holder.remark.isTextInputLayoutFocusedRectEnabled=false
-        holder.deletebtn.isVisible=true
+        /*holder.deletebtn.isVisible=true
         holder.edit_btn.isVisible=true
         holder.next_btn.isVisible=true
-        holder.book_detail_btn.isVisible=true
-
+        holder.stack_detail_btn.isVisible=true
+        holder.send_record_btn.isVisible=true*/
     }
 
     override fun getItemCount(): Int {
@@ -171,170 +183,64 @@ class RecyclerItemOAFileDeliveryRecordMainAdapter(filter_trackingNo:String) :
         var shippin_billing_month=itemView.findViewById<TextInputEditText>(R.id.edit_shippin_billing_month)
         var billing_date=itemView.findViewById<TextInputEditText>(R.id.edit_billing_date)
         var is_closed=itemView.findViewById<TextInputEditText>(R.id.edit_is_closed)
-        var invalid=itemView.findViewById<TextInputEditText>(R.id.edit_invalid)
+
 
         var edit_btn=itemView.findViewById<Button>(R.id.edit_btn)
         var deletebtn=itemView.findViewById<Button>(R.id.delete_btn)
         var next_btn=itemView.findViewById<Button>(R.id.next_btn)
-        var book_detail_btn=itemView.findViewById<Button>(R.id.book_detail_btn)
+        var stack_detail_btn=itemView.findViewById<Button>(R.id.stack_detail_btn)
+        var send_record_btn=itemView.findViewById<Button>(R.id.send_record_btn)
 
         var remark=itemView.findViewById<TextInputEditText>(R.id.edit_remark)
         lateinit var oldData:OAFileDeliveryRecordHeader
         lateinit var newData:OAFileDeliveryRecordHeader
-        var edit=false
-        var tempDate1=""
-        var tempDate2=""
-        var tempDate3=""
+        var tempContType=""
         init {
             itemView.setOnClickListener{
                 val position:Int=adapterPosition
                 Log.d("GSON", "msg: ${position}\n")
 
             }
-
+/*
             val combobox=itemView.resources.getStringArray(R.array.combobox_yes_no)
             val arrayAdapter= ArrayAdapter(itemView.context,R.layout.combobox_item,combobox)
             val arrayAdapter01= ArrayAdapter(itemView.context,R.layout.combobox_item,cookie_data.cont_code_ComboboxData)
 
-            //寄送日期
-            delivery_date.setOnClickListener {
-                if(edit==true){
-                    var c= Calendar.getInstance()
-                    val year= c.get(Calendar.YEAR)
-                    val month = c.get(Calendar.MONTH)
-                    val day = c.get(Calendar.DAY_OF_MONTH)
-                    var datePicker = DatePickerDialog(itemView.context,
-                        DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                            val SelectedDate=Calendar.getInstance()
-                            SelectedDate.set(Calendar.YEAR,mYear)
-                            SelectedDate.set(Calendar.MONTH,mMonth)
-                            SelectedDate.set(Calendar.DAY_OF_MONTH,mDay)
-                            val Date= dateF.format(SelectedDate.time)
-                            delivery_date.setText(Date)
-                        },year,month,day).show()
-
+            cont_code.setOnItemClickListener { parent, view, position, id ->
+                if(cookie_data.StackingControlListHeader_contNo_ComboboxData.indexOf(cont_code.text.toString())!=-1){
+                    cont_type.setText(cookie_data.StackingControlListHeader_cont_type_code_ComboboxData[
+                            cookie_data.StackingControlListHeader_contNo_ComboboxData.indexOf(
+                                cont_code.text.toString())])
                 }
-            }
-            //到件日期
-            arrival_date.setOnClickListener {
-                if(edit==true){
-                    var c= Calendar.getInstance()
-                    val year= c.get(Calendar.YEAR)
-                    val month = c.get(Calendar.MONTH)
-                    val day = c.get(Calendar.DAY_OF_MONTH)
-                    var datePicker = DatePickerDialog(itemView.context,
-                        DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                            val SelectedDate=Calendar.getInstance()
-                            SelectedDate.set(Calendar.YEAR,mYear)
-                            SelectedDate.set(Calendar.MONTH,mMonth)
-                            SelectedDate.set(Calendar.DAY_OF_MONTH,mDay)
-                            val Date= dateF.format(SelectedDate.time)
-                            arrival_date.setText(Date)
-                        },year,month,day).show()
-
+                else{
+                    cont_type.setText("")
                 }
+
             }
-            //結帳月份
-            shippin_billing_month.setOnClickListener {
-                if(edit==true){
-                    var c= Calendar.getInstance()
-                    val year= c.get(Calendar.YEAR)
-                    val month = c.get(Calendar.MONTH)
-                    val day = c.get(Calendar.DAY_OF_MONTH)
-                    var datePicker = DatePickerDialog(itemView.context,
-                        DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                            val SelectedDate=Calendar.getInstance()
-                            SelectedDate.set(Calendar.YEAR,mYear)
-                            SelectedDate.set(Calendar.MONTH,mMonth)
-                            SelectedDate.set(Calendar.DAY_OF_MONTH,mDay)
-                            val Date= dateF2.format(SelectedDate.time)
-                            shippin_billing_month.setText(Date)
-                        },year,month,day).show()
-
-                }
-            }
-
-            //結帳日其
-            billing_date.setOnClickListener {
-                if(edit==true){
-                    var c= Calendar.getInstance()
-                    val year= c.get(Calendar.YEAR)
-                    val month = c.get(Calendar.MONTH)
-                    val day = c.get(Calendar.DAY_OF_MONTH)
-                    var datePicker = DatePickerDialog(itemView.context,
-                        DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                            val SelectedDate=Calendar.getInstance()
-                            SelectedDate.set(Calendar.YEAR,mYear)
-                            SelectedDate.set(Calendar.MONTH,mMonth)
-                            SelectedDate.set(Calendar.DAY_OF_MONTH,mDay)
-                            val Date= dateF.format(SelectedDate.time)
-                            billing_date.setText(Date)
-                        },year,month,day).show()
-
-                }
-            }
-
 
             //編輯按鈕
             edit_btn.setOnClickListener {
                 when(edit_btn.text){
                     "編輯"->{
-                        edit=true
                         oldData=data[adapterPosition]
                         //Log.d("GSON", "msg: ${oldData.id}\n")
-                        trackingNo.inputType=InputType.TYPE_CLASS_TEXT
-                        courier_company.inputType=InputType.TYPE_CLASS_TEXT
-                        tempDate1=delivery_date.text.toString()
-                        tempDate2=arrival_date.text.toString()
-                        receiver.inputType=InputType.TYPE_CLASS_TEXT
-                        //shippin_billing_month.inputType=(InputType.TYPE_CLASS_TEXT or InputType.TYPE_CLASS_NUMBER)
-                        //shippin_billing_month.setSelectAllOnFocus(true)
-                        tempDate3=billing_date.text.toString()
-
+                        //header_id.inputType=InputType.TYPE_CLASS_TEXT
+                        //body_id.inputType=InputType.TYPE_CLASS_TEXT
+                        cont_code.setAdapter(arrayAdapter01)
+                        cont_code.inputType=InputType.TYPE_CLASS_TEXT
+                        tempContType=cont_type.text.toString()
                         remark.isClickable=true
                         remark.isFocusable=true
                         remark.isFocusableInTouchMode=true
                         remark.isTextInputLayoutFocusedRectEnabled=true
-                        trackingNo.requestFocus()
+                        cont_code.requestFocus()
                         edit_btn.text = "完成"
                     }
                     "完成"->{
-                        edit=false
-                        newData= oldData.copy()//OAFileDeliveryRecordHeader()
-                        newData.is_closed=oldData.is_closed
-                        newData.trackingNo=trackingNo.text.toString()
-                        trackingNo.inputType=InputType.TYPE_NULL
-                        newData.courier_company=courier_company.text.toString()
-                        courier_company.inputType=InputType.TYPE_NULL
-                        if(delivery_date.text.toString()==""){
-                            newData.delivery_date=null
-                        }
-                        else{
-                            newData.delivery_date=delivery_date.text.toString().substring(0,delivery_date.text.toString().indexOf("("))
-                        }
-                        delivery_date.inputType=InputType.TYPE_NULL
-
-                        if(arrival_date.text.toString()==""){
-                            newData.arrival_date=null
-                        }
-                        else{
-                            newData.arrival_date=arrival_date.text.toString().substring(0,arrival_date.text.toString().indexOf("("))
-                        }
-                        arrival_date.inputType=InputType.TYPE_NULL
-
-                        newData.receiver=receiver.text.toString()
-                        receiver.inputType=InputType.TYPE_NULL
-                        newData.shippin_billing_month=shippin_billing_month.text.toString()
-                        shippin_billing_month.inputType=InputType.TYPE_NULL
-
-                        if(billing_date.text.toString()==""){
-                            newData.billing_date=null
-                        }
-                        else{
-                            newData.billing_date=billing_date.text.toString().substring(0,billing_date.text.toString().indexOf("("))
-                        }
-                        billing_date.inputType=InputType.TYPE_NULL
-
+                        newData= oldData.copy()//BookingNoticeBody()
+                        newData.cont_code=cont_code.text.toString()
+                        cont_code.setAdapter(null)
+                        cont_code.inputType=InputType.TYPE_NULL
 
                         newData.remark=remark.text.toString()
                         remark.isClickable=false
@@ -343,30 +249,18 @@ class RecyclerItemOAFileDeliveryRecordMainAdapter(filter_trackingNo:String) :
                         remark.isTextInputLayoutFocusedRectEnabled=false
                         //Log.d("GSON", "msg: ${oldData}\n")
                         //Log.d("GSON", "msg: ${newData.remark}\n")
-                        edit_OAFileDeliveryRecord("OAFileDeliveryRecordHeader",oldData,newData)//更改資料庫資料
+                        edit_BookingNotice("BookingNoticeBody",oldData,newData)//更改資料庫資料
                         when(cookie_data.status){
                             0-> {//成功
                                 data[adapterPosition] = newData//更改渲染資料
                                 Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
-                                if(data[adapterPosition].billing_date!=null && !data[adapterPosition].is_closed){
-                                    over_OAFileDeliveryRecord("OAFileDeliveryRecordHeader",data[adapterPosition])
-                                    Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
-                                    when(cookie_data.status){
-                                        0->{
-                                            is_closed.setText("true")
-                                        }
-                                    }
-                                }
                             }
                             1->{//失敗
                                 Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
-                                trackingNo.setText(oldData.trackingNo)
-                                courier_company.setText(oldData.courier_company)
-                                delivery_date.setText(tempDate1)
-                                arrival_date.setText(tempDate2)
-                                receiver.setText(oldData.receiver)
-                                shippin_billing_month.setText(oldData.shippin_billing_month)
-                                billing_date.setText(tempDate3)
+                                //header_id.setText(oldData.header_id)
+                                //body_id.setText(oldData.body_id)
+                                cont_code.setText(oldData.cont_code)
+                                cont_type.setText(tempContType)
 
                                 remark.setText(oldData.remark)
                             }
@@ -389,7 +283,7 @@ class RecyclerItemOAFileDeliveryRecordMainAdapter(filter_trackingNo:String) :
                     dialog.dismiss()
                 }
                 mAlertDialog.setNegativeButton("YES") { dialog, id ->
-                    delete_OAFileDeliveryRecord("OAFileDeliveryRecordHeader",data[adapterPosition])
+                    delete_BookingNotice("BookingNoticeBody",data[adapterPosition])
                     when(cookie_data.status){
                         0-> {//成功
                             data.removeAt(adapterPosition)
@@ -415,15 +309,10 @@ class RecyclerItemOAFileDeliveryRecordMainAdapter(filter_trackingNo:String) :
 
             }
 
-            //單身
-            book_detail_btn.setOnClickListener {
-                cookie_data.first_recyclerView=cookie_data.recyclerView
-                var dialogF= PopUpOAFileDeliveryRecordMainFragment(data[adapterPosition].trackingNo)
-                dialogF.show( ( itemView.context as AppCompatActivity).supportFragmentManager ,"訂艙明細")
-            }
+           */
 
 
-            /*//鎖定按鈕
+            /* //鎖定按鈕
              lockbtn.setOnClickListener {
                  //Log.d("GSON", "msg: ${data}\n")
                  val mAlertDialog = AlertDialog.Builder(itemView.context)
@@ -434,7 +323,7 @@ class RecyclerItemOAFileDeliveryRecordMainAdapter(filter_trackingNo:String) :
                      dialog.dismiss()
                  }
                  mAlertDialog.setNegativeButton("YES") { dialog, id ->
-                     lock_OAFileDeliveryRecord("OAFileDeliveryRecordHeader",data[adapterPosition])
+                     lock_BookingNotice("BookingNoticeBody",data[adapterPosition])
                      when(cookie_data.status){
                          0-> {//成功
 
@@ -448,9 +337,9 @@ class RecyclerItemOAFileDeliveryRecordMainAdapter(filter_trackingNo:String) :
                  }
                  mAlertDialog.show()
 
-             }*/
+             }
 
-            /* //結案按鈕
+             //結案按鈕
              overbtn.setOnClickListener {
                  //Log.d("GSON", "msg: ${data}\n")
                  val mAlertDialog = AlertDialog.Builder(itemView.context)
@@ -461,7 +350,7 @@ class RecyclerItemOAFileDeliveryRecordMainAdapter(filter_trackingNo:String) :
                      dialog.dismiss()
                  }
                  mAlertDialog.setNegativeButton("YES") { dialog, id ->
-                     over_OAFileDeliveryRecord("OAFileDeliveryRecordHeader",data[adapterPosition])
+                     over_BookingNotice("BookingNoticeBody",data[adapterPosition])
                      when(cookie_data.status){
                          0-> {//成功
                              Toast.makeText(itemView.context, cookie_data.msg, Toast.LENGTH_SHORT).show()
@@ -476,25 +365,19 @@ class RecyclerItemOAFileDeliveryRecordMainAdapter(filter_trackingNo:String) :
 
              }*/
         }
-        private fun edit_OAFileDeliveryRecord(operation:String,oldData:OAFileDeliveryRecordHeader,newData:OAFileDeliveryRecordHeader) {
+        private fun edit_BookingNotice(operation:String,oldData:BookingNoticeBody,newData:BookingNoticeBody) {
             val old =JSONObject()
-            old.put("trackingNo",oldData.trackingNo)
-            old.put("courier_company",oldData.courier_company)
-            old.put("delivery_date",oldData.delivery_date)
-            old.put("arrival_date",oldData.arrival_date)
-            old.put("receiver",oldData.receiver)
-            old.put("shippin_billing_month",oldData.shippin_billing_month)
-            old.put("billing_date",oldData.billing_date)
+            old.put("header_id",oldData.header_id)
+            old.put("body_id",oldData.body_id)
+            old.put("cont_code",oldData.cont_code)
+
 
             old.put("remark",oldData.remark)
             val new =JSONObject()
-            new.put("trackingNo",newData.trackingNo)
-            new.put("courier_company",newData.courier_company)
-            new.put("delivery_date",newData.delivery_date)
-            new.put("arrival_date",newData.arrival_date)
-            new.put("receiver",newData.receiver)
-            new.put("shippin_billing_month",newData.shippin_billing_month)
-            new.put("billing_date",newData.billing_date)
+            new.put("header_id",newData.header_id)
+            new.put("body_id",newData.body_id)
+            new.put("cont_code",newData.cont_code)
+
 
 
             new.put("editor",cookie_data.username)
@@ -530,15 +413,11 @@ class RecyclerItemOAFileDeliveryRecordMainAdapter(filter_trackingNo:String) :
 
 
         }
-        private fun delete_OAFileDeliveryRecord(operation:String,deleteData:OAFileDeliveryRecordHeader) {
+        private fun delete_BookingNotice(operation:String,deleteData:BookingNoticeBody) {
             val delete = JSONObject()
-            delete.put("trackingNo",deleteData.trackingNo)
-            delete.put("courier_company",deleteData.courier_company)
-            delete.put("delivery_date",deleteData.delivery_date)
-            delete.put("arrival_date",deleteData.arrival_date)
-            delete.put("receiver",deleteData.receiver)
-            delete.put("shippin_billing_month",deleteData.shippin_billing_month)
-            delete.put("billing_date",deleteData.billing_date)
+            delete.put("header_id",deleteData.header_id)
+            delete.put("body_id",deleteData.body_id)
+            delete.put("cont_code",deleteData.cont_code)
 
             delete.put("remark",deleteData.remark)
             //Log.d("GSON", "msg:${delete}")
@@ -569,15 +448,11 @@ class RecyclerItemOAFileDeliveryRecordMainAdapter(filter_trackingNo:String) :
             }
 
         }
-        private fun lock_OAFileDeliveryRecord(operation:String,lockData:OAFileDeliveryRecordHeader) {
+        private fun lock_BookingNotice(operation:String,lockData:BookingNoticeBody) {
             val lock = JSONObject()
-            lock.put("trackingNo",lockData.trackingNo)
-            lock.put("courier_company",lockData.courier_company)
-            lock.put("delivery_date",lockData.delivery_date)
-            lock.put("arrival_date",lockData.arrival_date)
-            lock.put("receiver",lockData.receiver)
-            lock.put("shippin_billing_month",lockData.shippin_billing_month)
-            lock.put("billing_date",lockData.billing_date)
+            lock.put("header_id",lockData.header_id)
+            lock.put("body_id",lockData.body_id)
+            lock.put("cont_code",lockData.cont_code)
 
             lock.put("remark",lockData.remark)
             //Log.d("GSON", "msg:${lock}")
@@ -608,15 +483,11 @@ class RecyclerItemOAFileDeliveryRecordMainAdapter(filter_trackingNo:String) :
             }
 
         }
-        private fun over_OAFileDeliveryRecord(operation:String,overData:OAFileDeliveryRecordHeader) {
+        private fun over_BookingNotice(operation:String,overData:BookingNoticeBody) {
             val over = JSONObject()
-            over.put("trackingNo",overData.trackingNo)
-            over.put("courier_company",overData.courier_company)
-            over.put("delivery_date",overData.delivery_date)
-            over.put("arrival_date",overData.arrival_date)
-            over.put("receiver",overData.receiver)
-            over.put("shippin_billing_month",overData.shippin_billing_month)
-            over.put("billing_date",overData.billing_date)
+            over.put("header_id",overData.header_id)
+            over.put("body_id",overData.body_id)
+            over.put("cont_code",overData.cont_code)
 
             over.put("remark",overData.remark)
             //Log.d("GSON", "msg:${delete}")

@@ -154,6 +154,11 @@
         <item>(查詢)今日出勤人數與人力工時統計</item>
     </string-array>
 
+    <string-array name="combobox03_cardwork">
+        <item>上線</item>
+        <item>下線</item>
+    </string-array>
+
     <string-array name="combobox07">
         <item>備料/發料作業</item>
     </string-array>
@@ -182,6 +187,7 @@
         <item>OA reference no(維護)</item>
         <item>OA文件寄送紀錄(查詢/維護)</item>
         <item>PO#相關資料(查詢)</item>
+        <item>快遞公司月對帳單(查詢)</item>
     </string-array>
 
     <string-array name="combobox13_1_filter">

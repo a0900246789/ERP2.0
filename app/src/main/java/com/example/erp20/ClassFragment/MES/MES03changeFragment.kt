@@ -78,7 +78,7 @@ class MES03changeFragment : Fragment() {
         }
         //搜尋按鈕
         searchbtn?.setOnClickListener {
-            theTextView?.text = autoCompleteTextView?.text
+
 
             when(autoCompleteTextView?.text.toString()){
                 "員工每日訂餐單(單頭)"->{

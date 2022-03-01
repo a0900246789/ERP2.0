@@ -45,7 +45,7 @@ class Activity06 : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val theTextView = findViewById<TextView>(R.id._text)
+
 
         val recyclerView=findViewById<RecyclerView>(R.id.recyclerView)
 
@@ -63,7 +63,7 @@ class Activity06 : AppCompatActivity() {
         }
         //搜尋按鈕
         searchbtn?.setOnClickListener {
-            theTextView?.text = autoCompleteTextView?.text
+
 
             when(autoCompleteTextView?.text.toString()){
                 "領料申請"->{
@@ -174,21 +174,36 @@ class Activity06 : AppCompatActivity() {
                         }
                     }
                     val arrayAdapter04= ArrayAdapter(item.context,R.layout.combobox_item,relativeCombobox04)
-                   /* var relativeCombobox05: ArrayList<String> = ArrayList<String>()
+                    var relativeCombobox05: ArrayList<String> = ArrayList<String>()
                     for(i in 0 until cookie_data.ProductControlOrderBody_A_complete_date_ComboboxData.size){
+                        var one=""
+                        var two=""
+                        var three=""
+                        var four=""
                         if(cookie_data.ProductControlOrderBody_A_complete_date_ComboboxData[i]!=null){
-                            relativeCombobox05.add(
-                                cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData[i]+"\n"+
-                                    cookie_data.item_name_ComboboxData[cookie_data.semi_finished_product_number_ComboboxData.indexOf(
-                                        cookie_data.ProductControlOrderBody_A_semi_finished_prod_number_ComboboxData[i])]+"\n"+
-                                    cookie_data.pline_name_ComboboxData[cookie_data.pline_id_ComboboxData.indexOf(
-                                        cookie_data.ProductControlOrderBody_A_pline_id_ComboboxData[i])]+"\n"+
-                                    cookie_data.MeBody_work_option_ComboboxData[cookie_data.MeBody_process_number_ComboboxData.indexOf(
-                                        cookie_data.ProductControlOrderBody_A_me_code_ComboboxData[i])]
-                            )
+                            one=cookie_data.ProductControlOrderBody_A_prod_ctrl_order_number_ComboboxData[i]
+                            if(cookie_data.item_id_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_semi_finished_prod_number_ComboboxData[i])!=-1){
+                                two=cookie_data.item_name_ComboboxData[cookie_data.item_id_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_semi_finished_prod_number_ComboboxData[i])]
+                            }
+                            else{
+                                two="none"
+                            }
+                            if(cookie_data.pline_id_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_pline_id_ComboboxData[i])!=-1){
+                                three=cookie_data.pline_name_ComboboxData[cookie_data.pline_id_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_pline_id_ComboboxData[i])]
+                            }
+                            else{
+                                three="none"
+                            }
+                            if(cookie_data.MeBody_process_number_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_me_code_ComboboxData[i])!=-1){
+                                four= cookie_data.MeBody_work_option_ComboboxData[cookie_data.MeBody_process_number_ComboboxData.indexOf(cookie_data.ProductControlOrderBody_A_me_code_ComboboxData[i])]
+                            }
+                            else{
+                                four="none"
+                            }
+                            relativeCombobox05.add(one+"\n"+two+"\n"+three+"\n"+four)
                         }
                     }
-                    val arrayAdapter05= ArrayAdapter(item.context,R.layout.combobox_item,relativeCombobox05)*/
+                    val arrayAdapter05= ArrayAdapter(item.context,R.layout.combobox_item,relativeCombobox05)
 
                     var _id=item.findViewById<TextInputEditText>(R.id.edit_id)
                     _id.inputType= InputType.TYPE_CLASS_NUMBER
@@ -212,7 +227,7 @@ class Activity06 : AppCompatActivity() {
                     var purchase_order_id=item.findViewById<AutoCompleteTextView>(R.id.edit_purchase_order_id)
                     purchase_order_id.setAdapter(arrayAdapter04)
                     var prod_ctrl_order_number=item.findViewById<AutoCompleteTextView>(R.id.edit_prod_ctrl_order_number)
-                   // prod_ctrl_order_number.setAdapter(arrayAdapter05)
+                    prod_ctrl_order_number.setAdapter(arrayAdapter05)
                     var illustrate=item.findViewById<TextInputEditText>(R.id.edit_illustrate)
 
                     //異動日期
@@ -601,6 +616,7 @@ class Activity06 : AppCompatActivity() {
                 add.put("date",addData.date)
                 add.put("main_trans_code",addData.main_trans_code)
                 add.put("sec_trans_code",addData.sec_trans_code)
+                add.put("purchase_order_id",addData.purchase_order_id)
                 add.put("prod_ctrl_order_number",addData.prod_ctrl_order_number)
                 add.put("illustrate",addData.illustrate)
 

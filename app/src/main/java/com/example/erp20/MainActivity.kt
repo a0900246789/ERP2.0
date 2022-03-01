@@ -47,13 +47,17 @@ class cookie_data : Application() {
         const val username:String="System"//"One"
         const val password:String="cvFm9Mq6"//"eb2014326"
         const val URL:String="http://sunwhiteerptest.ddns.net:8000"//"http://118.168.43.235:8000"//"http://140.125.46.125:8000"
-        val date = SimpleDateFormat("yyyy-MM-dd")
-        val currentDate = date.format(Date())
-        val datetime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-        val currentDatetime = datetime.format(Date())
+        fun currentDateTime():String{
+            var datetime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            var readDate=Calendar.getInstance()
+            var currentDatetime = datetime.format(readDate.time)
+            return currentDatetime
+        }
+        var date = SimpleDateFormat("yyyy-MM-dd")
+        var currentDate = date.format(Date())
         lateinit var selectedFilter:String
         var MealOrderListBody_ArrayList_data: ArrayList<MealOrderListBody> = ArrayList<MealOrderListBody>()
-
+        var cardwork:String="上線"
         val Routes=routes()
         class routes(
             val special_basic_management:String="/special_basic_management",
@@ -110,6 +114,7 @@ class cookie_data : Application() {
              val PERMISSION_ADD:String="5",
              val PERMISSION_DELETE:String="6",
              val CLOSE:String="7",
+             val BUNDLE_CHANGE:String="8",
         )
 
         var currentAdapter:String=""
@@ -157,6 +162,7 @@ class cookie_data : Application() {
         var name_ComboboxData: MutableList<String> = mutableListOf<String>()//員工姓名
         var qrcode_ComboboxData: MutableList<String> = mutableListOf<String>()//員工Qrcode
         var staff_dept_ComboboxData: MutableList<String> = mutableListOf<String>()//員工部門
+        var is_work_ComboboxData: MutableList<Boolean> = mutableListOf<Boolean>()//員工在職
 
         var inv_code_m_ComboboxData: MutableList<String> = mutableListOf<String>()//主異動別代號
         var inv_code_name_m_ComboboxData: MutableList<String> = mutableListOf<String>()//主異動別代號名稱
@@ -182,6 +188,9 @@ class cookie_data : Application() {
         var ProductControlOrderBody_A_est_complete_date_ComboboxData: MutableList<String?> = mutableListOf<String?>()//生產管制單身-預際完工日期
         var ProductControlOrderBody_A_is_closed_ComboboxData: MutableList<Boolean> = mutableListOf<Boolean>()//生產管制單身-是否結案
         var ProductControlOrderBody_A_is_re_make_ComboboxData: MutableList<Boolean> = mutableListOf<Boolean>()//生產管制單身-重工
+        var ProductControlOrderBody_A_est_output_ComboboxData: MutableList<Int> = mutableListOf<Int>()//生產管制單身-預計產量
+        var ProductControlOrderBody_A_est_start_date_ComboboxData: MutableList<String?> = mutableListOf<String?>()//生產管制單身-預計開工日期
+        var ProductControlOrderBody_B_filter_offline_time_ComboboxData: MutableList<String?> = mutableListOf<String?>()//報工-下線時間
         var ProductControlOrderBody_D_prod_batch_code_ComboboxData: MutableList<String> = mutableListOf<String>()//生產管制單批號
         var MasterScheduledOrderHeader_id_ComboboxData: MutableList<String> = mutableListOf<String>()//主排單號
         var CustomerOrderHeader_poNo_ComboboxData: MutableList<String> = mutableListOf<String>()//客戶訂單單號
@@ -221,6 +230,8 @@ class cookie_data : Application() {
         var BookingNoticeHeader_oa_referenceNO1_ComboboxData: MutableList<String> = mutableListOf<String>()//訂艙通知單-單頭-OA1
         var OAFileDeliveryRecordBody_trackingNo_ComboboxData: MutableList<String> = mutableListOf<String>()//OA文件寄送記錄(單身)-寄件單據號碼
         var OAFileDeliveryRecordBody_booking_noticeNo_ComboboxData: MutableList<String> = mutableListOf<String>()//OA文件寄送記錄(單身)-訂艙通知號碼
+        var OAFileDeliveryRecordHeader_courier_company_ComboboxData: MutableList<String> = mutableListOf<String>()//OA文件寄送記錄(單頭)-快遞公司
+        var OAFileDeliveryRecordHeader_shippin_billing_month_ComboboxData: MutableList<String> = mutableListOf<String>()//OA文件寄送記錄(單頭)-船務結帳月份
         var StackingControlListHeader_code_ComboboxData: MutableList<String> = mutableListOf<String>()//疊櫃管制單(單頭)-單號
         var StackingControlListHeader_contNo_ComboboxData: MutableList<String> = mutableListOf<String>()//疊櫃管制單(單頭)-櫃編
         var StackingControlListHeader_cont_type_code_ComboboxData: MutableList<String> = mutableListOf<String>()//疊櫃管制單(單頭)-櫃型代號

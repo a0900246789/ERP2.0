@@ -44,7 +44,7 @@ class Activity02 : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val theTextView = findViewById<TextView>(R.id._text)
+
 
         recyclerView= findViewById<RecyclerView>(R.id.recyclerView)
         cookie_data.recyclerView =recyclerView
@@ -63,7 +63,7 @@ class Activity02 : AppCompatActivity() {
         }
         //確定按鈕
         searchbtn?.setOnClickListener {
-            theTextView?.text = autoCompleteTextView?.text
+
 
             when(autoCompleteTextView?.text.toString()){
                 "刷卡訂餐"->{

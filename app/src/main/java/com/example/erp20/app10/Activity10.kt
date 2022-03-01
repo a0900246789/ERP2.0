@@ -48,7 +48,7 @@ class Activity10 : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val theTextView = findViewById<TextView>(R.id._text)
+
 
         val recyclerView=findViewById<RecyclerView>(R.id.recyclerView)
 
@@ -63,7 +63,7 @@ class Activity10 : AppCompatActivity() {
 
         //搜尋按鈕
         searchbtn?.setOnClickListener {
-            theTextView?.text = autoCompleteTextView?.text
+
 
             when(autoCompleteTextView?.text.toString()){
                 "採購件"->{

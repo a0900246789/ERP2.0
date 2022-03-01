@@ -36,7 +36,7 @@ class Activity05 : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val theTextView = findViewById<TextView>(R.id._text)
+
 
         val recyclerView=findViewById<RecyclerView>(R.id.recyclerView)
 
@@ -54,10 +54,10 @@ class Activity05 : AppCompatActivity() {
         }
         //搜尋按鈕
         searchbtn?.setOnClickListener {
-            theTextView?.text = autoCompleteTextView?.text
+
 
             when(autoCompleteTextView?.text.toString()){
-                "疊櫃排程"->{
+                /*"疊櫃排程"->{
                     val item = LayoutInflater.from(this).inflate(R.layout.filter_combobox, null)
                     val mAlertDialog = AlertDialog.Builder(this)
                     //mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
@@ -93,56 +93,25 @@ class Activity05 : AppCompatActivity() {
                     }
                     mAlertDialog.show()
 
-                }
-               /* "疊櫃管制單(單身)"->{
-                    show_Header_combobox("StackingControlListHeader","all","False", StackingControlListHeader())//type=combobox or all
-                    when(cookie_data.status)
-                    {
-                        0->{
-                            val item = LayoutInflater.from(activity).inflate(R.layout.filter_combobox, null)
-                            val mAlertDialog = AlertDialog.Builder(requireView().context)
-                            //mAlertDialog.setIcon(R.mipmap.ic_launcher_round) //set alertdialog icon
-                            mAlertDialog.setTitle("篩選") //set alertdialog title
-                            //mAlertDialog.setMessage("確定要登出?") //set alertdialog message
-                            mAlertDialog.setView(item)
-                            //filter_combobox選單內容
-                            val comboboxView=item.findViewById<AutoCompleteTextView>(R.id.autoCompleteText)
-                            comboboxView.setAdapter(ArrayAdapter(requireContext(),R.layout.combobox_item,comboboxData))
-                            mAlertDialog.setPositiveButton("取消") { dialog, id ->
-                                dialog.dismiss()
+                }*/
+                "疊櫃排程"->{
+                        show_header_body("StackingControlListHeader","condition","False")//type=combobox or all
+                        when(cookie_data.status)
+                        {
+                            0->{
+                                Toast.makeText(this, "資料載入", Toast.LENGTH_SHORT).show()
+                                recyclerView?.layoutManager= LinearLayoutManager(this)//設定Linear格式
+                                StackingControlListHeaderSimplify_adapter= RecyclerItemStackingControlListHeaderSimplifyAdapter("")
+                                recyclerView?.adapter=StackingControlListHeaderSimplify_adapter//找對應itemAdapter
+                                cookie_data.recyclerView=recyclerView
+                                //addbtn?.isEnabled=true
                             }
-                            mAlertDialog.setNegativeButton("確定") { dialog, id ->
-                                //println(comboboxView.text)
-                                selectFilter=comboboxView.text.toString()
-                                show_header_body("StackingControlListBody","condition","False")//type=all or condition
-                                show_relative_combobox("ProductBasicInfo","all","False", ProductBasicInfo())
-                                show_relative_combobox("MasterScheduledOrderHeader","all","False", MasterScheduledOrderHeader())
-                                show_relative_combobox("StoreArea","all","False", StoreArea())
-                                show_relative_combobox("StoreLocal","all","False", StoreLocal())
-                                when(cookie_data.status)
-                                {
-                                    0->{
-                                        Toast.makeText(activity, "資料載入", Toast.LENGTH_SHORT).show()
-                                        recyclerView?.layoutManager=
-                                            LinearLayoutManager(context)//設定Linear格式
-                                        StackingControlListBody_adapter= RecyclerItemStackingControlListBodyAdapter()
-                                        recyclerView?.adapter=StackingControlListBody_adapter//找對應itemAdapter
-                                        addbtn?.isEnabled=true
-                                    }
-                                    1->{
-                                        Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
-                                    }
-                                }
-
+                            1->{
+                                Toast.makeText(this, cookie_data.msg, Toast.LENGTH_SHORT).show()
                             }
-                            mAlertDialog.show()
-                        }
-                        1->{
-                            Toast.makeText(activity, cookie_data.msg, Toast.LENGTH_SHORT).show()
                         }
                     }
 
-                }*/
 
             }
         }

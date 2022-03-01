@@ -15,7 +15,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="32dp"
-        android:hint="上下線刷卡">
+        android:hint="上下線刷卡(其他選項)">
 
         <AutoCompleteTextView
             android:id="@+id/autoCompleteText"
@@ -25,7 +25,7 @@
             android:inputType="none"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            android:text="派工清單">
+            android:text="(產線人員)人員每日工作事項(查詢)">
 
         </AutoCompleteTextView>
 
@@ -35,34 +35,76 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="32dp"
         android:layout_marginLeft="32dp"
+
         >
-        <Button
-            android:id="@+id/add_btn"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="新增"
-            android:enabled="false"
-            android:layout_alignParentLeft="true"></Button>
-        <Button
-            android:id="@+id/search_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="確定"
-            android:layout_alignParentRight="true"></Button>
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/cardwork_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="刷卡"
+                    android:layout_weight="1"
+                    ></Button>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="上下線">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteText2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:text="上線">
+
+                    </AutoCompleteTextView>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/search_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="查詢"
+                    android:layout_weight="1"
+                    android:layout_alignParentRight="true"></Button>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                >
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
 
     </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </androidx.recyclerview.widget.RecyclerView>
-    <TextView
-        android:id="@+id/_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="123456">
 
-    </TextView>
 
 </LinearLayout>
