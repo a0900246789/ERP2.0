@@ -328,7 +328,7 @@ class Activity02 : AppCompatActivity() {
                     var data: ArrayList<MealOrderListBody> =itemData.data
                     var SelectIndex:ArrayList<Int> = ArrayList<Int>()
                     var filterData: ArrayList<MealOrderListBody> = ArrayList<MealOrderListBody>()
-                    println(data[0])
+                    //println(data[0])
                     for(i in 0 until data.size){
                         if(cookie_data.staff_dept_ComboboxData[cookie_data.card_number_ComboboxData.indexOf(data[i].card_number)]==selectedfilter)
                             SelectIndex.add(i)

@@ -324,7 +324,10 @@ class Activity03 : AppCompatActivity() {
                     }
                     val comboboxView2=item.findViewById<AutoCompleteTextView>(R.id.autoCompleteText2)
                     comboboxView2.hint="員工姓名(必填)"
-                    comboboxView2.setText(comboboxData_set.first())
+                    if(comboboxData_set.size!=0){
+                        comboboxView2.setText(comboboxData_set.first())
+                    }
+
                     comboboxView2.setAdapter(ArrayAdapter(this,R.layout.combobox_item,comboboxData_set))
                     mAlertDialog.setPositiveButton("取消") { dialog, id ->
                         dialog.dismiss()

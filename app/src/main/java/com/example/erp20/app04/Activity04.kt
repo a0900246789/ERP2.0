@@ -130,7 +130,10 @@ class Activity04 : AppCompatActivity() {
                     comboboxData.removeAll(comboboxData)
                     for(i in 0 until data.size){
                         if(data[i]!=""){
-                            comboboxData.add( data[i]+" "+cookie_data.pline_name_ComboboxData[cookie_data.pline_id_ComboboxData.indexOf(data[i])] )
+                            if(cookie_data.pline_id_ComboboxData.indexOf(data[i])!=-1){
+                                comboboxData.add( data[i]+" "+cookie_data.pline_name_ComboboxData[cookie_data.pline_id_ComboboxData.indexOf(data[i])] )
+                            }
+
                         }
 
                     }

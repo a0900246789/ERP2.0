@@ -1,38 +1,37 @@
 package com.example.erp20
 
+import android.Manifest
+import android.app.AlertDialog
 import android.app.Application
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import android.Manifest
-import android.app.AlertDialog
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Bundle
-import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.erp20.Model.*
-import com.example.erp20.RecyclerAdapter.RecyclerItemProductControlOrderBodyBAdapter
 import com.google.gson.Gson
 import kotlinx.coroutines.*
 import okhttp3.*
 import okhttp3.Response
-import org.json.JSONObject
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.properties.Delegates
+
 
 class cookie_data : Application() {
     companion object {
@@ -44,9 +43,9 @@ class cookie_data : Application() {
         lateinit var scan_qrcode:String
         lateinit var scan_card_number:String
         lateinit var dept:String
-        const val username:String="System"//"One"
-        const val password:String="cvFm9Mq6"//"eb2014326"
-        const val URL:String="http://sunwhiteerptest.ddns.net:8000"//"http://118.168.43.235:8000"//"http://140.125.46.125:8000"
+        var username:String=""//"System"//"One"
+        var password:String=""//"cvFm9Mq6"//"eb2014326"
+        const val URL:String="http://35.201.203.196"//"http://sunwhiteerptest.ddns.net:8000"//"http://118.168.43.235:8000"//"http://140.125.46.125:8000"
         fun currentDateTime():String{
             var datetime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             var readDate=Calendar.getInstance()
@@ -248,6 +247,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         gettoken()
         username = findViewById<EditText>(R.id.Edit_Username)
+        val userid = getSharedPreferences("record", MODE_PRIVATE)
+            .getString("USER", "")
+        username.setText(userid)
         password = findViewById<EditText>(R.id.Edit_Password)
 
     }
@@ -281,13 +283,15 @@ class MainActivity : AppCompatActivity() {
     }
     fun btn_login(view: View) {
 
-        /*if(username.text.trim().isEmpty() || password.text.trim().isEmpty()){
+        if(username.text.trim().isEmpty() || password.text.trim().isEmpty()){
             Toast.makeText(this,"Input required",Toast.LENGTH_LONG).show()
         }
         else{
+            cookie_data.username=username.text.toString()
+            cookie_data.password=password.text.toString()
+            login()
+        }
 
-        }*/
-        login()
     }
     private fun login() {
         val body = FormBody.Builder()
@@ -314,6 +318,10 @@ class MainActivity : AppCompatActivity() {
             when(login_Info.status)
             {
                 0->{
+                    val pref = getSharedPreferences("record", MODE_PRIVATE)
+                    pref.edit()
+                        .putString("USER", cookie_data.username)
+                        .commit()
                     cookie_data.loginflag=login_Info.login_flag
                     cookie_data.card_number=login_Info.card_number
                     cookie_data.dept=login_Info.dept
